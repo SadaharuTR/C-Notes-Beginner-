@@ -1,0 +1,152 @@
+Programlaya Başlarken Temel İlkeler
+
+- Don't Repeat Yourself
+- Anlamlı İsimlendirme
+
+Main Fonksiyonu Nedir?
+
+- Tüm uygulamalarda olması zorunludur. 
+- Uygulamalarda Program.cs dosyası başlangıç kodlarının bulunduğu yani uygulamanın
+ayağa kalkabilmesi için başlangıç kodlarının bulunduğu bir dosyadır.
+- Uygulama ayağa kalktığında işletim sistemi ile iletişim kurabilecek metodun ve bu metod içerisinde başlanga
+başlangıca dair komutları barındıracak bir inşa = başlangıç kodları.
+
+- Uygulamayı çalıştırdığımızda bu uygulamanın bulunduğu işletim sistemi ile iletişimini 
+sağlayan fonksiyona main fonksiyonu denir.
+- Başlangıç kodları main'in içine yazılır.
+- Herhangi bir uygulama olsa da bu main fonksiyonundan sade ve sadece 1 tane olmalıdır.
+- static void Main (string [] args) {.....}
+- Bu fonksiyon uygulama ilk ayağa kalktığında ilk tetiklenen fonksiyondur. Dolayısıyla
+ilk kodlarımızı bu fonksiyonda yazarız.
+
+---------------------
+
+Top Level Statements Özelliği
+
+- Sıradan bir işlem için bile oluşturulan console uygulamasında bile basmakalıp
+(boilerplate) kodların gelmesi gerekmektedir. 
+- Günlük hayatta basit kodlar inşa edebilmek ve test süreçlerinde hızlı denemeler
+yapabilmek için bir kod bloğuna maruz kalmak gerekli değildir. 
+- C# 9.0 ile gelen top level statemensts özelliği ile main fonk. zoraki imzasının tanımlanması
+kaldırılmıştır.
+- Main fonksiyonunun kullanılması developer'in kararına bağlıdır.
+
+- Normalde C# 9.0'dan önce uzun uzun yazmak gerekirken,
+
+using System;
+
+namespace ProjectExample
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+            
+        }
+    }
+}
+
+Şimdi yerine sadece Top Statements Özelliği ile;
+
+			using System;
+
+            Console.WriteLine("Hello World!");
+			
+yazmamız yeterli. Bu şekilde yazılan komutlar derlendikten sonra esasında bir Main
+fonksiyonu içerisine alınacaktır.
+
+Uygulama derlenirken Program.cs dosyasında varsa Top Level Statements özelliği
+bu dosyaya özel algılayacak ve ilgili alana yazılan kodları main içerisinde yorumlayacaktır.
+
+Bunun dışında zaten bu özelliği başka bir dosyada kullanamyacağımızdan dolayı sadece
+Program.cs dosyasına has bir özelliktir.
+
+Kurallar:
+
+1- Using blokları ile namespace arasında kodlar yazılabilir.
+2- Bu işlem sadece Program.cs dosyasında geçerlidir. Main fonksiyonunda yazılacak komutların
+direkt burada yazılmasında müsaade edilmekte lakin farklı bir dosyada bu işlemi gerçekleştirememekteyiz.
+
+Genellikle bu özellik microservices yapılanmasında kodun gelişimi açısından hız kazandırıcı
+bir niteliğe sahiptir.
+
+Not: Mikroservis sadece bir işi yapan, bir fonksiyonaliteyi gerçekleştiren çok küçük kod parçacıkları.
+
+------------------------------
+
+// (Studio'da) ile yorum satırı eklenebilir.
+
+// Açıklama satırları / yorum satırları
+// Kodun niteliğini, anlaşılabilirliğini, kalitesini arttırmak için kullanılırlar.
+// Kritik noktalarda ve özet olarak kodları izah etmeliyiz.
+// Tek satırlık
+
+/*
+
+Çok 
+satırlık 
+yorum 
+alanı
+
+*/
+
+// Nerede kullanılırlar? : İsteneilen her yerde, semantik(anlamsal) akışı bozmaman kaydıyla...
+
+----------------
+
+Region : Kod dosyasını kategorik hale getirmemizi sağlayan bir ön işlemci(editör yorumlar) komutudur. Developer'ın yazmış olduğu kodu daha net görmesini sağlar.
+
+#region A operasyonu
+
+Binlerce satır kod...
+
+#endregion
+
+-'ye bastığımızda kategorize eder. Alt başlıklar olarak kullanılabilir.
+
+----------------
+
+Todo Nedir?
+
+//todo Burada 1'den 10'a kadar yazılmalıdır.Yorum satırının içine yazılır.
+
+View -> Task List'e tıkladığımızda görebiliriz.
+
+Yorum satırının task olarak adlandırıldığı komuttur.
+
+-----------------
+
+Debugging Nedir?
+
+- İçerisinde bol bol mantıksal bir çalışma yapılan bir kod inşa ettiğimizi düşünelim.
+- Debugging hata ayıklama demektir. Programın hatalarını yok etmeye yönelik yazılan kodu
+gözden geçirme, düzeltme aktiviteleridir.
+
+- Kodun akışı esnasında kodu okuyabilmemizi ve gözlemleyebilmemizi sağlar.
+- Kompleks uygulamalarda zaman alıcıdır.
+
+Takip etmek istenilen kodun satırının tam sol karşısına işaret konulur. 
+Bu yuvarlak kırmızı işaretin adı breakpoint'dir. Kodun debug edilmesini sağlar.
+
+Uygulamamız debug modda ayağa kaldırıldığında akış, breakpoint'in işaretlediği koda
+geldiğinde biz kodu debug edebileceğiz.
+
+Kodun devam edebilmesi için F10 tuşuna basmalıyız.
+Eğer ki F5'e basarsak debug'u sonlandırmış oluruz.
+
+------------------
+
+Watch Penceresi
+
+- Debug esnasında değişkenlerin değişen değerlerini görmekte kullanılır.
+- İLgli değişkene sağ tıklayıp 'add watch' diyelim. Watch penceresinden akışa göre
+değişkenlerin son durumunu görebiliriz.
+
+-----------------
+
+Debugsız Uygulama Çalıştırma : Zaman maliyetini önlemek için debugsız çalıştırılabilir.
+
+Start Without Debugging ya da CTRL + F5 ile debug etmeden çalıştırırız. Daha hızlı çalışır.
+
+

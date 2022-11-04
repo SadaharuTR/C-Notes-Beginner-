@@ -1,0 +1,142 @@
+Değişken Davranışları Genel Bakış
+
+Örnek;
+
+int x = 5;
+int y = x;
+y = 10;        //x=5 ve y=10. Çünkü x sadece değerini gönderdi.
+
+----------------
+
+Scope Kavramı : Faaliyet alanı, kapsam. Değişken ve fonksiyonların erişilebilirlik sınırlarını
+belirleyen alandır. Tanımlamalarda ve algoritmik çalışmalarda karışıklığı önleyen 
+bir sınır çizer.
+
+C#'da süslü {} parantez ile.
+
+{
+int a = 5;
+	ConsoleWriteLine(a);
+	//Buradan erişilebilir.
+	{
+	//Buradan da erişilebilir.
+	ConsoleWriteLine(a);
+	}
+}
+
+{
+	ConsoleWriteLine(a); -> Çalışmaz.
+	//Fakat buradan a'ya erişilemez. Farklı bir scope'a geçtik.
+
+}
+
+Bir scope içerisinde tanımlanan o scope içinde her yerde erişilebilir.(Tanımlandıktan sonra)
+
+- Bir scope'da aynı isimden birden fazla değişken olamaz.
+- Farklı scope'larda aynı isimde değişkenler olabilir.
+- Bir değişken sadece tanımlandığı scope içerisinden erişilebilir ve kullanılabilir.
+
+-------------------
+
+Değişmezler/Sabitler(const)
+
+- Sabitler, değişmeyen değerleri tutmak için oluşturulmuş yapılardır.
+- Süreçte var olan değeri değiştirilemez, değiştirilmeye çalışıldığı taktirde compiler
+tarafından hata verilir.
+
+const : constant, değişmeyendir. 
+
+- Prototip olarak değişkenlere çok benzer lakin davranışsal olarak değeri bir daha değiştirilemez. 
+
+- Özünde static bir yapılanmadır. (Static, uygulama bazlı veri depolayabildiğimiz bellekte bir alandır. O alana veri koyabilmek için static olarak işaretlemek lazım.)
+Static'e konulan bir değer evrenseldir. Uygulamadan her yerden erişilebilir.
+
+- Static ile const arasındaki fark; static değişkenler adı üzerinde değişkendir, lakin const'lar sabittir.
+
+- Tanımlanır tanımlanmaz değerlerini almak zorundadırlar.
+
+readonly: Sadece okunabilir değişkenler tanımlamaktır.
+
+- Const'tan farkı sadece tanımlandığı yerde değil, ayrıca constructor içerisinde de değeri
+atanabilir. Dependency Injection deseninde çok sık tercih edilir. İleride detaylandırılacak!
+
+- Readonly, static değildir.
+
+double pi = 3.14; -> Sabit yapsak daha iyi!
+
+const değişken_tipi değişken_tipi;
+
+Bir const tanımlandığında STACK'de ilgili türde alan tahsis edilecektir ve ilk atanan
+değer dışında bir daha değer kabul görmeyecektir.
+
+Const'lar değiştirilemez lakin istenildiği kadar okunabilir, değerleri elde edilebilir.
+
+const double pi = 3.14; //Tanımlama aşamasında değerlerini isterler.
+
+pi = 123; -> Hata verir.
+
+------------------
+
+Global Değişkenler
+
+- Bir değişken class scope'u içerisinde tanımlanıyorsa buna global değişken diyoruz.
+
+class Program 
+{
+	int a; // Global değişken.
+	
+	static void Main(...){
+	}
+}	
+
+-----------------
+
+Değişken Tanımlana Varyasyonları
+
+1) int a = 5;
+   int b = 10;	
+	
+2) Aynı türden birden fazla değişken oluşturulacaksa eğer tek imzada tanımalayabiliriz.
+
+	int a = 5, b = 10 ;
+	int a, b;
+	
+-------------------
+
+Değişkenler Arası Değer Atama Durumları - DEEP COPY - SHALLOW COPY
+
+- Değişkenler arası değer atanırken verisel açıdan iki davranış söz konusudur.
+
+Deep Copy: Derin kopyalamada eldeki veri çoğalır/klonlanır. RAM'de bir veri varken aynı veriden bir tane daha olacaktır.
+
+- Değer türü değişkenler birbirlerine atanırken default olarak deep cop geçerlidir.
+Yani veri otomatik olarak üretilir.
+
+				
+int a = 5;  
+int b = a;  
+
+a = a * 5;
+
+a -> 25
+b -> 5       //a'da yapılan değişiklik b'ye yansımaz. Çünkü 5 değeri deep copy yapıldı.
+
+Shallow Copy: Değişkenler arası değer atamalarında değeri türetmek/klonlamak/çoğaltmak
+yerine var olanı birden fazla referansla işaretlemeye dayalı kopyalama yöntemidir.
+
+- Bellekte birden fazla referansın tek bir veriyi işaret etmesidir.
+- STACK 	HEAP
+	A-------> | |   Aynı veriyi işaret eder.
+	B-------> | |
+	
+- Neticede ilgili değer bir değişikliğe uğradığında tüm işaretleyen referanslara
+bu değişiklik yansıyacaktır.	
+
+- Default olarak Shallow Copy referans türlü değişkenlerde geçerlidir.
+İlerideki konusu olan ref keyword'ü ile Değer Türlü değişkenlerde nasıl Shallow Copy yapıldığını göreceğiz.
+
+NOT: Shallow Copy OOP derslerinde ele alacağımız nesne ve referans arasındaki ilişkide
+varsayılan davranış olarak kabul edilmektedir. 
+
+------------------
+

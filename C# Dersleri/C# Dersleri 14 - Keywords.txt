@@ -1,0 +1,453 @@
+Keywords
+
+- Programlama dilinin en atomik parçalarıdır.
+- Derleyici için ön tanımlı olan, nerede hangi amaca hizmet edeceği belli ve kod içerisinde hangi noktalarda çağırılabileceği/kullanılabileceği kurallarla
+sınırlandırılmış olan anahtar sözcüklerdir.
+
+- Keyword'lerin operatörlerden farkı: Operatörler esas olarak belirli bir operasyonu/eylemi üstlenen yapılardır.
+Keywordler daha geniş kavramlardır.
+- Operatörler esasında bir keyword'dür lakin her keyword bir operatör değildir.
+
+Örnek: var keyword'ü hem pattern matching'de farklı hem de değişken seviyesinde farklı bir kullanıma sahiptir.
+
+Örnek: 
+
+namespace OrnekProje //namespace keyword
+{
+    class Program //class keyword
+    {
+        static void Main(string[] args)
+        {
+		for(...) //for keyword'ü 
+        System.Console.WriteLine("Hello World!");
+		
+		do //keyword
+		{
+		
+		}while(true); //while keyword
+		
+        }
+    }
+}
+
+- Konseptli keyword'lerin konseptine hakim olmak gerekir. Anlam kazanmak için bir bütüne ait olmasına veya yanına yazılacak konseptlere ihtiyacı vardır.
+Değişken türleri de bir konseptli keyword'lerdir.
+
+- Konseptsiz keyword'ler de vardır. Sayıları daha azdır.
+
+return;
+break;
+continue;
+goto; 
+
+gibi örnekler verilebilir.
+
+----------------------
+
+Manevratik Komutlar
+
+- Normal gidişata müdahele etmek (döngülerden çıkmak, kodu durdurmak veya devamını okumamak, methodu sonlandırmak gibi) için yardımcı olan komutlardır.
+
+Örnek: //23. adımda döngüden çıkmak istersek.
+
+for(int i = 0 ; i < 100; i++)
+{
+	if (i == 22)
+	{
+		i = 100; 
+	}
+}
+
+//bu şekilde algoritmik bir çözüm getirebiliriz.
+//ya da daha kolayı var. 
+
+- Manevratik komutlar yapabileceğimiz kod yönlendirmelerini daha efektif yapmamızı sağlar.
+
+-------------------------
+
+break komutu
+
+- switch case yapılanmasında ve döngülerde kullanılır. Sadece bu iki yapı içerisinde kullanılan bir keyword'dür.
+- Kullanıldığı yapıyı sonlandırmaya yarar.
+- İç içe döngülerde en içteki döngüde kullanılıyorsa sadece onu sona erdirir.
+
+Örnek:
+
+for(int i = 0 ; i < 100; i++)
+{
+	while (true)
+	{
+		break; 
+	}
+}
+
+Örnek:
+
+do
+{
+	if(true)
+	{
+	break; //if bloğu döngünün içerisinde olduğu için burada da break'i kullanabiliriz.
+	}
+}while(true);
+
+Örnek:
+
+Saniye 45 olduğunda DateTime'dan çıksın.
+
+while(true)
+{
+	if(DateTime.Now.Second == 45)
+		break;
+	Console.WriteLine(DateTime.Now);
+}
+
+Çıktı:
+.
+.
+20.09.2022 17:06:44
+20.09.2022 17:06:44
+20.09.2022 17:06:44
+20.09.2022 17:06:44
+20.09.2022 17:06:44 //45'e gelince çıkar.
+
+Örnek:
+
+for(int i = 0; i < 5; i++)
+	{
+		for(int j = 0; j < 3; j++)
+		{
+			if(j == 1)
+				break;
+			Console.WriteLine("i : " + i + " j : " + j);
+		}
+	}
+	
+Çıktı:
+
+i : 0 j : 0 //dıştaki döngü her sarmaya başladığında içteki j'nin 1 olduğu durumda içteki döngüden çıkış yapıp dıştaki döngüye i'yi arttırarak devam edecek.
+i : 1 j : 0 //i artacak ama j hep sıfır kalacak.
+i : 2 j : 0
+i : 3 j : 0
+i : 4 j : 0
+
+Örnek:
+
+Kullanıcıdan 't' harfi girilene kadar alınan sınırsız sayıda sayıyı toplayan ve sonucu ekrana yazdıran uygulama.
+
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+        int toplam = 0;
+
+        while(true)
+        {
+            System.Console.WriteLine("Lütfen bir sayı giriniz.");
+            string girilenDeger = Console.ReadLine();
+
+
+            if(girilenDeger == "t")
+            {
+                System.Console.WriteLine("Toplam Sonuç: " + toplam);
+                break; //ekrana tekrar üstteki satırın yazılmasını istemiyorsak kodu burada sonlandırmamız lazım.
+            }
+            else
+            {
+                toplam += int.Parse(girilenDeger);
+            }
+        }
+
+        }
+    }
+}
+
+Örnek:
+
+Kullanıcıdan alınan sonsuz adet sayı değerlerinden 37'nin katı girildiğinde sonlanan uygulamayı yazalım.
+
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+        while (true)
+        {
+            System.Console.WriteLine("Lütfen bir sayı giriniz.");
+            int sayi = int.Parse(Console.ReadLine());
+            if (sayi % 37 == 0)
+            {
+                System.Console.WriteLine("Uygulama sonlanmıştır.");
+                break;
+            }
+
+        }
+        }
+    }
+}
+
+-------------------------
+
+continue komutu
+
+- Sadece döngülerden erişilebilir ve kullanılabilir. "Döngü içindeki" döngü olmayan yapılanmalarda kullanılabilir.
+
+- Amaç döngüde bir sonraki tura direkt geçilmesini sağlar.
+
+Örnek:
+
+for (int i = 0; i < 10; i++)
+{
+	if(i%2 != 0) //i'nin 2'ye bölümünden kalan sıfır değilse devam et. Bir sonraki tura geç. 
+		continue;
+	
+	Console.WriteLine(i); //yani çift olmayan durumlarda buradaki işlemi yapmaz. Sadece çift olduğu durumlarda bu satır çalışır.
+}
+
+Örnek:
+
+//Kullanıcının girdiği sonsuz adet sayıdan pozitif olanlarını çarpan ve 't'(enter) yapıldığında sonucu ekrana yazdıran kodu yazalım.
+
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int carpim = 1;
+            while(true)
+            {
+                System.Console.WriteLine("Lütfen bir sayı giriniz.");
+                string girilenDeger = Console.ReadLine();
+                if (girilenDeger == "t")
+                {
+                    System.Console.WriteLine(carpim);
+                    break;
+                }
+                else //else bloğunu koymasak da olur. Kod aynı şekilde çalışır. Ek bilgi.
+                {
+                    int sayi = int.Parse(girilenDeger);
+                    if(sayi < 0)
+                        continue; //sayı negatifse bekleme yapma geç. Sonraki tura geç.
+
+                    carpim *= sayi;
+                }
+            }    
+        }
+    }
+}
+
+Sonuç:
+
+Lütfen bir sayı giriniz.
+45
+Lütfen bir sayı giriniz.
+78
+Lütfen bir sayı giriniz.
+10
+Lütfen bir sayı giriniz.
+t
+35100
+
+Örnek: 
+
+//1 ile 1000 arasında 7'nin katı olmayan sayıları ekrana yazdıralım.
+
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            for (int i = 1; i < 1000; i++)
+            {
+                if (i % 7 == 0)
+                    continue; //7'nin katı olanları geç. Döngüye sonraki adımdan devam et.
+                System.Console.WriteLine(i);
+            }
+
+        }
+    }
+}
+
+----------------------
+
+return Komutu 
+
+- Metod içerisinde her yerde kullanılabilir, erişilebilir bir keyword'dür.
+Main'de bir method yapılanmasıdır. Yani main içerisinde her yerde kullanılabilir.
+
+- return iki işleme yarar.
+1) Nerede çağırılıyorsa çağırılsın bulunduğu metoddan çıkış yapar. Yani sonlandırır. return'den sonra hangi komut geliyorsa gelsin işlenmez.
+2) İleride göreceğimiz metodlar konusunda geriye değer döndürme sorumluluğunu üstlenen bir keyworddür.
+
+Örnek:
+
+//Kullanıcı 'c' tuşuna basana kadar sonsuz döngüde dönen uygulamayı yazınız.
+//readLine enter ile çalışır. O yüzden readKey kullanmak lazım.
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while(true)
+            {
+                //ReadLine enter'a basıldığında çalışır.
+                if(Console.ReadKey().KeyChar == 'c')
+                {
+                    System.Console.WriteLine("Uygulama sona ermmiştir.");
+                    return;
+                }
+				System.Console.WriteLine("");
+                System.Console.WriteLine("Uygulama çalışıyor.");
+            }
+        }
+    }
+}
+
+Sonuç:
+
+4
+Uygulama çalışıyor.
+q
+Uygulama çalışıyor.
+w
+Uygulama çalışıyor.
+<
+Uygulama çalışıyor.
+ 
+Uygulama çalışıyor.
+cUygulama sona ermmiştir.
+
+--------------------------
+
+goto Komutu (en sevilmeyen keyword)
+
+- Kodun senkronizasyonunu bozup, akışı ters istikamette almamızı sağlayan bir manvratik komuttur.
+
+- Davranışsal olarak döngülere benzer.
+
+- switch case yapılanmasında dahili olarak kullanılan bu komut metod içerisinde her yerde kullanılabilir.
+
+switch(____)
+{
+	case n:
+	
+	break;
+	
+	case m;
+		goto case n;
+		
+}
+
+Prototip:
+
+a: //başlangıç referansı
+.
+.
+.
+goto a; // tanımlanmış olan referansa kodun akışını yönlendiriyoruz.
+
+- Geleneksel coder'lar tarafından pek sevilmez. Tavsiye edilmez.
+- Teknik olarak programı yavaşlattığı söylenir. Performans testlerinde kayıp ve yavaşlık olduğu görülmüştür. Maliyeti diğer durumlara göre fazladır.
+- goto keyword'ü ile senkronizasyonu bozup basa dönme durumu bir döngüyle aynı işlemi yapmaya nazaran daha maliyetli olacaktır.
+- Gerekmediği sürece kullanmamak lazım.
+
+Örnek:
+
+a:
+CW("Merhaba");
+CW("Dünya");
+
+goto a;
+
+//Sonsuz döngü şeklinde çalışmaya devam eder. Sürekli ekrana yazdırır.
+//Böyle bir durumda önerilen "döngü" kullanmaktır.
+
+Örnek:
+
+int i = 1;
+
+x:
+
+	Console.WriteLine(i++);
+	if(i <= 100) //true olduğu sürece x'ye gidecek.
+		goto x;
+		
+- goto keyword'ü belirtilen yere geri dönüş yaparken scope kavramını dinlemez.
+
+a:
+for (int i = 0; i < 100; i++)
+{
+	goto a; //scope dışındaki a'ya geri dönüş yapar. i'yi arttırmaz sonsuza kadar i'ye sıfır değerini atar.
+}
+
+-------------------------
+
+Ekstra Bilgiler
+
+- Döngülerde boş scope kullanmak istemiğimiz durumlarda ; noktalı virgül operatörü ile temiz kod yazımı yapabiliriz.
+
+while(true)
+{
+
+}
+
+yerine
+
+while(true);
+
+-------------------
+
+for ( ; ; )
+{
+
+}
+
+yerine
+
+for ( ; ; );
+
+-------------------
+
+do
+{
+
+} while (true); 
+
+yerine
+
+do;
+while(true);
+
+yazabiliriz. Ve sonsuz döngüleri daha kısa formatta yazabiliriz.
+
+- Bazen (ileride asenkton programlamada) içi boş sonsuz döngülerde ihtiyacımız olabilir.
+- Bu durumlarda normal döngü gövdelerini kullanabileceğimiz gibi scope'suz bu şekilde de kullanabiliriz.
+
+Aynı şekilde if scope'unda da benzer kullanım uygulanabilir.
+
+if (true)
+{
+
+}
+
+yerine
+
+if (true); //yazabiliriz. Çok karşımıza çıkmaz. 

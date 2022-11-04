@@ -1,0 +1,133 @@
+Ranges and Indices
+
+- C# 8.0 ile veri kaynakları üzerinde gerekli manipülasyonu sağlayabilmek ve bunun yanında kaynak içerisindeki
+tüm veriler üzerinde yapılan genel sorgulamalar ve algoritmalardan kaçınmak, yani direkt olarak hedef veri/ler
+odaklı çalışabilmek için yeni tipler ile operatörler geliştirilmiş bulunmaktadır.
+
+System.Index
+
+- Dizi ve koleksiyon yapılarındaki index kavramının tip olarak belirlenmiş halidir.
+- Temelde index değerini bir tür ile tutmakla beraber ^ operatörüyle birlikte daha fazla anlam ifade
+etmekte ve dizinin index değerlerini tersine ifade edecek şekilde sorumluluk yüklenmektedir.
+
+Index i = 3;  // 0 1 2 (3) 'ü alır. 3 değerine sahip olan bir index'e karşılık gelecektir. Normal gidişatta 0'dan başlar n-1'e doğru gider.
+
+Index i = ^3; // (3) 2 1 ile index'i tersinden almaya başladığımızda saymaya 0'dan değil 1'den başlarız. n'e doğru gideriz.
+
+Örnek:
+
+string[] isimler = { "Ali", "Veli", "Rıfkı", "Hatice", "Ayşe" };
+					----0------1-------2-------3-->
+Index index = 3; //Hatice'yi gösterir.
+
+fakat
+
+string[] isimler = { "Ali", "Veli", "Rıfkı", "Hatice", "Ayşe" };
+                                      <-3--------2---------1
+Index index = ^3; //Rıfkı'yı gösterir.
+
+Not: Indexer[] operatörü içerisinde tam sayı verilebildiği gibi Index türü de verilebilir.
+
+sayilar[3];
+sayilar[sayi]
+sayilar[index];
+
+Örnek:
+
+int[] sayilar = {3, 5, 7, 9, 1, 2, 31, 321 , 534, 5643, 457, 56, 78 };
+
+Index index = 5; //2'yi soldan yakalamak istiyorsak..
+Console.WriteLine(sayilar[index]);
+
+Ekrana 2'yi yazdıracaktır.
+
+//ya da sağdan yakalamak istersek;
+
+Index index = ^8;
+Console.WriteLine(sayilar[index]);
+
+Ekrana 2'yi yazdıracaktır.
+
+------------------------
+
+System.Range
+
+- Veri kümelerinde hangi değerler ile çalışacağımızı belirleyebilmek için index üzerinden aralık vermemizi ve bunu .. operatörü ile gerçekleştirmemizi sağlayan yapılanmadır.
+
+string[] isimler = { "Hüseyin", "Hilmi", "Rıfkı", "Hatice", "Ayşe", "Mahmut", "Kazım", "Okan", "Emre", "Ali", "Naci", "Hüsnü", "Kamil" };
+					----0----------1--------2--------3->                       <-7--------6------5-------4------3--------2---------1------
+Range range = 3..7; //3 index no iken 7 sıra no'dur.
+
+Not: .. operatörü hedeflenen aralığı bizlere Range türünde geri getirecektir. Böylece biz ilgili aralığı biz diziymiş gibi kullanabileceğiz.
+
+Örnek: 
+
+string[] isimler = { "Hüseyin", "Hilmi", "Rıfkı", "Hatice", "Ayşe", "Mahmut", "Kazım", "Okan", "Emre", "Ali", "Naci", "Hüsnü", "Kamil" };
+					----0----------1--------2--------3->                        <-7-------6-------5------4-------3-------2--------1-----                       
+Range range = 3..^6; //sağdaki sayıya tersinden gelirken operatörü ^ kullanıllırsa sağdaki sayımdan gelen ifade alınmayacak ondan bir önceki alınacaktır. 
+					 // yani Okan değil Kazım alınacak ve aralık "Hatice", "Ayşe", "Mahmut", "Kazım" olacaktır.
+
+string[] isimler = { "Hüseyin", "Hilmi", "Rıfkı", "Hatice", "Ayşe", "Mahmut", "Kazım", "Okan", "Emre", "Ali", "Naci", "Hüsnü", "Kamil" };
+						13---------12------11-------10--------9--------8---------7-------(6)------5------(4)-----3-------2--------1
+Range range = ^6..^3; //^6 solda olduğu için bir öncesine kaymaz.
+
+Aralığımız "Okan", "Emre", "Ali" olacaktır.
+
+Not: Indexer[] operatörü içerisine tam sayı veya Index türü verilebildiği gibi Range türü de verilebilir.
+
+sayilar[range]
+
+-----------------------------
+
+int[] sayilar = {3, 5, 7, 9, 1, 2, 31, 321 , 534, 5643, 457, 56, 78 };
+
+Range range = 5..10; //5. ile 10. index arasını aldık.
+
+var sayilar2 = sayilar[range]; //ilgili dizinin ayrılan alanını ayrı bir dizi olarak getirdi.
+
+sayilar2[0] = 100; //yeni dizi üstünde istediğimiz değişikliği yapabiliriz. Bu değişiklikler ilk sayilar dizisini etkilemez.
+
+Not:
+
+Range range = ..; -> Tüm diziye karşılık gelir.
+var sayilar2 = sayilar[range]; //ilgili diziyi kopyalacaktır.
+
+Örnek:
+
+int[] sayilar = {3, 5, 7, 9, 1, 2, 31, 321, 534, 5643, 457, 56, 78 };
+
+Range range = 5..^3;
+var sayilar2 = sayilar[range]; //sayilar 2'ye 2, 31, ,321 , 534, 5643'ü alır. 
+
+Range range = ^8..^3;
+var sayilar2 = sayilar[range]; //sayilar 2'ye 2, 31, ,321 , 534, 5643'ü alır. 
+
+NEDEN VAR KULLANILDI.
+
+Moreover, System.Index should have an implicit conversion from System.Int32, in order to avoid the need to overload mixing integers and indexes over 
+multi-dimensional signatures.
+
+Örnek:
+
+nt[] sayilar = {3, 5, 7, 9, 1, 2, 31, 321, 534, 5643, 457, 56, 78 };
+
+Index i1 = 5, i2 = 10;
+
+Range range = i1..i2; //gibi de kullanılabilir.
+
+Örnek:
+
+string isim = isimler[isimler.Length - 1];
+
+string isim = isimler[^1];
+
+iki kodda dizinin en sondaki elemanını vermeye yarayacaktır.
+
+Not: ^ operatörünü kullanabilmek için index türünde çalışılması gerekmektedir. Çünkü bu operatör geriye index türü döndürür.
+
+int i = ^3; //Yanlış
+Index i = ^3; //Doğru. Sağdan başlar 1-2-3 diye sayar.
+
+
+
+

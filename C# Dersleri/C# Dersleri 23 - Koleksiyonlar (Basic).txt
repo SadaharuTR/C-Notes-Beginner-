@@ -1,0 +1,102 @@
+Koleksiyonlar 
+
+ArrayList Koleksiyonu
+
+- Koleksiyonlara geçişlerde ilk ara geçiş örneği gibi düşünülebilecek bir koleksiyondur.
+
+ArrayList kullanabilmek için using System.Collections; kodun en üstüne eklemek gerekli.
+
+Tanımlama
+
+int[] yaslar = new int[17];
+
+ArrayList _yaslar = new ArrayList();
+
+//Diziler tanımlanırken kaç eleman tutacakları bildirilmek zorundadır.
+//Buradaki sınırlılık ArrayList'te kalkıyor.
+
+Değer Atama
+
+yaslar[5] = 123; //dizide değer atama
+
+_yaslar.Add(123); //koleksiyonlarda değer atama (pek çoğunda Add kullanılır.)
+
+ArrayList Tanımlanmış Koleksiyondan Değer Okuma
+
+for (int i = 0; i < 17; i++)
+{
+yaslar[i] = i + 10;
+_yaslar.Add( i+10);
+}
+
+//Diziler
+
+System.Console.WriteLine(yaslar[5]);
+
+//Koleksiyonlar
+
+System.Console.WriteLine(_yaslar[5]);
+
+Çıktı:
+15
+15
+
+-----------------
+
+ArrayList Boxing - Unboxing Durumlarından Dolayı Sınırlılıklar
+
+- ArrayList verilen datayı otomatik olarak boxing işlemine tutarak, object olarak değer alır. Bu verileri kendi türlerinde elde etmek için Unboxing yapmamız gerekir.
+Ahanda maliyet! İleride Generic Fonksiyonlar ile bu maliyetleri aşabileceğiz.
+
+Örnek: //Aritmetik ortalama
+
+using System;
+using System.Collections;
+using System.Text;
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.Primitives;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ArrayList _yaslar = new ArrayList();
+            
+            for (int i = 0; i < 17; i++)
+            {
+            _yaslar.Add(i+10);
+            }
+
+            int toplam = 0;
+            int arOrt = 1;
+            for (int i = 0; i < _yaslar.Count; i++) //Koleksiyonlarda Count ile eleman sayısını öğreniriz.
+            {
+                toplam += (int)_yaslar[i] ;
+            }
+            arOrt = toplam / _yaslar.Count;
+
+            System.Console.WriteLine($"0. Index: {_yaslar[0]} \n16.Index: {_yaslar[16]}");
+            System.Console.WriteLine($"Toplam: {toplam}" );
+            System.Console.WriteLine($"Aritmetik Ortalama: {arOrt}");
+            
+        }
+    }
+}
+
+----------------------
+
+ArrayList Collection Initializers(Koleksiyon İlklendirici)
+
+ArrayList arrayList = new ArrayList() {
+//object değil mi yapıştır her türden.        
+"Ahmet",
+123,
+'a',
+true
+}; //bu işlemin adı koleksiyon ilklendiricidir.
+
+//Bu değerlerin hangi türden olduğunu kontrol edip ona göre işlemleri yapmak lazım. if(_yaslar[i] is int)... tarzı kontroller yapılmalı.
+
+

@@ -1,0 +1,231 @@
+Regular Expressions
+
+- Metinsel yapılanmalarda belirli koşulları sağlayabilen ifadelerdir.
+
+- Bir metinsel ifade içerisinde @ karakteri geçen bütün aralıkları elde etmek istediğimizi varsayalım.
+ 
+bdasbdsabd@as14234jasd@adsksdfj123''4asdfff
+
+- Dikkat ederseniz bu değerlerdeki karakterlerin uzunluğu ve ne olduğu önemli değil. Yeter ki @ karakteri olsun.
+
+- Bunu normal kod yazımı(loop'lar vs.) yollarıyla yapmak ileri seviye, karışık programlarda zor olacaktır.
+
+- Milyonlarca e-mail adresi olduğunu düşünelim. Biliyoruz ki tek bir e-mail formatı var.
+Her e-mail mutlaka @ ve ardından .(nokta) karakterlerini barındırır. Eğer birden fazla nokta varsa,
+noktalardan biri mutlaka @ karakterinden sonra olmalıdır.
+
+Haliyle bir karakter dizisinin e mail adresi olup olmadığını test etmek oldukça zor olacaktır.
+
+Bu yüzden bu düzeni kavrayabilme işini Regular Expressions'lara bırakıyoruz.
+
+Regex
+
+- C#'ta bu tür düzenli ifadeleri temsil edebilmek için Regular Expressions operatörleri geliştirilmiştir.
+
+- Bu operatörler eşliğinde elde edilen verinin tasarlanan metinsel düzene uyup uymadığı değerlendirilebilmektedir.
+
+- Regular ifadeler System.text.RegularExpressions namespace'i altındaki Regex sınıfı tarafından  temsil edilmektedir.
+
+- Regular Expression'lar ufak tefek farklılıklar olsa dahi tüm programlama dillerinde mevcuttur.
+
+------------------------
+
+Regular Expressions Operatörleri ^ Operatörü, Regex Sınıfının Kullanımı
+
+^ Operatörü
+
+- Satır başının istenilen ifadeyle başlamasını sağlar.
+- Using keyword'ü ile using System.Text.RegularExpressions; eklemek lazım.
+
+^9 : Yazı 9 ile başlamalıdır. 9aafsdf, 912312313, 9'''114!++ hepsi uygundur.
+	 123asdf, 'dasfsdf uygun değildir.
+	 
+string text = "9123123234adsdfsdfsdf";
+Regex regex = new Regex("^9"); //regex'in içerisindeki pattern neyse o pattern'a sahip regex üzerinden Match'i çağırdığımızda verilen text değeri ne ise kontrol edilecek
+//pattern'a uygunluğu belirtilecektir. Sonuç Match sınıfıyla döner.
+
+Match match = regex.Match(text);
+
+System.Console.WriteLine(match.Success); //True yazacaktır. 9 ile başlamasaydı False verirdi.
+
+-----------------------
+
+\ Operatörü
+
+\  : Belirtilen karakter gruplarını içermesini istiyorsak.
+
+\D : Metinsel değerlerin ilgili yerinde rakam olmayan tek bir karakterin bulunması gerektiğini belirtir.
+\d : Metinsel değerlerin ilgili yerinde 0 - 9 arasında tek bir sayı olacağı ifade edilir. (tek-sadece)
+
+\W : Metinsel değerin ilgili yerinde alfanümerik olmayan karakterin olması gerektiği belirtilir. Alfanümerik karakterler: a-z A-Z 0-9
+\w : Metinsel değerin ilgili yerinde alfanümerik olan karakterin olacağı ifade edilir.
+
+\S : Metinsel değerin ilgili yerinde boşluk karakterleri (tab/space) dışında herhangi bir karakterin olamayacağı belirtilir.
+\s : Metinsel değerin ilgili yerinde sadece boşluk karakterinin olacağı ifade edilir.
+
+Örnek:
+
+//9 ile başlayani ikinci krakteri herhangi bir sayı olan ve üçüncü karakteri de boşluk olmayan bir düzenli ifade oluşturalım.
+//^9\d\S
+string text = "921231423442sfdsdfsdfsdg";
+Regex regex = new Regex(@"^9\d\S"); //verbatim ile özel ifadeleri kullanabiliriz. Birinden biri olmazsa bile False döndürecektir.
+Match match = regex.Match(text);
+
+System.Console.WriteLine(match.Success);
+
+Çıktı:
+True
+
+---------------------
+
++ Operatörü
+
+- Belirtilen gruptaki karakterlerden bir ya da daha fazlasının olmasını istiyorsak kullanabiliriz.
+
+
+//9 ile başlayan, arada herhangi bir sayısal değerleri olan ve son karakteri de boşluk olmayan bir düzenli ifade oluşturalım.
+//^9\d+\S -> 9 ile başlaması, ikinci ve ikinciden daha fazla karakterin sayısal olması ve bundan sonraki karakterin boşluk olmaması
+string text = "921231423442sfdsdfsdfsdg";
+//"9874a23424d -> True
+//"1234ffdsfdd -> False
+//"9a1234fszxx -> False
+//"98 58ffasds -> False
+//"9854 asdasd -> True
+Regex regex = new Regex(@"^9\d+\S"); //verbatim ile özel ifadeleri kullanabiliriz.
+Match match = regex.Match(text);
+
+System.Console.WriteLine(match.Success); //true
+
+---------------------
+
+|(veya) Operatörü
+
+Birden fazla karakter grubunun bir ya da birkaçının ilgili yerde olabileceğini belirtmek istiyorsak mantıksal veya operatörü kullanılır.
+
+Örnek:
+
+Baş harfi a ya da b ya da c olan metinsel ifade.
+
+a| b | c
+
+string text = "Ahmet"; //False
+//string text = "ahmet"; True
+Regex regex = new Regex(@"a| b | c");
+Match match = regex.Match(text);
+
+Console.WriteLine(match.Success);
+
+----------------------
+
+{n} Operatörü
+
+- Sabit sayıda karakterin olması isteniyorsa {adet} şekline belirtilmeli.
+
+//532-3454564 
+
+//\d{3}-\d{7} ->üç tane rakam olsun
+
+string text = "532-3454564"; //True
+Regex regex = new Regex(@"\d{3}-\d{7}");
+Match match = regex.Match(text);
+
+Console.WriteLine(match.Success); 
+
+---------------------
+
+? Operatörü
+
+- Bu karakterin önüne gelen karakter metinde en fazla bir defa geçmeli ya da hiç geçmemelidir.
+
+// \d{3}B?A --> ilk üç ifade sayısal olacak, sonraki ifadede enfazla 1 tane B geçmeli ya da geçmese de olur, sonrakinde de A olacak.
+
+string text = "234BA"; //True 
+//"543BA" -> true
+//"543A"  -> true
+//"123BBA" -> False , B iki kere geçiyor.
+
+Regex regex = new Regex(@"\d{3}B?A");
+Match match = regex.Match(text);
+
+Console.WriteLine(match.Success); 
+
+-------------------
+
+. Operatörü
+
+\n hariç herhangi bir karakterin kullanılabileceğini belirtir.
+
+Örnek:
+
+//d{3}.A ->ilk üçü sayı, sonrki herhangi bir karakter, ardından A değeri gelecek
+
+string text = "123'A'"; //True
+//string text = "123\nA'"; //False
+Regex regex = new Regex(@"d{3}.A");
+Match match = regex.Match(text);
+
+Console.WriteLine(match.Success); 
+
+
+---------------------
+
+\b - \B Operatörleri
+
+\B : Bu ifade ile kelimenin başında ya da sonunda olmaması gereken akrakterler bildirilir.
+\b : Bu ifade ilgili kelimenin belirtilen karakter dizisi ile sonlanmasını sağlar.
+
+// \d{3}dır\B -> üç tane sayı olsun ama sonunda ya da başında dır eki olmasın. 123dır olmaz, dır123 olmaz. 123dır2 olur.
+
+string text = "123dır"; 
+Regex regex = new Regex(@"\d{3}dır\B");
+Match match = regex.Match(text);
+
+Console.WriteLine(match.Success); 
+
+-------------------
+
+[n] Operatörleri
+
+- Metinsel ifadede belirli bir noktada belirli karakter aralığındaki değerlerin olmasını istiyorsak eğer [n] kullanabiliriz.
+Ayrıca özel karakterin yerinede yazılmasını da ifade eder.
+
+// \d{3}[A-E] -> ilk 3 sayı, sonrakinde A-E arası bir karakter bekle
+
+string text = "123A"; //true
+//"123C" -> true
+//"123P" -> false
+Regex regex = new Regex(@"\d{3}[A-E]");
+Match match = regex.Match(text);
+
+Console.WriteLine(match.Success); 
+
+//özel karakterler
+
+//(530) 751 33 83 formatında tel no almak istiyorsak. -(- ve -)-'ı [] içerisine almamız lazım.
+//[(]d{3}[)]\s\d{3}\s\d{2}\s\d{2}
+
+string text = "(530) 751 33 83"; //true
+Regex regex = new Regex(@"[(]d{3}[)]\s\d{3}\s\d{2}\s\d{2}");
+Match match = regex.Match(text);
+
+Console.WriteLine(match.Success);
+
+------------------------
+
+Regular Expressions Match Sınıfı Özellikleri
+
+string text = "(530) 751 33 83"; //true
+Regex regex = new Regex(@"[(]\d{3}[)]\s\d{3}\s\d{2}\s\d{2}");
+Match match = regex.Match(text);
+
+Console.WriteLine($"Success : {match.Success}");
+Console.WriteLine($"Value : {match.Value}"); //doğrulanan verinin ne olduğunu getirir. "(530) 751 33 83asdsadsadff2231" olsaydı bile sadece (530) 751 33 83 getirirdi.
+Console.WriteLine($"Index : {match.Index}"); //doğrulamanın hangi index'te başladığını bildirir.
+Console.WriteLine($"Length : {match.Length}"); //doğrulamanın yapıldığı ifadenin kaç karakterli olduğunu bildirir.
+
+Çıktı:
+
+Success : True
+Value : (530) 751 33 83
+Index : 0
+Length : 15

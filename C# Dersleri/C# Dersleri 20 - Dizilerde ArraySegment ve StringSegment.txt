@@ -1,0 +1,115 @@
+ArraySegment ve  StringSegment
+
+Diziler üstünde yapılan çalışmalarda bu tür maliyetleri ortadan kaldırabilmek için veya daha performanslı çalışabilmek uğrune 
+ArraySegment ve StringSegment türlerleri geliştirilmiş.
+
+- Bu türler yapısal olarak dizi yahut string ifadelerdeki bir bölümü temsil etmemizi sağlayan ve bütünsel açıdan
+ilgili veri kümesini parça parça birden fazla referans eşliğinde yönetmemize imkan veren türlerdir.
+
+- İşlemler orjinal array üzerinde referanslarla gerçekleşmekte, ekstradan alan tahsisi veya türetme olmamaktadır.
+
+int[] sayilar = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+
+int sayilar2 = sayilar[2..7];  //30 ile 70 aralığını getir. Bir başka diziye ata. Maliyet!
+
+sayilar2 dizisi artık yeni bir dizi. İndex'leri 0'dan başlar.
+
+sayilar2[0] *= 10;
+sayilar2[1] *= 10;
+sayilar2[2] *= 10;
+sayilar2[3] *= 10;
+sayilar2[4] *= 10;
+
+//Yapılan işlemler orjinal sayilar dizisini etkilemez. sayilar2 dizisinde işlemlerin etkilerini görebiliriz.
+
+ArraySegment Nedir?
+
+- Bir dizinin bütününden ziyade belirli bir kısmına yahut parçasına ihtiyaç dahilinde ilgili diziyi kopyalamak yerine
+bağımsız bir referans ile erişmemizi ve böylece salt bir şekilde temsil etmemizi sağlayan bir yapıdır.
+
+ArraySegment Türü İle Dizinin Belli Bir Alanını Referans Etmek
+
+int[] sayilar = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+
+ArraySegment<int> segment1 = new ArraySegment<int>(sayilar); //ileride daha detaylı
+
+segment1, sayilar dizisinin tüm elemanlarını komple referans etmekte. segment1 üzerinde herhangi bir değişiklik yapıldığında sayilar dizisinde, sayilar üzerinde yapıldığında segment1
+üzerinde değişiklikleri görebiliriz. Yeni dizi türetilmez.
+
+ArraySegment<int> segment2 = new ArraySegment<int>(sayilar, 2, 5); //sayilar dizinden 2. index'ten 5. aralığa kadar (30 - 40 - 50 değerleri). 
+//5. aralık demek soldan 1-2-3-4-5 say demektir.
+
+//sayilar, segment1, segment2'de yapılan değişiklikler birbirlerini etkiler.
+
+segment1[0] *= 10; //sayilar[0]'da 10*10 = 100 oldu.
+segment2[0] *= 10; //segment2'nin 0. index'i sayiların 2. index'i yani 30. -> 30 * 10 = 300
+
+//int[] sayilar => { 100, 20, 300, 40, 50, 60, 70, 80, 90, 100 }
+//segment1[] => { 100, 20, 300, 40, 50, 60, 70, 80, 90, 100 }
+//segment2[] => dizi yine { 100, 20, 300, 40, 50, 60, 70, 80, 90, 100 } ama referans edilen değer aralığı { 300, 40, 50 }
+
+ArraySegment Slicing(Dilimleme) Özelliği
+
+- Bir dizi üzerinde birden fazla parçada çalışılacaksa eğer her bir parçayı ayrı bir ArraySegment olarak tanımlayabiliriz. Bu tanımlamaların dışında 
+diziyi tek bir ArraySegment ile referans edip ilgili parçaları o segment üzerinden talep edebiliriz. Yani ilgili diziyi tek bir segment üzerinden daha rahat bir şekilde
+parçalayabiliriz. Bu durum bize yazılımsal açıdan bir efektiflik sağlayacaktır.
+
+int[] sayilar = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+
+ArraySegment<int> segment = new ArraySegment<int>(sayilar);
+
+ArraySegment<int> segment1 = segment.Slice(0,3); //integer türünde ArraySegment döndürür. 
+ArraySegment<int> segment2 = segment.Slice(4,7);
+ArraySegment<int> segment3 = segment.Slice(5,10);
+
+- Bu şekilde yapılan çalışmalarda belirli değer aralıklarını elimizdeki ana diziyi tutan/referans eden bir ArraySegment üzerinden dilimleyerek gerçekleyebiliriz.
+Kod maliyeti açısından da verimlidir.
+
+-----------------------
+
+StringSegment Türü Nedir?
+
+- String bir dizi olsa da yapısal olarak kendisine ait fonksiyonlar barındırdığı için, bunlardan kaynaklanan maliyeti absorbe edebilmek amacıyla
+String'e özel olan StringSegment'i kullanabiliriz.
+
+- Esasında metinsel değerlerdeki birçok analitik operasyonlardan bizleri kurtarmakta ve Substring vs. gibi fonksiyonlar yerine string değerde  hedef kesit üzerinde işlem
+yapmamızı sağlayan bir türdür.
+
+- StringSegment kullanabilmek için kütüphaneye ek bir paket yüklemek gereklidir.
+
+StringSegment Türü İle Dizinin Belli Bir Alanını Referans Etmek
+
+string text = "Ölüme gidelim dedin de mazot yok mu dedik.";
+StringSegment segment = new StringSegment(text);
+StringSegment segment1 = new StringSegment(text, 2, 5);
+
+System.Console.WriteLine(segment); //string segment direkt string'e dönüştürülebildiğinden CW'ile kullanılabilir.
+System.Console.WriteLine(segment1);
+
+Çıktı:
+
+Ölüme gidelim dedin de mazot yok mu dedik.
+üme g
+
+--------------------------
+
+StringBuilder Sınıfı Nedir? Ne Amaçla Kullanılır?
+
+string isim = "Alican";
+string soyisim = "Bonomo";
+
+Console.WriteLine(isim + soyisim); //işte bunlar hep maliyet.
+
+- StringBuilder, string birleştirme operasyonlarında + operatörüne nazaran  yüksek maliyeti absorbe edebilmek için arka planda StringSegment algoritmasını kullanan ve
+bu algoritma ile ilgili değerleri olabilecek en az maliyetler birleştirip döndüren bir sınıftır.
+
+StringBuilder kullanabilmek için Using System.Text'i eklemek lazım.
+
+StringBuilder builder = new StringBuilder();
+
+builder.Append(isim);
+builder.Append(" ");
+builder.Append(soyisim);
+
+Console.WriteLine(builder.ToString());
+

@@ -1,0 +1,165 @@
+C# Nedir?
+
+- Microsoft tarafından .NET çatısı altında geliştirilen ve gelişen modern bir açık kaynak programlama
+dilidir. 
+
+- Object oriented programming'i destekler. 
+- Orta seviyeli bir dildir. (c,c++,java,ADA)
+- C#, C++'ın bir üst versiyonudur. ++ zamanla #'a dönüşmüştür.
+- Java'dan etkilenmiştir.
+
+- C# ile WEB uygulamaları ve servisleri, Mobil, Konsol, Oyun, Servis mimarileri, ERP, DLL-... her şey geliştirilebilir.
+(Veri madenciliğinde Python tercih edilir)
+
+- Derlenen bir programlara dilidir.
+
+--------------
+
+.NET Microsoft'un developer'lar için sunduğu bir çatıdır. Bu çatının altında kişinin geliştirmek istediği uygulamaya lazım her şey bulunur.
+
+.NET Framework ilk çıkmıştır. Sadece Windows'a yönelik çözümler getirir. Microsoft bağımlıdır. Open source değildir.
+
+.NET Core ise cross platform'dur. Çeşitli işletim sistemlerinden uygulamaları destekler. Modüler'dir. Open source'dır.
+C# .NET Core'un bir alt koludur.
+
+--------------
+
+Compiler Nedir?
+
+- Yazdığımız kodun makinenin anlayabileceği koda derlenmesi lazım. Compiler arada bir katmandır. Bu işi yapar.
+- .exe de bu derleme sonucunda programı açmamızı sağlayan yazılım uzantısıdır. (DLL de benzer şekilde)
+
+deneme dosyasını derlemek için:
+
+using System;
+
+namespace ConsoleApp1
+{
+	class program
+	{
+		static void Main.....
+		{
+		Console.WriteLine("Merhaba Dünya");
+		Console.Read();
+		}
+}
+
+Developer command prompt ile dosyaları derleyebiliriz.
+cd C:.... ile ilgili dizine geliriz.
+csc deneme
+
+derlenir.
+
+.exe uzantılı dosya ekrana gelir ve Merhaba Dünya yazdırır.
+
+----------------
+
+Visual Studio Ortam Tanıtımı
+
+-Bir platform'dur. Çok yönlü bir editördür.
+-Solution explorer: Üzerinde çalıştığımız tüm dosyalar burada görülür.
+-Error list'de derleme hatalarımızı görürüz.
+
+- Proje: İçerisinde amaca dair çözümler getirilen kodsal çalışmaların-operasyanların yapıldığı bir bütündür.
+
+- Solution: İçerisinde bir veya birden fazla proje barındırabilen bir evrensel kümedir. 
+
+Bir banka uygulaması birden fazla alt projeden oluşabilir. Bu projelerin tek bir çatı altında toplanması solution'dur.
+
+---------------
+
+Create a new project diyip yeni bir proje oluşturabiliriz.
+
+Solution'a bir proje daha eklemek için solution'a sağ tıklayıp add project diyebiliriz.
+
+Solution'u derlersek altındaki her proje derlenir.
+
+Ya da sadece istediğimiz projeyi derleyebiliriz.
+
+Build - derleme yapar
+Rebuild - önceki derlenmiş dosyaları siler yeniden üzerine derler.
+Clean - Derlenmiş dosyaları siler.
+
+Build'a tıkladık dosya derlendi. Çıktıyı görmek için projeye sağ tıkla - open folder in file directory -> bin -> debug -> net5.0 'de derlemenin çıktılarını görebiliriz.
+Clean dersek bu dosyalar silinir.
+
+Eğer ki bir projeyi başlangıç projesi yapmak istersek sağ tıklayıp 'Set as Startup Project' dememiz gerekir.
+
+---------------
+
+Visual Studio Code Nedir?
+
+Daha hızlıdır. Zayıf sistemler için idealdir. 
+
+Explorer penceresinde proje dosyaları görülür.
+
+View - Terminal'de kendine ait dahili komut satırı vardır.
+
+Dotnet CLI: Bir komut satırı arayüzüdür. Kendi arayüzü yoktur, komut satırından talimatlarla çalışır. Bir proje oluştururken hangi dizinde oluşturduğunuza 
+dikkat edin! .NET Uygulamalrı geliştirmeyi, oluşturmayı, çalıştırmayı, yayınlamayı sağlar.
+
+cd C:\Users\acdem\Masaüstü\C#VSCode ile ilgili dizine girdik.
+
+dotnet --işlem ile ilgili SLI komutlarını çalıştırabiliriz.
+
+dotnet new console --name OrnekProje ilgili dizine OrnekProje isimli bir konsol uygulaması oluştur.
+           (projectType) --name ProjectName
+			MVC-WebAPI
+			
+.NET SDK'sı ile gelir. Geliştirme kitidir.
+
+Dotnet [command] prototipindedir.
+
+Temel SLI Komutları:
+
+- Help : Tüm komutların ayrıntılı bilgisini veren komuttur.
+- New : dotnet new [project type] --name [project name]
+	new --force ile aynı isimli projenin üstüne 'ezerek' bir proje oluşturulabilir.
+- Restore : Proje sürecinde referans edilen yahut referansı kaldırılan paketlerin restorasyonunu sağlar.
+	Önceden varolan ya da hazırlanmış paketleri, kütüphaneleri kendi uygulamamızda kullanmak için çekmemiz lazım.
+	Bu paketleri uygulamaya yükleyebilmek için restore etmemiz gerekir.
+	dotnet restore ile kullanılır. NuGet havuzu kullanılır.
+- Build
+	Bir projeyi derleyebilmek için varsayılan olarak bir restore işlemine tabi tutulur.
+	Projeyi derler ve sonuç olarak exe dll çıktıları verir.
+	\bin\Debug\net5.0 dizinine çıktı verir.
+- Publish
+	Projeyi derleyerek, yayınlanabilir hale getirir. Public hale getirmeye yarar. 
+	\bin\Debug\net5.0\publish dizinine çıktı verir. Çıktı olarak;
+	.dll
+	.deps.json(projenin tüm bağımlılıklarını(dependency-bir uygulama başka bir uygulamayı-kütüphaneyi kullanıyorsa bu bağımlılıkları referanslayan bir dosya verecektir) içerir.
+	.runtimeconfig.json(runtime konfigürasyonları)(Uygulama bağımlılıklarının dll'leri)
+	dotnet publish komutu.
+- Run
+	dotnet run : derler ve ayağa kaldırır. Çalıştırır.
+	dotnet run --no-build : derlemeden ayağa kaldırır.
+	
+----------------
+
+Proje Modifikasyon Komutları;
+
+reference: önceden yazılmış .dll'lerdir.
+NuGet havuzundaki .dll'lere ise paket-package denir.
+bir yazılımı başka bir yazılım kullanacaksa çıktısı .dll
+kullanıcı kullanacaksa çıktısı .exe'dir
+
+add package : dotnet add package ilgilikütüphaneismi
+
+add referance : dotnet add [source project].csproj reference [target project].csproj
+-uygulamaya fiizksel bir dll dosyasını referans etmemizi sağlar.
+dotnet add myproject.csproj referance ../ornekproje/ornekproje.csproj
+myproject de örnek projedeki dll'i referans olarak al. Onun dll'inin çıktısını burada kullan.
+
+remove package : dotnet remove package [package name]
+
+remove referance : dotnet remove reference [reference name]
+
+list referance : dotnet list reference 
+Bir uygulamada referans edilen tüm paketleri listeler.
+
+
+
+
+
+
+

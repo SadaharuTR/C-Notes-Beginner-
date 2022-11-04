@@ -1,0 +1,280 @@
+Akış Kontrol Mekanizmaları Nelerdir Ne Amaçla Kullanılırlar?
+
+- Akış kontrol mekanizmaları, kodun akış sürecinde belirli şartlara göre farklı yönlendirmeleri yapmamızı ve farklı 
+algoritmaları/kodları/yapılandırmaları çalıştırmamızı sağlayan mekanizmalardır.
+
+- Yazılım kodunun akış süreciden şarta göre yönlendirilmesini sağlamaktadır. Algoritmalarda ciddi manada kullanılan yapılardır.
+Olmazsa olmazdır.
+
+- Akış kontrol mekanizmalarında if-else veya switch yapılanmaları aynı işi farklı şekilde yapmamızı sağlayan
+birbirlerinden farklı yapılanmalardır. İkisi arasında teknik olarak fark olsa da işleyiş/kullanım açısından bir fark yoktur.
+
+
+Switch Case Yapılanması
+
+- Kodun akışında belirli bir şarta göre yönlendirme yapmamızı(farklı algoritme çalıştırmamızı ya da farklı operasyon
+gerçekleştirmemizi/tetiklememizi) sağlayan yapılanmadır.
+
+- Bu yapılanma sadece bir değişkenin değerinin sadece eşitlik durumlarını kontrol ederken kullanılabilir.
+
+switch (süreçte eşitlik durumu kontrol edilecek değer)
+
+{
+	case value1 : 
+	
+	
+	break;
+	// switch yapılanmasında verilen değerin eşitlik durumlarını kontrol edeceğimiz diğer değerleri case bloklarına bu şekilde yerleştiriyoruz.
+	// : case value belirtildikten sonra kalıpsal olarak burada kullanılmalıdır.
+	case value2 :
+	
+	
+	break;
+	//case ile break arasına yazılan kodlar ilgili case'in doğrulanması sürecinde işlenecek kodlardır.
+	.
+	.
+	.
+	
+	default:
+	//hiçbir case eşitlik durumunu sağlayamıyorsa default break arasındaki kodlar çalıştırılacaktır. Zorunlu değildir.
+	break;
+}
+
+- Switch case yapılanmasında kontrol edilen değer ile eşitlik sağlayan case varsa diğer case'lere bakmaksızın switch bloğundan çıkılacaktır.
+Amaç eşitlik durumuna göre belirli bir kod grubunu tetiklemektir.
+
+Örnek:
+
+string adi = "Ahmet";
+
+switch (adi) //kontrol edilen değerin türü neyse case bloklarında da aynı türde değerde kontrol edilmelidir.
+			 //Switch bloğunda kontrol edilen değer bir değişken yahut sabit ya da statik bir değer olabilirke,
+{
+	case "Mehmet": //case bloklarındaki değerler kesinlikle sabit/statik olmak zorundadır.
+		CW("Adı Mehmet.");
+		break;
+	case "Ayşe": //case bloklarındaki değerler değişkenlerden alınamaz.
+		CW("Adı Ayşe.");
+		break;
+	case "Hilmi": //case bloklarının sıralaması da önemli değildir.
+		CW("Adı Hilmi.");
+		break;	
+	default: //şart değil varsa tetiklenir. Blok içerisinde herhangi bir yere de yazılabilir
+		CW("Hiçbiri değil.);
+		break;
+}
+
+//Eşleşmeyi bulur bulmaz switch bloğundan çıkacaktır(compiler). Diğer case'lere bakmaz.
+
+------------------------
+
+Akış Kontrol Mekanizmaları - Switch Case'de When Şartı
+
+- Switch yapılanmasında sadece elimizdeki değerin eşitlik durumunu kontrol edebilmekteyiz. Bunun dışında bu kontrol esnasında farklı şartları da değerlendirmek 
+istersek when keyword'ünü kullanabiliriz.
+
+switch(satisTutari)
+{
+
+	case 100 when (___şart___): // satisTutari hem 100'e eşit mi hem de şart doğru mu diye kontrol ediyoruz.
+	
+	break;
+}
+
+Örnek:
+
+int satisTutari = 1000;
+
+switch(satisTutari)
+{
+
+	case 1000 when (3 == 5): // satisTutari 1000 ise VE 3 == 5 ise dediği için buraya girmez.
+	
+	break;
+	
+	case 1000 when (3 == 3): // 1000 VE 3 == 5 true olduğu için buraya girer.
+	
+	break;
+}
+
+Akış Kontrol Mekanizmaları - Switch Case'de goto Keyword'ü
+
+- switch case yapılanmasında sadece eşitlik durumunu inceleyebildiğimiz için mantıksal bir işlem gerçekleştiremeyiz.
+Dolayısıyla bazen farklı değerlere eşit olma durumunda aynı operasynu/kodu/akışı kullanacağımız senaryolarla karşılaşabilmekteyiz.
+
+switch(value)
+{
+	case "a":
+		A işlemini uygula
+		break;
+	case "b":
+		B işlemini uygula
+		break;
+	case "c":
+		A işlemini uygula //aynı kodu yazdık! olmaz.
+		break;
+		.
+		.
+}
+
+- Farklı eşitliklerde aynı kodu çalıştıracaksak eğer kod tekrarına girmemek için goto keyword'ü ile "şu case'deki kodu çalıştır." diyebiliyoruz.
+Case'ler arasında zıplama yapabiliyoruz.
+
+Örnek:
+
+int i = 10;
+
+switch(i)
+{
+	case 5:
+		CW(i*10);
+		break;
+		
+	case 6:
+		CW(i/5);
+		break;
+		
+	case 7:
+		goto case 5; // break'i kaldır. case'deki kodu çalıştır. goto varsa break'i kulanmayız.
+		
+	case 10:
+		CW(i*10);	 // kod tekrarını çözmek için case'deki gibi yapabiliriz.
+		break;
+		//goto keyword'nün kullanıldığı case'in eşleştirmesine bakmaksızın direkt kodunu çalıştıracaktır.
+}		
+
+- Birden fazla aynı case'e yönlendirilen goto keyword'ünü kullanmak için;
+
+.
+.
+case 7:
+case 10:
+		goto case 5; //her ikisinden biri olduğu durumda case 5'e yönlendir. case 7 veya case 10'sa 5'e yönlendir.
+}		
+
+---------------------
+
+C# 8.0 Switch Expressions Nedir?
+
+- Tek satırlık işlemler için maliyet düşürücü ve kullanışlı semantiklerdir.
+
+Örnek:
+
+// ESKİ YÖNTEM
+
+string isim = "";
+int i = 10;
+
+switch (i)
+{
+	case 5:
+		isim = "Hilmi";
+		break;
+	
+	case 7:
+		isim = "Ahmet";
+		break;
+	
+	case 10:
+		isim = "Mahmut";
+		break;
+}
+
+// YENİ YÖNTEM
+
+int i = 10;
+
+string isim = i switch 
+{
+	5 => "Hilmi", // => ise 
+	7 => "Ahmet",
+	10=> "Mahmut"
+};
+
+// Yeni yöntemle çok daha az maliyetli oldu.
+
+C# 8.0 Switch Expressions - when Şartı Uygulamak
+
+int i = 10;
+
+string isim = i switch 
+{
+	5 when ___şart___=> "Hilmi", // => ise 
+	7 when 3 == 3 => "Ahmet", //bu şekilde de yapılabilir ya da
+	var x when x == 10 && x%2 == 1 => "Mahmut", //bir değişken tanımlayıp bir condition ile VE'leyerek kullanabiliriz. i'yi var yerine int ya da kendi türünü 
+												//karşılayan bir değişkenle de karşılayabiliriz.
+	
+	var x => "Hiçbiri" // hiçbir eşleştirmenin olmadığındaki default tanımlamasına karşılık gelecektir.
+};
+
+----------------------------
+
+C# 8.0 Switch Expressions - Tuple Patterns
+
+- Tuple patterns ise switch yapılanmasını Tuple nesnelerini kontrol edebilecek şekilde hem standart hem de yeni yapılanmayla bizlere sunmaktadır.
+
+Örnek:
+
+// ESKİ-YENİ YÖNTEM
+
+int s1 = 10;
+int s2 = 20;
+string mesaj = "";
+
+switch(s1,s2)
+{
+	case(5,10):
+		mesaj = "5 ile 10 değerleri";
+		break;
+		
+	case(10,20):
+		mesaj = "10 ile 20 değerleri";
+		break;
+}		
+
+Console.WriteLine(mesaj));
+}}}
+
+//DAHA YENİ YÖNTEM
+
+int s1 = 10;
+int s2 = 20;
+string mesaj = (s1,s2) switch
+{
+	(5,10) => "5 ile 10 değerleri",
+	(10,20)=> "10 ile 20 değerleri" //sonuncuya virüle gerek yok.
+};
+
+Console.WriteLine(mesaj));
+}}}
+
+C# 8.0 Switch Expressions - Tuple Patterns when Şartı Uygulamak
+
+Örnek:
+
+int s1 = 10;
+int s2 = 20;
+string mesaj = (s1,s2) switch //tuple'ın türü birden fazla değişkenin bir araya gelmesiyle oluştuğu için ortak bir türle karşılanmıyor.
+{
+	(5,10) when (true) => "5 ile 10 değerleri", //ile yapabiliriz ya da
+	var x when x.s1 % == 1 || x.s2 == 10 => "s1'in 2 modu 1 olduğunda ve s2'nin değeri 10 olduğunda." // var kullanmak daha iyi. tuple çünkü.
+};
+
+Console.WriteLine(mesaj));
+}}}
+
+-------------------------
+
+C# 8.0 Switch Expressions - Positional Patterns ve when Şartının Kullanımı
+
+- Positional Patterns ise Deconstruct özelliği olan nesneleri kıyaslamak yahut değersel karşılaştırmak için kullanılan bir gelişimdir. (ileride OOP'de)
+- _ => alt tire ise hiçbiri anlamına gelmektedir.
+- Yine aynı şekilde ise'den önce ya da değişken ile kullanırız. (bunların hepsi ileride sakin!)
+
+------------------------
+
+C# 8.0 Switch Expressions - Property Patterns
+
+- Nesnenin propertylerine girerek belirli durumları hızlı bir şekilde kontrol etmemizi gerçekleştiren ve bunu farklı değerler için birden fazla kez tekrarlı bir
+şekilde yapmamıza olanak sağlayan güzel bir gelişimdir. (bu da OOP'de daha detaylı.)
+- when şartı da her zamanki gibi.

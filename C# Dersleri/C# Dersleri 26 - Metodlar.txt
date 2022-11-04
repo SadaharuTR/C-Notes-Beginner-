@@ -1,0 +1,550 @@
+Metot nedir?
+
+- Yöntem, yordam, function...
+- Yazılımda fiili olarak gerçekleştirdiğimiz tüm operasyonlar bir metot'dur.
+- Metot, prosedürel programlamanın temel elemanıdır. Bir iş/fiiliyat/operasyon yapan en küçük program parçacıklarıdır.
+
+- Metot'lar tekrara düşmemizi önler.
+
+int[] sayilar = new int[10];
+for (int i = 0; i < sayilar.Length; i++)
+{
+	sayilar[i] = new Random().Next();
+}
+foreach (var sayi in sayilar)
+{
+	System.Console.WriteLine(sayi);
+}
+
+//Aynı kodu 3 kere çalıştırmak istiyorsak; kodu üç kere alt alta yazabiliriz. 3 kere dönen bir for loop'una alabiliriz...
+
+Ya da tekrar eden kodu metot'a alabiliriz. Ve ihtiyaç anında istediğimiz kadar çağırabiliriz.
+Böylece tekrarı önleyip ideal kodlamaya ulaşabiliriz.
+
+Metot Anatomisi Nasıldır? Metot İmzası nedir?
+
+- Metot'lar sınıf elemanıdır. Sınıf/class içerisinde çalıştırmamız gerekir.
+
+namespace OrnekProje
+{
+    class Program
+    {
+	//Burada bir metot oluşturulabilir.
+        static void Main(string[] args) //main'de bir metot'dur.
+        {
+            //Şimdilik metot içerisinde metot oluşturamıyoruz diye kabul edelim. (ileride local functions konusunda) 
+        }
+	//Burada da oluşturulabilir.
+    }
+}
+
+---------------------
+
+[erişim belirleyicisi/access modifier] [geri dönüş değeri] [Metotun adı] () //bu kısım metodun imzasıdır.
+{
+//burası ise gövdesi olarak geçer.
+}
+
+- Erişim belirleyicisi/access modifier'lar ileride göreceğimiz yapılardır. Oluşturulmuş olan bir yapının(illa ki metot olmasına gerek yok) dışarıdan erişilip
+erişilmeyeceğini belirtmemizi sağlayan komutlardır. Daha da detaylandırılacak.
+
+public : Erişilsin
+private : Gizli/erişilmesin (default)
+
+- Metot'lar yaptıkları operasyonlar/algoritmalar/işlemler neticesinde geriye değerler dönebilir. Bu değer kodun içerisinde yakalanabilir ve programlamatik olarak
+işleme tabii tutulabilir. Geri dönüş değerini ekran çıktısı ile karıştırmamak gerekir. 
+
+- Metot'larda diğer yapılarda olduğu temel isimlendirme kurallarına uymak kaydıyla, isimlendirilebilir. Rakamla başlayamama, özel karakter vs..
+
+- () ise Metot dediğimiz yapılanmalar dış dünyadan parametreler alabilmekte ve bu parametrelerdeki değerler üzerinde işlemler gerçekleştirebilmektedir.
+İşte bu parametreleri parantez içerisinden alabilmekteyiz. Bir metot illa ki parametre almak zorunda değildir. Ama alacaksa türü/cinsi belirtilmelidir.
+
+- {scope} ise Metot'un gerçekleştireceği operasyonu/algoritmayı oluşturduğumuz faaliyet alanıdır.
+
+static void Main(string[] args) //main'de bir metot'dur. 
+//İşaretleme olmadığı için private. Geri dönüş değeri void, yani olmayan. Main adlı (string[] args) parametresi alan bir metot'dur.
+
+-------------
+
+İşlevine Göre Metot Türleri Nelerdir?
+
+- Yapılacak işleme göre 4 farklı varyasyonda fonksiyon oluşturabiliriz.
+
+1) Geriye Değer Döndürmeyen, Parametre Almayan
+2) Geriye Değer Döndürmeyen, Parametre Alan
+3) Geriye Değer Dönen, Parametre Almayan
+4) Geriye Değer Dönen, Parametre Alan
+
+-------------------
+
+Geriye Değer Döndürmeyen, Parametre Almayan Metotlar
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) //main'de bir metot'dur. İşaretleme olmadığı için private. Geri dönüş değeri void, yani olmayan. Main adlı (string[] args) parametresi alan bir metot'dur.
+        {
+            
+        }
+
+    //[erişim belirleyicisi/access modifier] [geri dönüş değeri] [Metotun adı] (......)
+    //{
+
+    //}
+
+    //Geriye Değer Döndürmeyen, Parametre Almayan Metotlar
+
+    //bir metot geriye değer döndürmüyorsa bunun void ile döndürülmesi zorunludur.
+
+    private void Metot1()  //private ya da public oluşuyla bir alakası yok. İstersen public yap.
+    {
+        System.Console.WriteLine("Geriye değer döndürmeyen, parametre almayan metot oluşturuldur.");
+    }
+    }
+}
+
+Geriye Değer Döndürmeyen, Parametre Alan Metotlar
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            
+        }
+
+    //[erişim belirleyicisi/access modifier] [geri dönüş değeri] [Metotun adı] (......)
+    //{
+
+    //}
+
+    //Geriye Değer Döndürmeyen, Parametre Alan Metotlar
+    public void Metot2(int a) //parametreler bildiğimiz değişkenlerdir.
+    {
+
+    }
+    public void Metot3(int a, bool b) //oluşturduğumuz parametre değerlerine metodun scope'undan erişebiliriz.
+    {
+        // a değeri metod3'ün parametresinin a'sıdır.
+    }
+    public void Metot4(int a, bool b, char c) //sınırsız sayıda parametre değeri girilebilir.
+    {
+        
+    }
+    //Bir "değişken" metodun parametre kısmında tanımlanıyorsa parametre, bu "değişken" class'ın içinde ya da metodun içinde tanımlanıyorsa değişken denilecektir.
+    //hatta OOP'de class içerisinde tanımlanan değişkenlere field denilecektir.
+    }
+}
+
+Geriye Değer Döndüren, Parametre Almayan Metotlar
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            
+        }
+
+    //[erişim belirleyicisi/access modifier] [geri dönüş değeri] [Metotun adı] (......)
+    //{
+
+    //}
+
+    private char Metot5() //eğer ki bir metot geriye herhangi bir türde değer döndüreceğini ifade ediyorsa kesinlikle o türde bir değer döndürmelidir. Aksi takdirde hata verir.
+    {
+        //....bişiler....bişiler
+
+        return 'a'; //geriye değer döndüren fonksiyonlarda, bildirilen türde bir değer döndürebilmek için return keyword'ü gerekmektedir.
+    }
+    //return keyword'ü nerede tetiklenip işlenirse orada ilgili fonksiyondan çıkılır.
+    private int Metot5()//hata
+    {
+        if(DateTime.Now > 10) //hata verir. Çünkü false olduğu durumlarda da geriye bir değer döndürmesi lazım.
+            return 5; 
+        //return 123; 'ü eklersek hata ortadan kalkar.    
+    }
+	char metod7() //de yazılabilir. Default olarak private olacaktır.
+	{
+		return 'b';
+    }
+}
+
+Geriye Değer Döndüren Parametre Alan Metotlar
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            
+        }
+
+    //[erişim belirleyicisi/access modifier] [geri dönüş değeri] [Metotun adı] (......)
+    //{
+
+    //}
+    public bool  Metot8(int x) 
+    {
+       return false;
+    }
+    
+    public int Metot9(int x)
+    {
+        return DateTime.Now.Year > 2000 ? 1 : 0 ; //şimdiki yıl 2000'den büyükse 1 değilse 0 dön. 
+    }
+    }
+}
+
+Metodun Geriye Değer Döndürmesi Ne Demektir?
+
+- Bir metodun geriye değer döndürmesi demeki içeride yapılan işlem neticesinde üretilen sonuçların ekrana yazılması demek değildir.
+
+- Metodun geriye döndürdüğü değer, programatik olarak yakalanıp algoritmaları akışında farklı yönlendirmelere sebebiyet verebilen değerdir.
+Yani bu değer algoritmanın akışında kullanılabilir değerdir.
+
+Örnek: //kurcalayalım.
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            bool sonuc = PersonelEkle("Rıfkı", "Conocan", 25);
+            if (sonuc)
+            {
+             .....  
+            }
+            else
+            {
+             .....   
+            }
+        }
+        static public bool PersonelEkle(string adi, string soyadi, int yas)
+        {
+            if (yas >= 20)
+            {
+                //..veritabanına ekle mesela
+                return true;
+            }
+            else
+            {
+                System.Console.WriteLine("Personel 20'den küçük olamaz.");
+                return false;
+            }
+        }
+        static public int Topla(int sayi1, int sayi2) //main'de erişebilmek için static yaptık.
+        {
+        int sonuc = sayi1 + sayi2;
+        System.Console.WriteLine(sonuc);//ekrana verilen çıktı geriye dönülen değer demek değildir.
+        return sonuc;
+        }   
+    }
+}
+
+Metotlarda Optional Parameters(İsteğe Bağlı Parametreler)
+
+- Parametreli bir metot kullanılırken/çağrılırken/tetiklenirken parametrelerine, türlerine uygun değerler gönderilmek zorunludur.
+Eğer ki bir metodun parametrelerine zorunlu bir şekilde değer göndermek istemiyorsak, parametreye değeri isteğimize göre/opsiyonal olarak göndermek istiyorsak, 
+o parametrenin bu durumu karşılayabilecek özellikte olması gerekmektedir. İşte bu özelliğe opsiyonel parametreler denmektedir.
+
+- Bir parametrenin opsiyonel olması demek o parametrenin varsayılan/default değeri olması demektir.
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            X(15,20); //b'yi gönderedebiliriz, göndermeyedebiliriz.
+			X(5); //de yapılabilir artık. b opsiyonel. 0 varsayılan değeri alınacak.
+        }
+        static public void X(int a, int b = 0)  //metot parametrelerine = assign operatörü ile bir değer atanırsa eğer o parametreye varsayılan değeri atanmış olur. Haliyle opsiyonel parametre haline getirilmiş olunur.
+        {
+        //a opsiyonel değil, b opsiyonel oldu.
+        }
+    
+    }
+}
+
+//static public void X(int a = 5, int b = 0) //hem a hem b'de opsiyonel yapılabilir. 
+//o zaman da X(); olarak kullanabiliriz.
+
+//Birden fazla parametre durumunda opsiyonel olanlar sağ tarafta TANIMLANMALIDIR!
+//static public void X(int a = 5, int b) -> olmaz! 
+
+//static public void X(int a, int b = 0, int c = 0) ->olur!
+
+//static public void X(int a, int x, int y, int b = 0, int c = 0) -> olur!
+
+//static public void X(int a, int x, int b = 0, int y, int c = 0) -> olmaz!
+
+--------------------------
+
+Tanımlanmış Metodun Kullanımı - Tanımlandığı Sınıf İçerisindeki Metotlar Tarafından Kullanımı
+
+- Bir metot tanımlandığı sınıf içerisindeki farklı bir metot içerisinden çağrılacaksa eğer tek ypaılması gereken sadece isminin çağrılmasıdır.
+
+class Program
+    {
+        static void Main(string[] args) 
+        {
+            X();
+        }
+        static void X()        
+        {
+            
+        }
+    
+    }
+	
+class Ornek
+{
+    public void A()
+    {
+        B();
+    }
+
+    private void B()
+    {
+        C(5);
+    }
+    private int C(int a = 0)
+    {
+        return a;
+    }
+}
+
+--------------------------
+
+Başka Sınıfta Tanımlanmış Metotların Erişimi-Referans ve Nesne İlişkisi
+
+- 3 bir int'dir. Ahmet bir string'dir.
+
+Adi, Soyadi ,yas, medeniHal, gozRengi...vs... hepsi bir Nesne'yi oluşturur. Karmaşık değerlerin bütünü, Nesne'leri oluşturmamızı sağlayan yapının adı da class'tır.
+
+- Class Model ise, Nesne Class'ın verisidir.
+
+class Ogrenci
+------------------
+string adi;      |
+string soyadi;   |
+int yasi;    	 |
+int sinif;       |
+------------------
+
+- Bir öğrenciyi modelledik. Bir çğrenci tek başına adi ya da yasi değil ama bunların bir araya gelmiş halidir.
+
+Bu modelden bir adet nesne oluşturalım. 
+
+adi = "Ahmet";
+soyadi = "Yılmaz";
+yasi = 20;
+sinif = 3;
+
+Class'tan bir değer oluşturduk, ve kompleks değere Nesne-Object dedik. Bu nesne bizim kompleks değerimizin verisidir.
+
+İstediğimiz kadar oluşturabiliriz. Mehmet için de oluşturalım.
+
+adi = "Mehmet";
+soyadi = "Yıldız";
+yasi = 21;
+sinif = 2;
+.
+.
+.
+public void X() //bu metotlarla bu class'ın içini istediğimiz gibi manipüle edebiliriz.
+{
+}
+
+Bu nesnelerin içerisinde değerler olduğu gibi metotlar da olabilir.
+
+Farklı class'larda oluşturulmuş metotlara erişebilmemiz için o sınıflardan nesne oluşturmamız gerekiyor. Bunu da new keyword'ü ile yaparız.
+
+Type isim = new Type() gibi.
+
+Random r = new Random(); 'da kullanmıştık. Random sınıfı üzerinde işlem yapabilmek, onun metotlarına erişebilmek için bir nesne oluşturuyoruz.
+new diyerek Random'dan bir nesne oluştur. Bu nesneye rahat bir şekilde erişebilmek için bu nesneyi aynı türde bir değişkenle işaretle.
+
+Random türünde r diye bir değişken oluşturduk ardından new ile Random() yazarak Random türünde bir nesne oluşturduk ve r değişkeni üzerinden bu nesne içerisindeki metotlara
+erişilebilir vaziyette bir nesne elde etmiş olduk.
+
+- Referans oluşturulan nesnenin işaretlenmesini sağlayıp o nesneye de benim erişmemi sağlayan bir değişkendir.
+
+- İleride OOP dersinde hepsi detaylandırılacak.
+
+Özet:
+
+Sınıf - Class : Yeryüzündeki herhangi bir olguyu modellememizi sağlayan yapılanmadır. İçerisinde ilgili olguya dair verileri tutacak alanları(field) barındıran ve
+bu alanlar üzerinde işlem yapmamızı sağlayacak olan metotları barındıran bir yapı.
+
+Nesne : Class'tan üretilen değer/veri. 
+
+Referans : Class'tan üretilen değeri kullanmamızı sağlayan yapı.
+
+class A
+
+public void X()
+{
+}
+
+-> Bu class'tan X metoduna erişmek istiyorsak, 
+
+A a      = new A();
+referans - nesne (object)
+//bu class'tanbir değişken oluştur. Ve bu değişkenin karşılığı olarakta ilgili class'tan new operatörü ile bir nesne oluştur.
+
+//= de artık assign değil referans etme operatörüdür.
+
+Erişmek istiyorsak A a      = new A(); yapısının olduğu her yerde a.X ile erişebiliriz. (public ise.) 
+
+-------------------
+
+Başka Sınıfta Tanımlanmış Metotların Erişimi
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            //Başka Sınıfta Tanımlanmış Bir Metodun kullanımı
+            Matematik matematik = new Matematik(); //Matematik türünde matematik isminde bir referans oluşturduk. = Matematik türünde bir nesne oluşturduk.
+            //oluşturulan bu nesneyi Matematik türündeki matematik referansı ile işaretledik.
+            System.Console.WriteLine(matematik.Carp(3,5)); //public olmsaydı erişemezdik.
+        }
+    }
+    class Matematik
+    {
+        public int Topla(int sayi1, int sayi2)
+        {
+            return sayi1 + sayi2;
+        }
+        public int Cikar(int sayi1, int sayi2)
+        {
+            return sayi1 - sayi2;
+        }
+        public int Carp(int sayi1, int sayi2)
+        {
+            return sayi1 * sayi2;
+        }
+        public int Bol(int sayi1, int sayi2)
+        {
+            return sayi1 / sayi2;
+        }
+    }
+}
+
+------------------------
+
+Metotlarda Non Trailing Named Arguments Özelliği
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            X(3, 5, "abc"); //normalde sıraya uygun olmak zorunda. Ama sıraya uymamak istiyorsak;
+            //Non-Trailing Named Arguments özelliğini kullanabiliriz.
+
+            X(c:"abc", a:5, b:5); //gibi istediğimiz sırada değer gönderebiliriz.
+            
+            //karışıklığa sebep olmaması için bu özellik kullanılıyorsa tüm parametreler için kullanılmalı.
+            //hangi parametreye hangi değeri gönderdiğimizi görmek için faydalıdır.
+            //göreceli bir şekilde çok parametreli fonksiyonlarda hedef parametrelere değer göndermemizi sağlar.
+        }
+
+        static void X(int a, int b, string c)
+        {
+
+        }
+    }  
+}
+
+-------------------------
+
+Metotlarda In Parametreleri (C# - In Keyword'ü)
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+           //1) Parametrenin değerini metodun içerisinde herhangi bir yerde çağırıp kullanabiliriz.
+           //2) metot içerisinde üretilen herhangi bir değeri tutacak değişken oluşturmaktansa parametre üzrinde bu değeri tutabiliriz.
+           //yani parametrenin değerini değiştirebiliriz. Çünkü parametreler özünde bir değişkendir.
+
+           //In komutu sayesinde parametreye verilen değeri sabi tutabilmekteyiz.
+           //In komutu metodun parametresini readonly hale getirir.
+        }
+
+        static void X(in int a, int b, in char c) 
+        {
+            a = 123; //derleyici hatası! -in- dediğimiz için değişmez.
+            b = 12;  //sıkıntı yok. çalışır.
+            c = 'c'; //sıkıntı büyük! in char! olmaz.
+        }
+    }
+    
+}
+
+--------------------------
+
+Local Functions(Metot İçerisinde Tanımlanabilir Yerel Metotlar)
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            X();
+           //Local Functions
+           //Bir metot içerisinde tanımlanmış olan metotlardır.
+
+           //C#'da metotlar sadece class içerisinde tanımlanırlar diye belirtmiştik. Halbuki OOP'de göreceğimiz
+           //struct, abstract class, interface, record yapılanmalarında da metotlar tanımlanmaktadır.
+           //metotlar bu saydıklarımızın dışında kesinlikle başka bir yerde tanımlanamaz.
+
+           //metotlar kesinlikle metotların içerisinde tanımlanamaz demiştik! Yalan!
+           //C#'da gelen local function özelliği sayesinde metot içerisinde metot tanımlanabilmektedir.
+
+           //Erişim belirleyicisi, tanımlanmış metodun tanımlandığı sınıf dışından erişilememesi durumunu belirler.
+           
+           //Local function'larda erişim belirleyicileri yoktur. Direkt geri dönüş değerinden başlanır.
+            
+        }
+
+        public static int X() //Local function olarak tanımlanan fonksiyon adı, tanımlandığı fonksiyonun adındna farklı olmalıdır! Derleyici hatası vermez! (Ezme durumu olur-Recursive fonksiyonlarla karışır.)
+        {
+            Y();
+            void Y() //X fonksiyonu içerisinde sadece X'ten erişilebilecek bir Y fonksiyonu tanımlamış olduk.
+            {
+                System.Console.WriteLine("Merhaba");
+                //Kullanım Kuralları
+                //-Bir local function sadece tanımlandığı metodun içerisinde kullanılabilir.
+                //-Local function'lar tanımlandığı metodun içerisinde her yerden erişilebilir.   
+            }
+            Y();
+			
+		return 0;
+        }
+    }    
+}
+
+- Local function, sadece tek bir metotta tekrarlı bir şekilde kullanılacak bir algoritmayı/kod parçacığını/işlemi o metoda özel bir şekilde tek seferlik tanımlamamızı ve
+kullanmamızı sağlamaktadır.
+
+- Local function muadilleri: Anonim, Delegate, Func.
+
+----------------------
+
+
+

@@ -1,0 +1,133 @@
+Recursive(Tekrarlamalı/Özyinelemeli) Metotlar
+
+- Kendi içerisinde kendisini tetikleyen/çağıran fonksiyonlardır.
+
+- Recursive Fonksiyonlar, bir yaklaşımdır. Anlaşılması, kullanılması ve anlatılması zordur!
+
+- Öngörülemeyen, derinliği tahmin edilemeyen, sonu bilinmeyen durumlarda tercih edilebilir.
+
+Örnek:
+
+X();
+
+void X()
+{
+    System.Console.WriteLine("Merhaba");
+    X();
+}
+
+//Sonsuza kadar ekrana Merhaba yazar.
+
+Örnek:
+
+X();
+
+void X()
+{
+    System.Console.WriteLine("Merhaba");
+    X();
+    System.Console.WriteLine("Dünya");
+}
+
+//Dünya'yı yazdırmaz. Yine sonsuza kadar Merhaba yazdırır.
+
+Örnek:
+
+//Recursive Fonksiyonlarda kontrolü parametreler ile sağlayabiliriz.
+
+//3 kere Merhaba yazsın istersek;
+
+X();
+
+void X(int a=1)
+{
+    System.Console.WriteLine("Merhaba");
+    if (a < 3)
+    {
+        X(++a); //++a öncelik olarak a ' yı artırıyor ve X'e parametreyi artmış olarak gönderiyor a++ öncelik olarak a ' yı X'e gönderiyor ve a hiç artmadan tekrar X method'u 
+				//çalışıyor ve sonsuz döngü oluyor.
+    }
+}
+
+Çıktı:
+
+Merhaba
+Merhaba
+Merhaba
+
+Örnek:
+
+//3 kere Merhaba 3 kere Dünya yazalım.
+
+X();
+
+void X(int a = 1)
+{
+    System.Console.WriteLine("Merhaba");
+    if (a < 3)
+    {
+        X(++a);
+    }
+    System.Console.WriteLine("Dünya");
+}
+
+Çıktı:
+
+Merhaba
+Merhaba
+Merhaba
+Dünya
+Dünya
+Dünya
+
+Örnek:
+
+//Döngülerin kullanıldığı her noktada recursive fonksiyonlar kullanılabilir. Ama terse her zaman geçerli değildir.
+
+//Belirli değer aralığındaki 5'in katı olan tüm sayıları toplayan recursive fonksiyon'u yazalım.
+
+System.Console.WriteLine(Topla(10,20));
+
+int Topla(int baslangic, int bitis)
+{
+    if(baslangic % 5 == 0 )
+        return baslangic + Topla(++baslangic, bitis);
+    if(baslangic < bitis)
+        return Topla(++baslangic, bitis);
+    return 0; //toplama işleminde etkisiz eleman.
+}
+
+Çıktı:
+45
+
+Örnek:
+
+//Bir klasör dizisindeki bütün dosyaları getirelim.
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+List<FileInfo> files = DosyaYazdir("D:/İndirilenler/Video"); 
+    foreach (FileInfo file in files)
+    {
+        System.Console.WriteLine(file.FullName); //bunları da foreach ile ekrana yazdıralım.
+    }
+List<FileInfo> DosyaYazdir(string path) //hangi klasörlerini araştırdığımızı path'den öğrenelim
+{
+    List<FileInfo> fileInfos = new();
+    DirectoryInfo directoryInfo = new(path); //DirectoryInfo ile bütün klasör bilgilerini alalım.
+    DirectoryInfo[] directoryInfos = directoryInfo.GetDirectories(); //GetDirectories dosyaların içerisindeki directory'leri döner.
+	//DirectoryInfo dizisi ile bütün directoryInfo'ları aldık.
+	//hangi dosyanın içerisinde kaç klasör var bilmiyoruz, o yüzden recursive kullanmak lazım.
+	
+    if(directoryInfos.Any()) //bu directory içerisinde başka directory var mı? Başka bir klasör varsa bunu bilmek için if'ledik.
+        foreach(DirectoryInfo directory in directoryInfos)//eğer varsa foreach ile directoryInfo'larda biz gezin. Eğer ki bu klasörlerin içinde başka klasörler varsa o klasörlere tek tek git.
+            fileInfos.AddRange(DosyaYazdir(directory.FullName));//Her DosyaYazdir'da recursive olacak bunu yaparken FileInfos'a AddRange diyerek geriye dönen dosyaları da topla.
+			//ta ki bunların hepsi DosyaYazdir'dan getirilene kadar.
+    else //dibine kadar gittikten sonra en son bir tanesinin alt klasörü olmayacak.
+        fileInfos.AddRange(directoryInfo.GetFiles()); //eğer klasör yoksa var olanları topla, bunları List'e ver geriye döndür.
+    return fileInfos;
+}

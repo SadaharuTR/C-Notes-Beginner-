@@ -1,0 +1,404 @@
+Akış Kontrol Mekanizmaları - if Yapısı
+ 
+- Switch case elimizdeki bir değerin sadece eşitlik durumnu check eden,kıyaslayan bir akış kontrolüydü.
+
+- if yapılanması ise elimizdeki bir değerin eşitlik durumu da dahil bütün karşılaştırmaları yapmamızı ve duruma göre
+akışı yönlendirmemizi sağlayan bir yapılanmadır.
+
+Prototip:
+
+if (___şart___) //Karşılaştırma operatörleri ve mantıksal operatörlerin hepsi burada kullanılabilir.
+
+{
+//Eğer ki şart doğru ise true ise burası tetiklenir.
+}
+//değilse compiler if scope'undan çıkacak ve yoluna devam edecektir.
+
+- Şart her zaman bool türde olmalıdır.
+
+Örnek:
+
+bool medeniHal = true;
+
+if (medeniHal == true) 
+{
+	CW("Allah bir yastıkta kocatsın.");
+}
+
+// if yapılanması tek başına kullanılıyorsa sadece şarta bağlı çalışacak koda odaklanır.
+
+Örnek:
+
+// if yapılanmasında illa ki else kullanmak zorunda değiliz.
+
+int i = 10;
+
+if (i == 10)
+{
+	Console.WriteLine("Merhaba");
+}
+	Console.WriteLine("Dünya");
+	
+Çıktı: Merhaba
+	   Dünya
+	
+if (i != 10)
+{
+	Console.WriteLine("Merhaba");
+}
+	Console.WriteLine("Dünya"); //burası her daim çalışacak bir koddur. if ile alakası yok.
+
+Çıktı: Dünya
+
+Örnek:
+
+bool medeniHal = true;
+
+if (medeniHal) //illa karşılaştırma operatörü kullanmak şart değil. Zaten bool.
+// ya da if(!medeniHal) yazarak false'ı da kontrol edebiliriz.
+{
+	CW("Allah bir yastıkta kocatsın.");
+}
+
+Akış Kontrol Mekanizmaları - if else Yapısı
+
+- if else yapısı şarta göre bir kodun çalışıp, şartın olmadığı durumda bir başka kodun çalışmasını belirleyen bir yapılanmadır.
+Şartın olumsuz/değil durumunda çalışacak kodu belirlemiş oluyoruz.
+
+if(___şart___)
+{
+//şart true ise sadece if.
+}
+else
+{
+//şart false ise kesinlikle else bloğu tetiklenir.
+}
+
+//ikisi aynı anda tetiklenmez.
+
+Örnek:
+
+int i = 10;
+
+if(i>5)
+{
+CW("i değeri 5'ten büyüktür."); //burası yazdırılır.
+}
+else
+{
+CW("i değeri 5'ten küçüktür."); //i = 3 olsaydı burası.
+}
+
+Örnek:
+
+int i = 10;
+
+if(i == 10)
+{
+CW("i değeri 10."); //i'nin 10 olduğu durum if'te.
+}
+else
+{
+CW("i değeri 10 değil."); //i'nin 10 olmadığı durum else'de.
+}
+
+//kodu ile
+
+int i = 10;
+
+if(i != 10)
+{
+CW("i değeri 10 değil."); //burada ise i'nin 10 olmadığı durum if'te.
+}
+else
+{
+CW("i değeri 10."); // 10 olduğu durum else'de.
+}
+
+//aynı anlama gelir. 
+
+Örnek: //her iki durumda da aynı kodu çalıştırmak ve kod tekrarına düşmemek istiyorsak...
+
+- if ve else bloklarında aynı işlemleri yapacaksak eğer tekrarlı bir biçimde yapmamamız gerekmektedir. Her iki durumda da ortak çalıştırılacak olan komutları
+if else bloğunun dışına yazmamız yeterli olacaktır.
+
+int i = 10;
+
+if(i == 10)
+{
+CW("i değeri 10."); //i'nin 10 olduğu durum if'te.
+//CW("Merhaba"); olmaaz.
+}
+else
+{
+CW("i değeri 10 değil."); //i'nin 10 olmadığı durum else'de.
+//CW("Merhaba"); olmaaaz.
+}
+CW("Merhaba"); //böylece hangi bloğa girerse girsin burası çalışacaktır ve iki kere yazmamız gerekmeyecektir.
+
+Akış Kontrol Mekanizmaları - if Else if Yapısı
+
+- Birden fazla şartı kontrol etmemizi sağlayan bir yapılanmadır.
+
+- Eğer hava yağmurluysa şunu yap değilse bunu yap -> if else
+  Eğer haca yapmurluysa şunu yap yok yağmurlu değil kapalıysa bunu yap, o da değilse.... yap -> if - else if
+  
+Prototip:
+
+if(___şart___)
+{
+// şart doğruysa burası
+}
+else if(___şart___)
+{
+// yok eğer yukarıdaki şart doğru değilse buradaki şart doğru ise burası tetiklenir.
+}
+else if(___şart___)
+{
+// aynı şekilde.
+}
+.
+.
+.
+
+// if yapılandırmalarından herhangi biri doğrulandıysa eğer diğer ifler değerlendirilmeyecektir.
+
+Örnek:
+
+int sayi = 30;
+
+if(sayi > 5 && sayi <= 10) //false
+{
+	CW(sayi * 5);
+}
+else if(sayi > 10 && sayi <= 20) //false
+{
+	CW(sayi * 10);
+}
+else if(sayi > 20 && sayi <= 30) //true. içeri girdi ve tetikledi. 
+{
+	CW(sayi * 20);
+}
+
+Örnek:
+
+int sayi = int.Parse(Console.ReadLine()); // Kullanıcıdan sayıyı 210 girer isek.
+
+if (sayi > 100 && sayi <= 200)
+{
+	Console.WriteLine("100 ile 200 arasında."); //false, buraya girmez.
+}
+else if (sayi > 200 && sayi <= 300) // burayı tetikler ve sonuncusuna bakmadan if bloğundan çıkar.
+{
+	Console.WriteLine("200 ile 300 arasında.");
+}
+else if (sayi > 200 && sayi <= 400) // burasını kontrol bile etmez. Burası da çalışsın istiyorsak eğer else if mantığıyla çalışmamız hatalıdır.
+{
+	Console.WriteLine("200 ile 400 arasında.");
+}
+
+// kodu aşağıdaki gibi düzenlersek.
+
+int sayi = int.Parse(Console.ReadLine()); // Kullanıcıdan sayıyı 210 girer isek.
+
+if (sayi > 100 && sayi <= 200)
+{
+	Console.WriteLine("100 ile 200 arasında."); //false, buraya girmez.
+}
+if (sayi > 200 && sayi <= 300)  // Hem burası,
+{
+	Console.WriteLine("200 ile 300 arasında.");
+}
+if (sayi > 200 && sayi <= 400)  // Hem de burası tetiklenir. Ve ekrana iki CW'de yazdırılır.
+{
+	Console.WriteLine("200 ile 400 arasında.");
+}
+
+// her bir if bloğu başlı başına bağımsız bir bloktur.
+
+Örnek:
+
+int i = 100;
+
+if(i < 100)
+{
+ CW("100'den küçük.");
+}
+else if(i > 100)
+{
+ CW("100'den küçük.");
+}
+else
+{
+ CW("100'e eşit.");
+}
+
+Akış Kontrol Mekanizmaları - Scopesuz If Yapısı
+
+- Tek bir satırlık/konseptlik(;'e kadar) işlem yapılacaksa scope kullanmadan da yazılabilir.
+
+if (true)
+{
+CW(".........");
+}
+
+ya da
+
+if (true)
+CW(".........");
+
+- Eğer ki birden fazla k onsept/işlem/operasyon barındıracaksa bunları kesinlikle scope içine almamız gerekli. Aksi taktirde scopesuz ilk işlemi if bloğu alacak
+diğerlerini almayacaktır.
+
+--------------
+
+ÖRNEK:
+
+// klavyeden iki ürünün fiyatı girildiğinde toplam fiyat 200 TL'den fazla ise, 2. üründen %25 indirim yaparak ödenecek tutarı gösteren uygulama.
+
+Console.Write("Lütfen birinci ürünün fiyatını giriniz : "); //write yazar, yadığı yerde kalır; writeLine yazar bir satır aşağıya geçer.
+int birinciUrunFiyati = int.Parse(Console.ReadLine());
+
+Console.Write("Lütfen ikinci ürünün fiyatını giriniz : "); //write yazar, yadığı yerde kalır; writeLine yazar bir satır aşağıya geçer.
+int ikinciUrunFiyati = int.Parse(Console.ReadLine());
+
+// int toplam = birinciUrunFiyati + ikinciUrunFiyati; ya da değişken oluşturmaya gerek yok diyelim.
+
+if (birinciUrunFiyati + ikinciUrunFiyati > 200)
+{
+	//int toplamSonTutar = birinciUrunFiyati + (ikinciUrunFiyati * 75 / 100); //değişkeni sonradan tekrardan kullanacaksan oluştur. Yoksa oluşturma.
+	//yüzde 25 indirim demek 75 çarp 100 böl demek.
+	//ya da direkt olarak yazdırabiliriz.
+	Console.WriteLine(birinciUrunFiyati + (ikinciUrunFiyati * 75 / 100));
+	
+}
+
+else 
+{
+	Console.WriteLine(birinciUrunFiyati + ikinciUrunFiyati);
+}
+
+ÖRNEK:
+
+// Belirlenen kullanıcı adı ve şifre doğru girildiğinde "Giriş başarılı", yanlış girildiğinde "Girdiğimiz kullanıcı adı veya şifre hatalı." mesajı veren console
+// uygulamasını yazalım.
+
+Console.WriteLine("Lütfen kullanıcı adınızı giriniz.");
+string kullaniciAdi = Console.ReadLine();
+
+Console.WriteLine("Lütfen şifrenizi giriniz.");
+string sifre = Console.ReadLine();
+
+if(kullaniciAdi == "Ali" && sifre == "12345") //tek satır işlem olduğu için {}'ları kaldırabiliriz.
+//{
+	Console.WriteLine("Giriş başarılı.");
+//}
+else
+//{
+	Console.WriteLine("Girdiğiniz kullanıcı adı veya şifre hatalı.");
+//}
+
+ya da
+
+if(!(kullaniciAdi == "Ali" && sifre == "12345")) // şarta ! koyarak ters yüz de edebiliriz.
+	Console.WriteLine("Girdiğiniz kullanıcı adı veya şifre hatalı.");
+else
+	Console.WriteLine("Giriş başarılı.");
+	
+ya da tek satırda...
+
+Console.WriteLine(kullaniciAdi == "Ali" && sifre == "12345" ? "Giriş başarılı." : "Girdiğiniz kullanıcı adı veya şifre hatalı.");
+
+ÖRNEK:
+
+// Kullanıcıdan alınan iki sayının ve yapılacak işlem türünün (toplama, çıkarma, çarpma, bölme) seçilmesiyle, sonucu hesaplayan
+// programı yazalım.
+
+Console.WriteLine("Lütfen 1. sayıyı giriniz.");
+int sayi1 = int.Parse(Console.ReadLine());
+Console.WriteLine("Lütfen 2. sayıyı giriniz.");
+int sayi2 = int.Parse(Console.ReadLine());
+
+Console.WriteLine("Lütfen yapılacak işlemi belirtiniz.(+,-,*,/"));
+char islem = char.Parse(Console.ReadLine());
+
+if (islem == '+')
+{
+	Console.WriteLine(sayi1 + sayi2);
+}
+else if (islem == '-')
+{
+	Console.WriteLine(sayi1 - sayi2);
+}
+else if (islem == '/')
+{
+	Console.WriteLine(sayi1 / sayi2);
+}
+else
+{
+	Console.WriteLine(sayi1 * sayi2);
+}
+
+ya da 
+
+switch (islem)
+{
+	case '+':
+		Console.WriteLine(sayi1 + sayi2);
+		break;
+	case '-':
+		Console.WriteLine(sayi1 / sayi2);
+		break; 
+	case '/':
+		Console.WriteLine(sayi1 / sayi2);
+		break;
+	default:
+		Console.WriteLine(sayi1 * sayi2);
+		break;
+		
+ya da 
+
+	int sonuc = islem switch 
+	{
+		'+' => sayi1 + sayi2,
+		'-' => sayi1 - sayi2,
+		'/' => sayi1 / sayi2,
+		 _  => sayi1 * sayi2
+	};
+	
+ya da 
+
+Console.WriteLine(islem == '+' ? sayi1 + sayi2 : (islem == '-' ? sayi1- sayi2 : (islem == '/' ? sayi1 / sayi2 : sayi1 * sayi2)));
+
+//ile tek satırda da halledebiliriz.
+
+Örnek:
+
+// Girilen sayının değeri 10 değilse ekrana 'Sayı yanlış' yazalım.
+
+if (sayi != 10)
+{
+	CW("Sayı yanlış."); // uzun uzun if else yazmaya gerek yok. Daha kısa yazabilmek varken!
+}
+
+ya da tek satırda;
+
+	Console.WriteLine(sayi == 10 ? "" : "Sayı yanlış."); // sayi 10 ise boş değer, değilse "Sayı yanlış." 
+
+Örnek:
+
+// Verilen sayının negatif ya da pozitif olduğunu gösteren uygulama.
+
+int sayi = int.Parse(Console.ReadLine());
+
+// bazı zamanlar akış kontrol bloklarında elde edilen değeri, bloğun dışında da kullanmamız gerekirse bunu bir değişkenle taşımamız gerekebilir.
+
+string sonuc = "";
+
+if (sayi < 0)
+	sonuc = "Negatif";
+else 
+	sonuc = "Pozitif";
+	
+	Console.WriteLine(sonuc); // -5 girersek ekranda : -5
+							  // 					   Negatif yazacak.

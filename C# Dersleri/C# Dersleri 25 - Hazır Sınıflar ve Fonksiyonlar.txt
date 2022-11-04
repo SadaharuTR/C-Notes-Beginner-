@@ -1,0 +1,135 @@
+DERS-18: Hazır Sınıflar ve Metotlar
+
+Math Sınıfı - Abs Fonksiyonu
+
+- Using.System'ı kullanır. Ekstra eklemeye gerek yok.
+
+- Abs, mutlak değer işlemi yapar. Absolute value'dan gelir.
+
+int i = Math.Abs(-5);
+
+Math Sınıfı - Ceiling Fonksiyonu
+
+- Herhangi bir ondalıklı değeri yukarıya yuvarlar. 
+
+CW(Math.Ceiling(3.14)); // 4 olur.
+
+Math Sınıfı - Floor Fonksiyonu
+
+- Herhangi bir ondalıklı değeri aşağı yuvarlar.
+
+CW(Math.Floor(3.14)); // 3 olur.
+
+Math Sınıfı - Round Fonksiyonu
+
+- Ondalıklı değeri kendisine en yakın olan tamsayıya yuvarlar.
+
+CW(Math.Round(3.4)); // Aşağı yuvarlar. 3 olur.
+CW(Math.Round(3.5)); // Yukarı yuvarlar. 4 olur. Tam ortadaki değerler yukarı yuvarlanır.
+CW(Math.Round(3.6)); // Yukarı yuvarlar. 4 olur.
+
+Math Sınıfı - Pow Fonksiyonu
+
+- Sayının üssünü almaya yarar.
+
+CW(Math.Pow(7,9)); //7 üssü 9 ve sonuç olarak double döner.
+
+Math Sınıfı - Sqrt Fonksiyonu
+
+- Karakök almaya yarar.
+
+CW(Math.Sqrt(4));  //2
+CW(Math.Sqrt(16)); //4
+CW(Math.Sqrt(55)); //7.416...
+
+Math Sınıfı - Truncate Fonksiyonu
+
+- Ondalıklı değerlerin sadece tamsayı kısmını elde etmekte kullanılır.
+
+CW(Math.Truncate(3.14)); //3'ü döndürür.
+
+DateTime - Now Özelliği
+
+CW(DateTime.Now)); //o anki tarih ve saati verir. 27.09.2022 15:06:31
+
+DateTime - Today Özelliği
+
+- Sadece tarih bilgisini verir. 
+
+CW(DateTime.Today)); //27.09.2022 00:00:00
+
+DateTime - Compare Fonksiyonu
+
+- Verilmiş iki tarihi kıyaslar ve integer değer döndürür.
+
+DateTime tarih1 = new DateTime(2021, 01, 01);
+DateTime tarih2 = new DateTime(2022, 01, 01);
+
+int result = DateTime.Compare(tarih1,tarih2);
+
+if(result < 0) //birinci tarih ikincisinden geride.
+{
+	System.Console.WriteLine($"{tarih1} küçüktür {tarih2}");
+}     
+else if(result == 0)
+{
+	System.Console.WriteLine($"{tarih1} eşittir {tarih2}");
+}    
+else
+	System.Console.WriteLine($"{tarih1} büyüktür. {tarih2}");   
+	
+Çıktı:
+
+1.01.2021 00:00:00 küçüktür 1.01.2022 00:00:00
+
+DateTime - Tarihsel Zamana Saat, Gün, Ay, Yıl Ekleyerek Sonucu Hesaplamak
+
+AddYears
+
+System.Console.WriteLine(DateTime.Now.AddYears(999)); //şimdiki zamana 999 yıl ekledik. 27.09.3021 15:20:40
+
+AddSeconds
+
+System.Console.WriteLine(DateTime.Now.AddSeconds(999)); //999 saniye ekledik. 27.09.2022 15:38:41
+
+AddMinutes, AddMonths, AddDays.....
+
+TimeSpan Türü İle İki Tarih Farkının Karşılanması
+
+- İki tarih arasındaki farkı timespan türüyle karşılayabiliriz.
+
+DateTime t1 = DateTime.Now;
+DateTime t2 = new DateTime(2000,1,1);
+TimeSpan span = t1-t2;
+System.Console.WriteLine(span.Days);
+System.Console.WriteLine(span.Minutes);
+
+Çıktı:
+8305
+28
+
+Random Sınıfı - Next Fonksiyonu
+
+- Rastgele sayısal değer oluşturur.
+
+Random random = new Random();
+//belirtilen maksimum değer aralığa dahil değildir.
+System.Console.WriteLine(random.Next()); //0 ile int max değeri aralığında rastgele değer üretir.
+System.Console.WriteLine(random.Next(100)); //sıfır ile 100 arası
+System.Console.WriteLine(random.Next(50,100)); //50 ile 100 arası
+
+- Sadece pozitif değer üretir. Negatif üretmek istiyorsak -1 ile çarpmamız lazım.
+
+Random Sınıfı - NextDouble Fonksiyonu
+
+- 0 ile 1 arası rastgele sayı üretir. 0,5921208223291304 gibi.
+
+System.Console.WriteLine(random.NextDouble());
+
+-----------------------------
+
+
+
+
+
+

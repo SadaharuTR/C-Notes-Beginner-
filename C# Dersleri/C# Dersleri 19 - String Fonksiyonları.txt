@@ -1,0 +1,289 @@
+String Fonksiyonları Nelerdir?
+
+Contains 
+
+- Bir metnin içerisinde herhangi bir değerin olup olmadığı kontrol edip bool değer döndüren fonksiyondur.
+
+string metin = "laylay şinanay hop hop smooth criminal hop";
+
+bool sonuc = metin.Contains("hop"); //büyük küçük harf duyarlılığı vardır. "Hop" aratırsak false döner.
+CW(sonuc); //true
+
+StartsWith
+
+- İlgili metinin verilen değerle başlayıp başlamama durumunu kontrol edip sonuc olarak bool döndürür.
+
+Console.WriteLine(metin.StartsWith("laylay")); //true
+
+EndsWith
+
+- İlgili metinin verilen değerle bitip bitmeme durumunu kontrol edip sonuc olarak bool döndürür.
+
+Console.WriteLine(metin.StartsWith("l hop")); //true
+
+Equels
+
+- Elimizdeki metinsel ifade ile herhangi bir ifadenin eşitliğini kontrol edip bool döner.
+
+Console.WriteLine(metin.Equals("Maho")); //false
+
+Console.WriteLine(metin.Equals("laylay şinanay hop hop smooth criminal hop")); //true
+
+Compare 
+
+- Metinsel ifadeleri karşılaştırır ve sonuçta integer döner. 0 dönerse her iki değer eşit, 1 dönerse soldaki değer alfanümerik olarak sağdakinden büyüktür;, -1 dönerse de küçüktür.
+
+Console.WriteLine(string.Compare(metin, "Z")); //Z > l olduğundan -1 döner.
+Console.WriteLine(string.Compare(metin, "a")); //l > a olduğundan 1 döner. 
+Console.WriteLine(string.Compare(metin, "laylay şinanay hop hop smooth criminal hop")); // 0 döndürür.
+Console.WriteLine(string.Compare(metin,metin); //0 döndürür.
+
+Console.WriteLine(string.Compare(metin,9,metin,8,5); //metin'in 9. index'inden başlayıp, ikinci karşılaştırma yapacağımız ifade olan yine metin ifadesinin 8. index'inden başlayarak
+													 //her ikisininde 5 tane karakter al. n ile i kıyasla. n > i olduğundan 1 döner.
+
+CompareTo 
+
+- Compare ile her şeyi aynı sadece kullanımı farklı.
+
+Console.WriteLine(metin.CompareTo("Z");	 //-1 : l < Z									 
+Console.WriteLine(metin.CompareTo("a");	 //1  : a > l								 
+Console.WriteLine(metin.CompareTo(metin);//	0 : metin = metin										 
+
+------------------------------
+
+IndexOf
+
+string metin = "laylaylom galiba sana göre sevmeler...";
+
+- Verilen değerin string ifade içerisinde olup olmamasını kontrol edip geriye integer olarak indexNo'yu döndürür.
+
+Console.WriteLine("la"));  //0
+Console.WriteLine("lay")); //0
+Console.WriteLine("La"));  //-1
+Console.WriteLine("sana"));//17
+
+- IndexOf ilk eşleşen değerin index'ini döndürür.
+
+Insert Metotu
+
+string metin = "laylaylom galiba sana göre sevmeler...";
+
+- Elimizdeki metinsel ifadeye bir değer dahil etmemizi/eklememizi sağlar.
+
+metin.Insert(int startIndex, string value)
+
+string eklenmisMetin = metin.Insert(17, "merhaba");
+
+- İlgili ekleme operasyonu gerçekleştikten sonra eklenmiş hali string olarak döndürülecektir. Lakin metin orjinal verisi ayrı bir şekilde tutulacaktır. Dönen eklenmiş veriyle
+var olan metin arasında fark vardır.
+
+Console.WriteLine(metin));
+Console.WriteLine(eklenmisMetin));
+
+Çıktı:
+
+laylaylom galiba sana göre sevmeler...
+laylaylom galiba merhabasana göre sevmeler...
+
+Remove Metotu
+
+- Metinsel ifadede indexel olaak verilen değer aralığı silen bir fonksiyondur.
+
+metin.Remove(5); //5.indexten sonraki tüm değerleri sil.
+metin.Remove(5,10); //5.index'ten başla 10 tane değer sil.
+
+- Insert'te olduğu gibi ilgili fonksiyon yapmış olduğu işlem neticesinde yeni değeri üreterek bizlere string döndürecektir. Elimizdeki orjinal veri değişmeyecektir.
+
+Console.WriteLine(metin.Remove(5));
+Console.WriteLine(metin.Remove(5,10));
+Console.WriteLine(metin);
+
+Çıktı:
+
+layla
+laylaa sana göre sevmeler...
+laylaylom galiba sana göre sevmeler...
+
+Replace Metotu
+
+- Elimizdeki metinsel ifadede belirtilen değerleri yahut karakterleri, belirtilen diğer değerler ya da karakterle ile değiştirmemizi sağlayan bir fonksiyondur.
+
+Console.WriteLine(metin.Replace('a','b'));
+Console.WriteLine(metin.Replace("la","lo"));
+
+Çıktı:
+
+lbylbylom gblibb merhbbbsbnb göre sevmeler...
+loyloylom galiba merhabasana göre sevmeler...
+
+- Sonuç olarak string değer üretecek ve geriye döndürecektir.
+
+Split Metotu
+
+- Metinsel ifadeyi verilen değeri ayraç olarak kullanıp parçalayan ve sonucu string dizisi olarak döndüren bir fonksiyondur.
+
+string[] dizi = metin.Split(' '); //her boşluğa denk geldiğinde parçala ve parçaları dizinin elemanlarına ata.
+
+string[] dizi = metin.Split(' ','a'); //hem boşluk hem a gördükçe parçala.
+
+Substring Metotu
+
+- Metinsel ifadenin belirli bir aralığını elde etmemizi sağlar.
+
+metin.Substring(5); //5.indexten sonuna kadar tüm değerleri getir.
+Console.WriteLine(metin.Substring(5,10)); //5. indexten başla sonra 10 karakterti getir.
+
+Çıktı:
+
+ylom galiba merhabasana göre sevmeler111...
+ylom galib
+
+ToLower Metotu
+
+- Elimizdeki metinin tüm karakterlerini küçük karakter yapar.
+
+string metin = "AAAAAA Kİ Kİ Kİ AAAAAAA";
+System.Console.WriteLine(metin);
+System.Console.WriteLine(metin.ToLower());
+
+ToUpper Metotu
+
+string metin = "aaaaaa ki ki ki aaaaaa";
+System.Console.WriteLine(metin);
+System.Console.WriteLine(metin.ToUpper());
+
+Çıktı:
+
+aaaaaa ki ki ki aaaaaa
+AAAAAA KI KI KI AAAAAA
+
+Trim Metotu
+
+- Metinsel ifadelerin varsa, solundaki ve sağındaki karakterlerini temizleyen bir fonksiyondur.
+
+Console.WriteLine("Ahmet Mehmedovski");
+Console.WriteLine("   Ahmet Mehmedovski   ".Trim());
+
+Çıktı:
+Ahmet Mehmedovski
+Ahmet Mehmedovski
+
+TrimEnd Metotu
+
+- Sadece sağındaki boşlukları temizler.
+
+Console.WriteLine("Ahmet Mehmedovski");
+Console.WriteLine("   Ahmet Mehmedovski   ".TrimEnd());
+
+Çıktı:
+
+Ahmet Mehmedovski
+   Ahmet Mehmedovski
+   
+TrimStart Metotu
+
+- Sadece solundaki boşlukları temizler.
+
+Console.WriteLine("   Ahmet Mehmedovski   ".TrimEnd());
+Console.WriteLine("   Ahmet Mehmedovski   ".TrimStart());
+
+
+Çıktı:
+
+   Ahmet Mehmedovski
+Ahmet Mehmedovski      //boşluk var.
+
+Örnek:
+
+Adımızın baştan 3, soyadımızın sondan 5. karakteri getirelim.  
+
+string adSoyad = "Çağatay Demirtaş";
+System.Console.WriteLine(adSoyad[2]);
+System.Console.WriteLine(adSoyad[adSoyad.Length - 5]);   
+
+Çıktı:
+g
+i
+
+İkinci Çözüm:
+
+string adSoyad = "Çağatay Demirtaş";
+
+string aralik = adSoyad[2..^4]; //Ranges and Indices
+System.Console.WriteLine(aralik[0]);
+System.Console.WriteLine(aralik[aralik.Length-1]);
+
+Çıktı:
+g
+i
+
+Örnek:
+
+Girilen Metnin İçerisinde Kaç Adet n Karakterinin Geçtiğini Hesapla
+
+System.Console.WriteLine("Lütfen bir metin giriniz: ");
+
+string metin = Console.ReadLine();
+int adet = 0;
+
+for (int i = 0; i < metin.Length; i++)
+{
+    if(metin[i] == 'n')
+        adet++;
+}
+System.Console.WriteLine(adet);
+
+Çıktı:
+
+Lütfen bir metin giriniz: 
+sen ne diyon bana ben seni dinledim sen de beni dinle
+10
+
+Örnek:
+
+Girilen Metindeki Kelime Sayısını Hesaplayalım. 
+
+1.Çözüm
+
+System.Console.WriteLine("Lütfen bir metin giriniz: ");
+string metin = Console.ReadLine();
+string[] kelimeler = metin.Trim().Split(' ');
+System.Console.WriteLine(kelimeler.Length);
+
+Çıktı:
+
+Lütfen bir metin giriniz: 
+aşkın kanununu yazsam yeniden
+4
+
+2.Çözüm
+
+System.Console.WriteLine("Lütfen bir metin giriniz: ");
+string metin = Console.ReadLine();
+int adet = 1; //bir boşlukta en az 2 kelimemiz olur o yüzden 1'den başla.
+            
+    while(true)
+    {
+        int index = metin.Trim().IndexOf(' '); //baştaki ve sonraki boşlukları da saymasın.
+        if(index == -1)
+            break;
+                
+        adet++;
+
+        metin = metin.Substring(index + 1); 
+
+    }
+	
+System.Console.WriteLine(adet);
+			
+Çıktı: 
+we don't need no education
+5
+
+----------------
+
+Not: String ifadelerde + ile birleştirme maliyet açısından önerilmemektedir.
+
+
+
+

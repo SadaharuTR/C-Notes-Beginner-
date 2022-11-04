@@ -1,0 +1,77 @@
+Span, ReadOnlySpan, Memory ve ReadOnlyMemory Türleri Nedir? Nasıl Kullanılır?
+
+Span Türü nedir?
+
+- Bellek üzerinde belirli bir alanı temsil ederek işlemler gerçekleştirmemizi sağlayan bir struct'tır.
+Bu belirli alanlardan kasıt tabi ki de ardışıl alan kaplayan Array değerleridir.
+
+- Normal şartlarda Array'lerin belleğin HEAP kısmında tutulduğunu biliyoruz. Lakin stackalloc keyword'ü sayesinde STACK'te de Array tanımlayabilmekteyiz.
+
+- Span, stack yahut heap farketmeksizin tanımlanmış olan Array'lerin tümünü yahut bir bölümünü
+bizler için refere edebilen ve üzerinde işlemler gerçekleştirmemizi sağlayan yapılardır.
+
+- Span, dizi ve string gibi maliyetli veriler üzerinde yapılacak operasyonlarda performans açısından yüksek getiriyle birlikte maliyeti olabildiğince 
+düşürmekte ve ekstradan değer kopyalamaya gerek kalmaksızın tüm faaliyetleri gerçekleştirmemizi sağlamaktadır.
+
+ReadOnlySpan<T>
+
+- Span niteliklerinin tümünü sağlamakta adı üzerinde sadece okunabilir kılmaktadır.
+
+------------------
+
+Span ile ArraySegment ve StringSegment farkı: ArraySegment sadece string ve dizilerde temsiliyet yapabilirken,
+Span bellek üzerinde olan herhangi bir yeri temsil edebilir.
+
+- ArraySegment'te referans edilen alana her türlü müdahele edilirken, ReadOnlySpan'da bu verisel operasyonlar engelleneilir ve sadece okunabilir bir davranış sergilenebilir.
+
+- Sadece string yahut array türler ile çalışılacaksa eğer ArraySegment ve StringElement tavsiye edilir.
+
+------------------------
+
+Memory Türü nedir?
+
+- Span ref struct olarak tasarlanmış bir struct'tır. (OOP konusu)
+
+- Dolayısıyla Heap'te allocation(tahsis) edilememe; object, dynamic yahut interface türleri aracılığıyla referans edilmeme; yahut bir class içerisinde field ya da property
+olarak tanımlanamama gibi kısıtlamaları vardır. (Unut burayı.)
+
+- Memory türü Span'ın bu kısıtlamarından uzak bir versiyonudur.
+
+ReadOnlyMemory: Memory türünün sadece okunabilir halidir.
+
+Örnek:
+
+using System;
+using System.Text;
+using Microsoft.Extensions.Primitives;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] sayilar = { 10,20,30,40,50,60,70,80,90,100 };
+            
+            //tüm diziyi referansladık.
+            Span<int> span = new Span<int>(sayilar); 
+            //tüm diziyi referansladık.
+            Span<int> span2 = sayilar;
+
+            Span<int> span3 = new Span<int>(sayilar, 3, 5); //3. index'ten başla 5 tane değer al.
+            //span1,span2 ve span3 aynı diziyi refere eder. Üzerlerinde yapılan işlem orjinal array'i etkiler.
+            
+            Span<int> span4 = sayilar.AsSpan(); //diziden span türünde bir nesne talep edebiliriz.
+            Span<int> span5 = sayilar.AsSpan(3,5); //ya da belirli bir aralığı belirtebiliriz.
+
+            string text = "Sen kalbimde batan güneş, ben yollarda çilekeş";
+            //metinsel ifadeler üzerindeki referanslar readonly gelecektir!
+            ReadOnlySpan<char> readOnlyspan = text.AsSpan();
+            ReadOnlySpan<char> span6 = text;
+            
+        }
+    }
+}
+
+
+

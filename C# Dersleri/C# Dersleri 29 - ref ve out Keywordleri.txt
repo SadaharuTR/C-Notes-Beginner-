@@ -1,0 +1,189 @@
+Ref Keyword'ü
+
+- ref keyword'ü, referanstan gelmektedir.
+
+- Referans, OOP kavramıdır. OOP'de nesneler(object) RAM'de HEAP bölgesinde tutulmaktadır.
+
+- OOP'de referanslar = operatörü ile iletişim geçirebilmektedirler. Bir referans, işaretlediği herhangi bir nesneyi
+= operatörü sayesinde farklı bir referansa işaretletebilir. Yani referanslarda = operatörü neticesinde herhangi bir verisel/nesnesel türeme söz konusu
+olmamakta, işaretlenmiş nesne diğer referans tarafından da işaretlenmektedir.
+
+int a = 5;
+int b = a; //Deep Copy, a çoğaltıldı. Artık b'nin de bellekte yeri ve değeri var.
+
+- ref keyword'ü değer türlü değişkenlerde referans operasyonları yapmamızı sağlayan bir keyword'dür.
+Değer türlü değişkenlerin referanslarını çağırmamızı/kullanmamızı sağlar. Referans türlü değişkenler gibi çalışmasını sağlar.
+
+int a = 5;
+ref int b = ref a; //artık a'nın değeri değil a'nın referansı(kendisi) gidecek. Artık her iki değişken de aynı bellek adresinden besleniyor anlamına gelir. 
+a'daki ve b'deki değişiklikler ikisini de etkiler.
+
+- a'nın referansını b'nin referansı ile işaretledik.
+
+- Değer türlü değişkenlerde shallow copy yapmamızı sağlar.
+
+Örnek:
+
+int a = 5;
+
+ref int b = ref a;
+System.Console.WriteLine(a);
+System.Console.WriteLine(b);
+a++;
+--b;
+System.Console.WriteLine(a);
+System.Console.WriteLine(b);
+a*=5;
+System.Console.WriteLine(b);
+b-=10;
+System.Console.WriteLine(a);
+
+Çıktı:
+5
+5
+5
+5
+25
+15
+
+Örnek:
+
+int y = 10;//STACK'te (int)y = 10
+X(y); //fonksiyona gönderildi
+
+System.Console.WriteLine(y); //buraya geldiğimizde y hala 10.
+
+void X(int a) //(int) a = 10 çünkü y'nin değeri a'ya gönderildi.
+{
+    a = 25; //(int) a = 25 yani 10 değeri ezildi a 25 yapıldı.
+}
+
+Çıktı:
+10
+
+Fakat ref kullanırsak;
+
+int y = 10; //STACK'te (int)y = 10
+X(ref y); //y'nin değerinden ziyade kendisini gönder.
+
+System.Console.WriteLine(y);
+
+void X(ref int a) //a değişkeni artık bir referans işaretliyor. (int) a = y davranışını sergiler.
+{
+    a = 25; //a'nın değeri 25 olduğunda, a da artık y ise...
+}
+
+Çıktı:
+25
+
+------------------
+
+C#'ta Ref Returns Özelliği Nedir? Ne Amaçla Kullanılmaktadır?
+
+- ref keyword'ü sadece metotlarda kullanılır ifadesi yanlıştır. Başka kullanım alanları da vardır.
+
+- ref returns özelliği ise sadece metotlarda çalışır.
+- Metotlar geriye değer döndürebilen yapılardır. Ayrıca metotlarda nesneler de döndürebilir.
+
+- ret returns özelliği metotlarda değer türlü değişkenlerin referansını geriye döndürmemizi sağlar.
+
+Örnek:
+
+int a = 5; //Stack'te (int) a = 5;
+int b = X(a); //Stack'te (int) b = 'de a'nın değeri fonksiyona gitti.
+System.Console.WriteLine(a);
+System.Console.WriteLine(b);
+
+int X (int y) //5 değeri geldi. Stack'te (int) y = 5 oldu.
+{
+    y = 25; //5'i ezdi yerine 25 değerini assign etti. (int) y = 25
+    return y; //y'nin değeri 25'i b'ye gönderdi. (int) b = 25 oldu.
+}
+
+Çıktı:
+5
+25
+
+//ref ile kurcalarsak kodu;
+
+int a = 5; //STACK (int) a = 5
+int b = X(ref a); // (int) b = ' geriye bir int türünde referans döndürülmesini bekliyor. y'nin kendisi geriye döner ve (int) b = 25 olur.
+System.Console.WriteLine(a);
+System.Console.WriteLine(b);
+
+ref int X (ref int y) //a'nın kendisini gönderdik. (int) y = a oldu. y artık a'dır.
+{
+    y = 25; // y'ye 25 değerini atamak demek, a'ya atamak demektir. (int) a = 5 ezildi (int) a = 25 oldu.
+    return ref y; // y değişkenimizin kendisini geriye döndürdük.
+}
+
+//a'da b'de y'de 25'i gösterir.
+
+Çıktı:
+25
+25
+
+-------------------
+
+C#'ta out Keyword'ü Nedir? Ne Amaçla Kullanılmaktadır?
+
+- out keyword'ü metotların parametreleri üzerinden dışarıya değer göndermenizi sağlayan bir keyword'dür.
+
+- Bir metodun parametreleri varsayılan olarak INPUT'tur. Haliyle metotlarda tanımlanmış parametreler direkt olarak içeriye değer almaya odaklanır.
+
+- Eğer ki bir metodun parametresi dışarıya değer çıkaracaksa o parametrenin out keyword'ü ile işaretlenmesi gerekir.
+
+Örnek:
+
+//bir metot out parametreler barındırıyorsa o parametrelere kendi içerisinde deer atanması gerekmektedir.
+//Aksi taktirde derleyici hatası alınacaktır.
+
+//Output parametre barındıran bir metodu kullanırken, out parametrelerden gelecek olan değerleri karşılayacak değişkenler tanımlanmalıdır.
+
+Kullanım 1:
+
+int _b = 0;
+string _d ="";
+
+int a = X(out _b, 123, out _d);
+
+int X(out int b, int c, out string d)
+{
+    b = 24;
+    d ="a";
+    return 0;
+}
+
+Kullanım 2:
+
+int a = X(out int _b, 123, out string _d);
+
+int X(out int b, int c, out string d)
+{
+    b = 24;
+    d ="a";
+    return 0;
+}
+
+Çıktı: //iki kodda da aynı.
+24
+ahmet
+
+----------------
+
+EKSTRA: TryParse Fonksiyonu
+
+- Hatayı runtime'a bırakmadan, gelen değer kesinlikle integer'a dönüştürülebilir bir değerse eğer bu işlemi yap ve kullan, dememizi sağlar.
+
+string a = "123";
+//int.TryParse(a, out int r); a değeri integer'a uygunsa bunu içeride dönüştürüp r ile geri döndür. Ayrıca fonksiyon olarak bool değer de döner.
+//bu sayede if'e de uygundur.
+
+if(int.TryParse(a, out int r))
+{
+    
+}
+else
+{
+    
+}

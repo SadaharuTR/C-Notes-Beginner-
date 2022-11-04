@@ -1,0 +1,259 @@
+While Döngüsü
+
+while (____şart____) //şart doğrulandıkça tetiklenir.
+{
+...
+}
+
+- while döngüsü sadece şarta bağlı bir döngüdür. for'a kıyasla daha ilkel ve sade bir döngüdür.
+- while döngüsü programlamanın ilk tasarlanmış döngüsüdür.
+- Genellikle sonsuz döngülerde ve sonucu bilinmeyen durumlarda kullanılır. Yine de istediğimiz yerde kullanmakta özgürüz.
+
+While Döngüsünü For İle Kıyaslayalım
+
+for (int i = 0; i < 10; i++)
+{
+	CW("Alican Velican");
+}
+
+-> İki kod aynı anlama gelir.
+
+int i = 0;
+while (i<10) //while döngüsünde for gibi çalışabilmek için kombinasyonu kendimiz oluşturmalıyız.
+{
+	//i++; bu örnekte farketmez nereye yazıldığı.
+	CW("Alican Velican");
+	i++;
+}
+
+- While döngüsü şart false olana kadar tetiklenecektir.
+
+Örnek:
+
+//Ekrana 10 kere "Merhaba Dünya" yazdıran bir program yazalım.
+
+int i = 1;
+
+while (i <= 10)
+{
+   CW("Merhaba Dünya");
+   i++;
+}
+
+Örnek:
+
+//Klavyeden girilen sayıdan geriye doğru 0'a kadar sayan bir sayaç hazırlayalım.
+
+int sayi = int.Parse(Console.ReadLine());
+
+while (sayi >= 0)
+{
+	//sayi--; bu örnekte sorun çıkar. Çünkü ekrana yazacağımız değeri kullanıyoruz.
+	Console.WriteLine(sayi);
+	sayi--; //buraya yazmamız lazım.
+}
+
+Not: While döngüsünde çalışırken artırma/azaltma operatörlerinin nerede kullanıldığına dikkat etmek lazım.
+
+Örnek:
+
+//while döngüsü ile 0-100 arasındaki tek sayıları toplayarak sonucu ekranda gösteren programı yapalım.
+
+int i = 0, toplam = 0;
+
+while (i <= 100)
+{
+	if (i%2 == 1)
+		toplam +=i; // toplam += i++; yazamayız. if şartını sonsuza kadar sağlayacağı için olmaz.
+	
+	i++;
+}
+
+Örnek:
+
+//Klavyeden girilen sayının faktöriyelini hesaplayalım.
+
+int sayi = int.Parse(Console.ReadLine());
+int faktoriyel = 1;
+
+while( sayi>0 )
+{
+
+	faktoriyel *= sayi; 
+	sayi--;
+	// faktoriyel *= sayi--; 'yi burada kullanabiliriz. if olmadığından dolayı her durumda sayi değişkeninin değerini önce faktoriyel'e verecek ardından 1 düşürecektir.
+}
+
+CW(faktoriyel);
+
+Örnek:
+
+//O anki tarihin saniye değeri 5'in katıysa eğer tarihi ekranda gösteren uygulamayı yazalım.
+
+while(true)
+{
+	if(DateTime.Now.Second % 5 == 0 )
+	{
+	Console.WriteLine(DateTime.Now);
+	}
+}
+
+-----------------------
+
+Do While Döngüsü
+
+do{
+.
+.
+.
+}while(____şart____);
+
+- while döngüsü önce şarta bakar true ise kodu çalıştırır. Falsa olursa kod bloğu çalışmaz.
+- do while ise önce kodu çalıştırır sonra şarta bakar. Şart true da olsa false da olsa bir kere tetiklenir.
+
+Örnek:
+
+do{
+
+	Console.WriteLine("do while döngüsü");
+	
+}while(false);
+
+Not: Tek satırda döngülere sokmak istediğimiz kodları scope'suz yazabiliriz.
+
+for ( int i = 0; i < 10; i++)
+	CW("Alican Mehmetovski");
+	
+ya da
+
+while (true)
+	CW("");
+	
+ya da
+
+do
+	CW("Apaçi Serkan"); 
+while(true);
+
+------------------------
+
+Sonsuz Döngüler
+
+For ile Sonsuz Döngüler
+
+for (int i = 0; true; i++) //int'ın değer aralığının sonuna ulaştığında döngü biter.
+{
+}
+
+onun yerine;
+
+for (; ;)
+{
+...
+}
+
+yazarsak sonsuz döngüye gireriz.
+
+Örnek:
+
+//bir aksiyonu aradığımızı ve bulduğumuz anda çıkmamız gerektiğini düşünelim.
+
+	bool dongu = true; //for'un dışına bağlayıcı bir değişken atamamız lazım.
+	
+    for (; dongu ;)
+    {
+         if(true)
+        {
+            dongu = !dongu; //tam tersini donguye atarsak false olup bir sonraki turde sonsuz döngüden çıkarır.
+        }
+    }    
+		
+---------------------------
+
+while ile Sonsuz Döngüler
+
+while (true)
+{
+....
+}
+
+
+Örnek: //mesela mouse tıklanana kadar döngüye devam eden bir kod olsun.
+
+bool durum = false;
+while(!durum) // true verseydik direkt durum yazabilirdik.
+{
+	if(true) //burada tıklanmış olsun.
+	{
+		durum = !durum; //fantezi aradık. Maksat farklılık.
+	}
+}
+
+---------------------------
+
+Do While ile Sonsuz Döngüler
+
+do{
+.
+.
+} while (true);
+
+Sonsuzluktan çıkmak için ise;
+
+bool durum = true;
+
+do{
+	if(true)
+	{
+		durum = !durum;
+	}
+	
+} while (durum);
+
+-------------------------
+
+İç İçe Döngüler Nelerdir?
+
+for(int i = 0; i < 10; i++)
+{
+	for( int j = 0; j < 5; j++)
+	{
+		while(true)
+		{
+		...
+		}
+	}
+}
+
+Örnek:
+
+for(int i = 0; i < 10; i++) //burada i kullandık. 10 kere döner.
+{
+	for(int j = 0; j < 5; j++) //burada farklı bir harf kullanmaya özen göstermeli. 10*5 kere 50 kere döner.
+	{	
+		for(int o = 0; o < 3; o++) //yine harf değişelim. 10*5*3 150 kere döner.
+		{
+		int p = 0;
+		
+			while(p < 4)
+			{
+				p++; // 10 * 5 * 3 * 4 = 600 kere döner.
+			}
+		}
+	}
+}
+
+- İç içe döngülerde maliyet tüm döngülerin maliyetinin/tur sayısının/periyodik çalışmasının çarpımına eşittir.
+- Dıştaki döngünün 1 turunda alttaki döngü tam turunu yapar.
+
+------------------
+
+Foreach Bir Döngü mü? İterasyon mu?
+
+- İterasyondur. (Kandırıldık. Döngü değilmiş.)
+
+- Döngü, belirli bir kombinasyon eşliğinde çalışan ve belirli bir şarta bağlı olan periyodik işlemler gerçekleştiren yapılanmadır.
+- İterasyon ise mantığında ne kombinasyon ne şart vardır. İterasyondaki sonraki veri, öteki veri anlamına gelen itere etmek fiili vardır. (ileride)
+Bir veri kümesi üzerinde işlem yapmamızı/verileri elde etmemizi sağlayan yapılanmadır.
+
+-------------------

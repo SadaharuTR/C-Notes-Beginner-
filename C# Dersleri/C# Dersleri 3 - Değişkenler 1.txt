@@ -1,0 +1,333 @@
+DEĞİŞKENLER
+
+- İşlenecek veriler RAM'de tutulur. Yazılımda veri tutulmaz. RAM'den alınıp RAM'e verilir.
+Bunun için değişkenler kullanılır. 
+- Yazılımda işlenecek veriyi yazılım adına RAM'e yerleştirebilmek için değişkenleri 
+kullanırız.
+
+- C# Programlama dilinde RAM'de veri tutabilmek/depolayabilmek için tanımlanacak olan
+değişkenin türü/veri türü bildirilmelidir. Tür elimizdeki veriye göre bildirilir.
+
+- Bir değişkenle RAM'de alan tahsisinde bulunulduğunda buna Değer Türlü - Value Type
+değişken diyoruz. Yani tuttuğu değer bir normal değer olan değişkenlerdir. 
+
+Değer Türlü Değişkenler : Sadece bir değeri tutan değişkenlerdir. Ad, soyad, doğum tarihi..
+
+Primitive Type : En ilkel tür. byte: primitive türdür. Byte'lardan bir araya gelmiş olan
+decimal ise primitive değildir lakin value type'dır. 
+
+Değişken tanımlarken RAM'e tutulacak veriye uygun bir alan tahsisinde bulunması
+gerekecektir. RAM'de alan tahsisinde bulunabilmek için ilgili değişkenin türünde
+hareket edilir.
+
+Bir türde tanımlanmış alana farklı bir türde değer atayamayız.
+
+bool - mantıksal - doğru ya da yanlış : 0-1
+char - metinsel - karakterler
+
+kalanı sayısal. byte, short, int, float, double...
+- Değişkenlerin max-min aralıkları vardır. Min değere uyarak optimize tür belirlemek önemli olabilir.
+- string özel durum. Bir değer türü değildir bir referans türüdür. İleride!
+
+------------------
+
+Console.WriteLine(typeof(tür).IsPrimitive) -> fonksiyonunu çağırarak primitive kontrolü yapılabilir.
+	             decimal, int, byte -> False, true, true yanıtlarını alırız.
+	  
+-----------------
+
+C# Temel Kuralları
+
+{.....kod mod cort....} -> Scope, faaliyet alanı.
+
+Dil Özellikleri : 
+
+1. Bu dil büyük küçük harf duyarlılığına sahiptir. Ahmet ile ahmet farklıdır.
+
+2. Tip güvenliği olan bir dildir. 
+
+-----------------
+
+Değişken Tanımlama
+
+Prototip : 
+
+degisken_turu degisken adi; 
+
+; ile kod konseptini kapatırız.
+
+string adi; //RAM'de adi isminde string türünde bir değişken.
+
+int yasi; //ayni şekilde
+
+bool medenihal;
+
+string soyadi;
+
+RAM -> (int) yasi
+	   (bool) medenihal
+	   (string) soyadi  
+	   
+	   olarak oluştu.
+	   
+RAM'in Yapısı :  2 kısımdan oluşur.
+
+Stack: İçerisinde değer türlü değişken ve değerlerini tutabildiğimiz bölümdür.
+	Değişken türü, adı ve değerini tutar. Metot isimlerini de tutar.
+	İleride göreceğimiz metodların bellek adresleri STACK'de tutulur.
+	Not: Burada tutulan	değişken ismine nadirde olsa referans dendiğini görebilirsiniz.(Değer türlü olsa bile, karıştırılmaması lazım. Lafın gelişi bir deyimdir.)
+
+Heap: Nesneleri tutabildiğimiz bölümdür.
+
+Yazılan değişkenlere koda yazılır yazılmaz alan tahsisinde bulunulmaz. Kod ne zaman çalıştırılır,
+o alan compiler tarafından derlendikten sonra kodlara karşılık alan tahsis edilir.
+
+STACK, FIFO(First in First out) denilen mantığa göre çalışır. İlk giren ilk çıkar.
+Kodda yukarıdan aşağıya senkronizasyonda RAM'e yazılma aynı sırada yapılır.
+
+Değişken Tanımlama Kuralları
+
+- Tutacağımız değerin anlamını belirtecek şekilde isimlendirme yapılmalıdır.
+- Değişken isimleri ?/',. gibi özel karakterler barındıramaz. _ ise istisnadır.
+
+double stok_adedi; -> doğru
+
+- Değişken isimleri sayısal ifade ile başlayamaz. Ama sayılar kullanılabilir.
+
+int sayi1; -> doğru
+int 1sayi; -> yanlış
+
+- Bir scope içerisinde aynı isimde birden fazla değişken tanımlanamaz.
+
+İsimlendirme Kuralları
+
+1- PascalCase : Her kelimenin ilk harfi büyük yazılmalı. AdSoyad, TcKimlikNo, Satislar
+				Kısaltma iki harfliyse iki harfte büyük. In/Out = IO ya da InOutStream = IOStream
+
+2- Camel Case : İlk kelime haricindeki tüm kelimelerin baş harfi büyüktür.
+				satisDurumu, personelAdi, userName, user, userNamePassword
+
+3- Snake Case : Tüm kelimeler küçük ve arları alt tire.
+				kullanici_adi, isim_soyisim	
+				
+--------------------
+
+Değişken isimlerini @ operatörüyle tanımlama : 
+
+- Değişken isimlerinde programatik keyword kullanılamaz. Eğer ki bir değişken isminde programatik
+olarak kullanılan bir keyword'ü vermek istiyorsanız bunu @ operatörü ile ezebilir ve verebilirsiniz.
+
+string static; -> olmaz. static bir keyword.
+
+string @static; -> olur. Artık normal bir metin.
+
+Anlamlı keyword olmasa da olur. string x; ile string @x; aynıdır.
+
+-----------------
+
+Tanımlanmış Değişkene Değer Atama
+
+int x = 123;
+
+= operatörü, assign - atama operatörüdür. Sağdaki değeri soldaki değişkene, field'a, property'e atar.
+
+string adi = "Faruk";
+string soyadi = "Darmad";
+char basHarf = 'g';
+
+Stack'de yukarıdan aşağıya sırasıyla mevcut hale geldi.
+
+Tanımladıktan sonra da değer atayabiliriz.
+
+int x; //stack de x oluştu.
+.
+.
+.
+x=120; //x'e 120 atandı.
+
+Eğer ki bir deişken ismi assign operatörünün soluna çağırılıyorsa o alana değişkenin
+kendisi gelecektir.
+
+Örnek;
+
+int a = 5;      //Stack (int) a = 5
+int b = 15;     //Stack (int) b = 15
+string c;		//Stack (string) c
+
+c = "Hilmi";	//Stack (string) c = "Hilmi" //Hilmi değeri 3. satırda atanacaktır.
+
+Örnek;
+
+int x = 5;            	//Stack (int) x = 5
+char y = 'a';			//Stack (char) y = 'a'
+bool p;					//Stack (bool) p 
+delimal d = 3.14m;		//Stack (decimal) d = 3.14
+p = false;				//Stack (bool) p = false 3. satırda üzerinde değişiklik yapılacaktır.
+
+Bir değişkene atanan en son değer geçerlidir.
+
+int a = 5;    stack'de a = 5 sonra 15 sonra 20 oldu.
+
+a = 15;
+a = 20;
+
+Tanımlanmış olan değişkene türüne uygun değer atanmalıdır.
+
+------------------
+
+Değişkene Değer Atama Kuralları
+
+- Metinsel Değerler
+
+string: metinsel ifadeler çift tırnak içerisinde yazılmalıdır.
+
+"Ali", "1245789987" -> Bir sayısal olarak metinsel olarak turuluyorsa eğer yazılım
+açısından o metinsel bir ifadedir. Üzerinde matemetik işlem yapılamayan "Ali"'den farkı 
+olmayan bir değerdir.
+
+"Ali 28 yaşındadır." -> string
+
+"" içerisine yazılan tüm değerler string keyword'ü ile karşılanmalıdır.
+
+- Karaktersel Değerler
+
+char: '' tek tırnak içerisine yazılmalıdır.
+
+char x = 'g';
+
+'.' , ',' , '?'
+
+'g' -> karakterdir.
+"g" -> string'dir.
+
+- Mantıksal İfadeler
+
+bool: true ya da false ile belirtilir.
+
+bool medeniHal = false;
+bool medeniHal = true;
+
+- Sayısal Değerler
+
+Sayısal ifadelere değer atarken direkt olarak değeri göndeririz.
+
+Sayısal ifadelerde bir değer default olarak integer kabul edilir.(Önemli)
+
+Ondalıklı sayılar, tüm ondalıklı sayılar tam sayıları karşılayabilir, kapsar.
+
+float x = 3.14f ya da 3.14F
+
+float türünde bir küsüratlı değer tutarken ilgili değerin sonuna f ya da F gelmelidir.
+Benzer kurallar double ve decimal içinde geçerlidir.
+
+double x = 3.14d ya da 3.14D ya da 3.14
+Ondalıklı türlerde bir değer defaul olarak double'dır. O yüzden yanına d ya da D yazmasakta olur.
+
+decimal x = 3.14m ya da 3.14M
+
+Bir sayısal tür değer aralığına girmeyen değeri tutamaz.
+
+---------------------
+
+Tuple Türüyle Değer Atama
+
+- Tek bir syntax üzerinde birden fazla değişken tanımlamamızı sağlayan bir nesnedir.
+
+(int a, int b, type c, type d ...)z; -> z tuple değişkendir. İçerisinde birden fazla
+farklı veya benzer türde değişken tanımı mevcuttur.
+
+(int a, string b)c = (5,"ahmet"); -> 5 a'ya ahmet ise b'ye gidecektir.
+
+c.a -> int değişkeni getirecektir.
+c.b -> string değişkeni getirecektir. 
+
+(int yas, string adi, bool medeniHal)kisi = (28, "Ali", true);
+kisi.yas = 5; -> değeri değiştirmek istersek.
+
+(int x, char y)z ;
+z = (5, 'a');
+
+-------------
+
+Literal Düzenlemeler C# 7.0
+
+- Kompleks sayısal ifadeleri _ alt tire ile düzenleyebiliriz.
+
+int sayi = 1000000; yerine int sayi = 1_000_000; yazabiliriz.
+
+-------------
+
+Değişkenlerin default değerleri;
+
+İleride OOP denilen yaklaşımı gördüğümüzde class içerisinde tanımlanan değerlerin
+default değerlerinin otomatik atandığını konuşacağız.
+
+string : null (değersiz), boş demek değildir.
+
+char : '0'
+
+sayisal ifadelerde : 0
+
+bool : false
+
+Default keyword'ü içerisine verilen türün varsayılan değerini geri döndürür.
+
+bool x = default(bool); -> x false
+int y = default(int); -> y 0
+string z = default(string); -> z null
+char c = default(char); -> c \0
+
+Main içerisinde oluşturulan değişkenlerin ilk değerlerini manuel atmaya özen gösterilmelidir.
+
+--------------
+
+Literal Düzenlemeler C# 7.1
+
+Üstteki default'lara değişiklik geldi.
+
+bool x = default; ->dememiz artık yeterli.
+
+--------------
+
+Tanımlanmış Değişkenin Değerini Okuma
+
+int x = 5;
+
+- Bir değişkenin değerini elde edebilmek için değişkenin isminden faydalanılırız.
+Bir değişkenin adı assign = operatörünün sağında yahut metodların parametrelerinde
+çağırılıyorsa ilgili değişkenin değeri gönderilir.
+
+Console.WriteLine(x); //x'in kendisi değil değeri gidecektir.
+
+int y = x; //x'in değerini y'ye gönderir. Gelen değer y'ye atanır.
+
+STACK
+(int) x=5
+(int) y=5
+
+Örnek;
+							STACK
+int a = 5;					(int) a = 5
+int b = 10;					(int) b = 10 -> b = 5
+int c = b;					(int) c = 10 -> c = 5
+int d = a;					(int) d = 5  
+b = a;
+c = b;
+
+Örnek;
+				STACK
+int a = 5;      (int) a=5  -> a=5 //a'nın önceki varolan 5 değeri silinecek, 5 değeri tekrardan a'ya verilmiş olacak.
+a = a;		
+
+--------------
+
+Değeri Olmayan Değişkenler
+
+Class içerisinde tanımlanan değişkenlerde varsayılan değer otomatik atanır.
+Main içerisinde atanma olmaz. İlk değeri manuel vermediğimiz sürece işlem yapamayız.
+Main gibi bir metod içerisinde tanımlanan değişkenlerin ilk değerlerini manuel olarak 
+vermeyi alışkanlık haline getirmek gereklidir.
+
+--------------
+
+

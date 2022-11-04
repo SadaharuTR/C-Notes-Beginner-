@@ -1,0 +1,137 @@
+object Türü
+
+object: Tüm türleri karşılayabilen bir türdür.
+
+- Tüm türler varsayılan olarak object'ten türerler. ((string, char, number, bool))
+Bu yüzden tüm türleri karşılayabilmektedir.
+
+- Referans türlü bir değişkendir. Lakin değer türlü değerleri de karşılayabilir.
+
+string adi = "Ali"; 
+
+object adi = "Ali";
+
+- Object değişkenler ilgili değişkenleri RAM'de object türde
+tutarlar. Lakin verinin öz türünü de içerisinde bozmadan saklarlar. Yani object içerisindeki
+veri kendi öz türündeki veri olarak tutulur.
+
+- Bu durum object içerisindeki veriyi kendi türünde tekrar elde edebiliriz anlamına gelmektedir.
+Veriyi object içerisine koymaya -boxing- veriyi kendi türünde elde etmeye -unboxing- diyoruz.
+
+------------------
+
+Boxing : Object türdeki bir değişkene herhangi bir türdeki bir değeri göndermektir.
+
+object yas = 28; //boxing. buraya yerleştirilen 28 int olarak yerleştirilir.
+
+- Boxing işlemi neticesinde ilgili değer objectin içerisinde kendi türüyle saklanır.
+- Lakin yaş değişkeni artık 28 değerini bize object türünde getirecektir.
+- Burada object türden elde edilen değer üzerinden türüne özgü işkemler gerçekleştirilemez.
+Örneğin sayısal bir değer varsa o değer object olarak geleceğinden matematiksel işlemler
+yapılamaz.
+
+- Object bir değişkenin içerisindeki değer üzerinde türüne özgü işlemler yapabilmek için
+o objectin içerisinde değeri kendi/has/özgün türünde elde etmemiz gerekmektedir. İşte bu işleme de unboxing denir.
+
+- Herhangi bir değer object türe assign ediliyorsa eğer bu işlem boxing'dir.
+
+-----------------
+
+CAST OPERATÖRÜ
+
+Boxing edilmiş bir veriyi kendi türünde elde etmemizi sağlayan bir operatördür.
+
+- Tür dönüşümlerinde bilinçli tür dönüşümü konusunda ve kalıtımsal durumlarda cast operatörü kullanılır.
+
+() cast operatörü parantezdir.
+Cast operatörü object olan değişkenin solunda o object'i hangi türünde unboxing etmek istiyorsak parantez içerisinde
+hedef türü bildirerek kullanılır.
+
+int a = 5;
+object b = a; 
+(int) b; // Cast operatörü b değişkeni/objesi içerisindeki değeri bana int olarak ver demektedir.
+
+Örnek;
+
+object _yas = 28;
+
+Console.WriteLine(_yas * 5);  -> Hata.
+
+int yas = (int)_yas; //unboxing 
+
+Console.WriteLine(_yas * 5); -> Şimdi çalışır.
+
+- UnBoxing esnasında Boxing edilmiş verinin orjinal türü neyse o bildirilmelidir.
+- Yani int türünde boxing edilmiş bir değeri int türünde UnBoxing etmelisiniz. Chat türünde UB etmeye çalışırsanız! Patlarsınız.! Runtime error.
+
+----------------
+
+var Keyword'ü;
+
+Tutulacak değerin türüne uygun bir değişken tnaımlayabilmek için kullanılan keyword'dür. 
+var keyword'ü kendisine atanan değerin türüne bürünür. (compiler'a bırakılır o iş)
+
+var medeniHal = true; -> bool olduğundan dolayı var bool turune bürünecektir.
+
+Bir keyword'dür bir tür değildir.
+
+Esas kullanım amacı farklı diller arasında desteklenmeyen türlerdeki verileri karşılayabilmek için oluşturulmuştur.
+Diller arasındaki entegrasyonda kullanılıyordu.
+
+var yas = 25; -> Türünü bilebildiğimizverilerin dğeişken türlerini var ile compiler'a yaptırmak ufakta olsa maliyettir.
+				 Bu maliyetten kurtulmak için manuel belirtmek daha iyi.
+				 
+string adi = "Ali";
+
+- var keyword'ü ile tanımlanan değişkenin değeri tanımlanma aşamasında verilmelidir. Ki türü belirleyip direkt ona dönüşebilsin.
+- var keyword'ü ile tanımlanan değişkene ilk değer verildikten sonra o değerin türüne bürüneceği için sonraki
+durumlarda değeri farklı türlerde verilemez.
+
+var x = 3.14; -> var artık bir double'dır.
+
+x = "Ali"; -> Hata verir. String değil.
+
+- var ile object arasındaki fark; var bir keyword iken object ise bir türdür. var atanan değerin türüne bürünürken, object atanan değeri
+boxing yaparak object'e dönüştürür.
+
+-------------------
+
+dynamic Keyword'ü
+
+var a = 5; -> compiler süresinde/development aşamasında a, int davranışı sergileyecektir.
+
+dynamic a = 5; -> development aşamasında a'nın hala dynamic olduğu gözlemlenecektir. Ne zamanki uygulama derlenip çalıştırılır.
+o zaman dynamic ilgili değerin türüne bürünmüş olacaktır.
+
+var derleme aşamasında değerin türüne bürünürken, dynamic ise runtime'da verilen değerin türüne bürünecektir.
+
+Not: GetType() türün ne olduğunu söyleyen fonksiyondur. İşe yarayabilir.
+
+Örnek;
+
+dynamic a = "5";
+Console.WriteLine(a*5); 
+
+Kod compiler aşamasında hata vermez. Çünkü dynamic henüz atanmadı. Runtime'da hatayı verecektir. 
+Runtime'da a'nın string 5 değeri olduğunu anlar.
+
+- dynamic keyword'ü runtime'da türü belirleyecektir. Lakin kararlı davranmayacaktır.
+
+Örnek;
+
+dynamic x = "Ahmet";
+Console.Writeline(x.GetType());
+x = 3.14D;
+Console.Writeline(x.GetType());
+
+Bu kod çalışır.Çalışma ekranında sonuç: System.String
+										System.Double olacaktır.
+										
+- Dynamic runtime'da esnek çalışmayı sağlar.
+- Türünü bilmediğimiz bir veri geldiğinde runtime'da dynamic'te karşılayabiliriz.
+
+- Uzaktan gelen verilen var keyword'ü ile karşılanamaz. Çünkü var keyword'ü tanımlandığı esnada verinin atanmasını ister.
+
+---------------------
+
+

@@ -1,0 +1,244 @@
+Kod Nasıl Çalışır?
+
+Yazılımlar varsayılan olarak senkron çalışırlar.
+
+int a;				
+int b = 5;
+string c = "Ahmet"; //Aşağı doğru tek tek ilerler.
+
+Lakin ileri düzey prgramlama ile kodumuzu asenkron hale getirebilmekteyiz.
+
+Genel olarak sağ'da işlem yap, sola assign et mantığını kullanırız.
+
+--------------
+
+; noktalı virgül operatörü: C# programlama dilinde kodun konseptinin bittiğini ifade eder.
+
+- Kullanılmadığında compiler hata verir. Derlemez.
+- Bir konseptin sonunda istenildiği kadar kullanılabilir.
+
+int a = 5;;;;;;;;;; // Sorun yok. Ama çirkin.
+
+int a = 123.ToString().Split().Rank; //konsepti sonlandırdık.
+
+-------------------
+
+NOT: Kod aslında satır satır okumaz! Yukarıdan aşağıya okur diye bir kural yoktur!
+
+Compiler kodu konsept konsept okur! 
+
+Örnek;
+{
+int 
+	a 
+	= 
+	5
+	;
+	string b = "Jojo";
+	
+} // Derlenir.
+
+------------------------
+
+Tür Dönüşümü (Type Conversion) Nedir? Neden Verilerin Türlerini Değiştirmek/Dönüştürmek İsteriz?
+
+- Yazılım sürecinde elimizdeki değerlerin türlerini değiştirebilmekteyiz.
+- Tür dönüşümleri elimizdeki veriyi türe uygun işlemlere tabii tutmak için uygulanabilir.
+- Farklı servislerden gelen değerleri uygun türlere dönüştürmek isteyebiliriz.
+- Bir int değeri decimal'e dönüştürerek aralığını arttırabiliriz.
+
+- Tür dönüşümlerinde amaç türü dönüştürmektir. Yani elimizdeki veriye uygun bir türe geçiş yapmaktır. Elimizdeki veriyi uygun olmayan bir türe
+dönüştürmeye çalışırsak bu mümkün değildir. Hata verecektir.
+- Eldeki türe uygun dönüşüm yapılmalıdır. Amaç veriyi değiştirmek değildir. Amaç elimizdeki veriyi karşılayabilecek farklı bir türe dönüştürmektir.
+
+Örnek;
+
+{string}"435" -> int ve decimal dönüşür. Ama bool dönüşmez.
+{string}"Ali" -> int, dec, char... dönüşmez.
+{string}"a"   -> int dönüşmez ama char dönüşebilir.
+{string}"true"-> bool'a dönüşebilir ama int'e dönüşmez.
+
+{int} 123 -> string ve char(istisna) dönüşür, bool'a dönüşmez.
+
+-------------
+
+Metinsel İfadelerin Diğer İfadelere Dönüştürülmesi - Parse Fonksiyonu
+
+- Parse metodu/fonksiyonu sadece string dataları hedef türe dönüştürürken kullanılır!
+
+type y = type.Parse(stringIfade); 
+
+Örnek;
+
+string x = "123";
+
+short x2 = short.Parse(x);
+
+Console.WriteLine(x2 * 5);
+
+ya da
+
+Console.WriteLine(short.Parse(x) * 5);
+
+Örnek;
+
+string a = "Ahmet";
+
+int a2 = int.Parse(a); //syntax'da problem olmaz. Runtime'da error verir. String harf, int'e dönüşmez.
+
+Örnek;
+
+string medeniHal = "true";  //string medeniHal = "Evli"; deseydik hata verirdi. Bool'da evli diye bir şey yok.
+
+bool medeniHal2 = bool.Parse(medeniHal);
+
+Console.WriteLine(medeniHal2); //string "" içerisine "true" ya da "false" yazdığı sürece hata vermez. Ekrana true ya da false yazdırır.
+
+-------------------------
+
+Metinsel İfadelerin Diğer İfadelere Dönüştürülmesi - Convert Fonksiyonları
+
+Örnek;
+
+string x = "25";
+
+int x2 = Convert.ToInt32(x);
+
+- Parse'da ne anlatıldıysa burada da geçerli.
+
+Örnek;
+
+string x = "3,14"; //nokta ile yazarsak ekrana 314 yazar. Burada virgül kullanılmalı.
+
+double d = Convert.ToDouble(x);
+
+-------------------------
+
+Diğer İfadelerin Metinsel İfadelere Dönüştürülmesi - ToString Fonksiyonu
+
+Örnek;
+
+int a = 25;
+string a2 = Convert.ToString(a);
+
+Örnek;
+
+float f = 35;
+string f2 = f.ToString();
+
+- Tür dönüşümlerinde genelde diğer türlerden string'e bir dönüşüm olduğu için bunu kolaylaştırmak adına ToString fonksiyonu oluşturulmuştur.
+
+------------------------
+
+C# Sayısal İfadelerin Kendi Aralarında Tür Dönüşümü!
+
+- Bir sayısal değer kendi türünden daha büyük değer aralığına sahip olan diğer türlere dönüştürülürken burada herhangi bir işlem yapmamıza gerek kalmayacağı için
+bu işleme -bilinçsiz tür dönüşümü- denir.
+
+- Bir sayısal değer kendi türünden daha küçük değer aralığına sahip olan diğer türlere dönüştürülürken hedef türün ilgili veriyi karşılayamama riskinden dolayı
+buradaki işlemi bilinçli yapmamız gerekecektir -bilinçli tür dönüşümü-.
+
+- Bir sayısal türün alt türüne bir veriyi dönüştürdüğümüzde eğer ki o veri alt türün değer aralığına girmiyorsa veri kaybı söz konusu olacaktır.
+
+C# Bilinçsiz Tür Dönüşümü - Implicit Type Conversion
+
+int a = 3000;
+
+float f = a; -> şu anda burada bir tür dönüşümü söz konusudur. Lakin buradaki tür dönüşümü bizim kararımız/bilincimizle yaptığımız bir dönüşüm değildir.
+
+Örnek;
+
+short x = 123;
+long y = x;
+
+C# Bilinçli Tür Dönüşümü - Explicit Type Conversion
+
+int x = 60000;
+short y = x; //Hata.
+
+- Boxing işlemlerinden tanıştığımız cast operatörü, bilinçli tür dönüşümünde de sayısal türleri kendi aralarında dönüştürürken iradeli bir şekilde bu işlerin
+yapılmasını sağlayan bir operatördür.
+
+int x = 3000;
+short y = (short)x; //varsa bir veri kaybı ben (type) ile bunu bilinçli olarak üstleniyorum.
+
+Değer aralığının modunu alıp sonucu ekrana yazdırır.
+
+Örnek; (Önemli)
+
+int a = 3000;
+
+short s = (byte)a; //int'ten byte türüne bilinçli bir dönüşüm yapılmıştır. Sonra da byte'dan short'a atanarak bilinçsiz tür dönüşümü yapılmıştır.
+
+--------------------
+
+C# checked Bloğu İle Bilinçli Tür Dönüşümü Kontrolü
+
+checked {
+//veri kaybı söz konusu olan kodları bu scope'ların içine yazmalıyız.
+int a = 500;
+byte b = (byte)a;
+Console.WriteLine(b);
+}
+
+- checked, bilinçli tür dönüşümü esnasında bir veri kaybı söz konusu olursa eğer runtime'da bizleri uyaracak olan bir kontrol mekanizmasıdır.
+
+C# unchecked Bloğu İle Bilinçli Tür Dönüşümü Kontrolü
+
+unchecked{
+
+int a = 500;
+byte b = (byte)a;
+Console.WriteLine(b);
+}
+- Hata vermez. Veri kaybı olur.
+- Normal bir kod bloğu default olarak unchecked'dir.
+
+---------------------
+
+bool Türünün Sayısal Türe Dönüştürülmesi
+
+	bool b = true;
+	int i = Convert.ToInt32(b);
+ // long i = Convert.ToInt64(b); 
+ // short i = Convert.ToInt16(b);
+ // decimal i = Convert.ToDecimal(b);
+	Console.WriteLine(i);
+	
+- Ekrana 1 yazacaktır. False olsaydı 0 yazacaktı.
+- Elimizdeki herhangi bir mantıksal değeri herhangi bir sayısal değere convert edersek ilgili değerin mantıksal karşılığını elde edebiliriz.
+
+Sayısal Türlerin bool Türüne Dönüştürülmesi
+
+int i = 1;
+bool b = Convert.ToBoolean(i);
+Console.WriteLine(b);
+
+- Ekrana i = 0 ise False yazacaktır. 0 harici her değerinde True yazacaktır. (-123, 1000, 1,...)
+- Tür dönüşümlerinde dönüştürülecek türün hedef türe uygun olması gerekiyordu. Burada bir istisna var. 
+
+-----------------------
+
+char Türünün Sayısal Türe Dönüştürülmesi (ASCII)
+
+- ASCII, bilgisayardaki her bir karakterin sayısal bir karşılığı vardır. Bu sayısal değerlere
+ASCII kaynak kodu denmektedir.
+
+- Örneğin, a harfi 97'ye A ise 65'e denk gelir.
+
+char a = 'a';
+int _a = (int)a;
+
+Console.WriteLine(_a); // Ekrana 97'yi getirir.
+
+- Cast operatörünü, unboxing, bilinçli tür dönüşümü ve burada da kullandık.
+
+Sayısal Türlerin char Türüne Dönüştürülmesi
+
+int oascii = 111;
+int Oascii = 79;
+
+Console.WriteLine((char)oascii); // ekrana küçük o
+Console.WriteLine((char)Oascii); // ekrana büyük O yazdırılır.
+
+	

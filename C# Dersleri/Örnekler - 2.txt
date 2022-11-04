@@ -1,0 +1,177 @@
+Örnek:
+
+Dizinin elemanlarını kullanıcıdan alma ve ekrana yazdırma.
+
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           int[] sayilar = new int[4];
+
+           for (int i = 0; i < sayilar.Length; i++)
+           {
+                System.Console.Write("Sayılar dizisinin " + (i) + ". index değerini giriniz: ");
+
+                sayilar[i] = Convert.ToInt32(Console.ReadLine());
+           }
+
+            System.Console.WriteLine("**************");
+
+            for (int i = 0; i < sayilar.Length; i++)
+            {
+                System.Console.WriteLine(sayilar[i]);    
+            }
+
+        }
+    }
+}
+
+Çıktı:
+
+Sayilar dizisinin 0. index degerini giriniz: 40
+Sayilar dizisinin 1. index degerini giriniz: 50
+Sayilar dizisinin 2. index degerini giriniz: 40
+Sayilar dizisinin 3. index degerini giriniz: 06
+**************
+40
+50
+40
+6
+
+Örnek:
+
+Kullanıcıdan girdiği sayı dizinin içinde var mı diye kontrol eden varsa kaç tane olduğunu söyleyen yoksa da yoktur diye uyaran program.
+
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+             int[] sayilar = {10,10,20,30,20,30,40,50,70,55,65,70,55,65,5,20,35,5,20,34,65,90};
+             int adet = 0;
+             int sayi;
+
+             System.Console.Write("Lütfen bir sayı giriniz: ");
+             sayi = Convert.ToInt32(Console.ReadLine());
+
+            for (int i = 0; i < sayilar.Length; i++)
+            {
+                if( sayi == sayilar[i])
+                {
+                    adet++;
+                }           
+            }
+            if (adet == 0)
+            {
+                System.Console.WriteLine("Girdiğiniz değer bulunamadı.");
+            }
+            else
+            {
+                System.Console.WriteLine("Girdiğiniz değer dizide bulundu.");
+                System.Console.WriteLine("Adet: " + adet);
+            }
+        }
+    }
+}
+
+Çıktı:
+
+Lütfen bir sayi giriniz: 10
+Girdiginiz deger dizide bulundu.
+Adet: 2
+
+Çıktı:
+
+Lütfen bir sayi giriniz: 300
+Girdiginiz deger bulunamadi.
+
+Örnek:
+
+Kullanıcıdan 10 tane int değer alan ve ;
+
+1- Kaç adet tek, çift eleman olduğunu,
+2- Çift değerlein toplamını, tek değerlerin toplamını bulan.
+3- Son olarak da çift değerlerin toplamı, tek değerlerden büyükse çift değerlerin toplamı büyüktür yazdıran tersi geçerli ise tek değerlerin toplamı büyüktür yazdıran program.
+
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+             int[] sayilar = new int [10];
+             int tekAdetToplam = 0;
+             int ciftAdetToplam = 0;
+
+             int tekSayilarinToplami = 0;
+             int ciftSayilarinToplami = 0;
+             
+             int kullaniciDeger;
+
+             for (int i = 0; i < sayilar.Length; i++)
+             {
+                System.Console.Write((i) + ". index değerini giriniz: ");
+                kullaniciDeger = int.Parse(Console.ReadLine());
+
+                sayilar [i] = kullaniciDeger; //dizinin içini kullanıcıdan aldığımız değerler ile doldurduk.
+             }
+
+             for (int j = 0; j < sayilar.Length; j++)
+             {
+                if(sayilar[j] % 2 == 0)
+                {
+                    ciftAdetToplam++;
+                    ciftSayilarinToplami += sayilar[j];
+                }
+                else
+                {
+                    tekAdetToplam++;
+                    tekSayilarinToplami += sayilar[j];
+                }
+             }
+
+             if(ciftSayilarinToplami > tekSayilarinToplami)
+                System.Console.WriteLine("Çift sayıların toplamı tek sayıların toplamından büyüktür.");   
+             else
+                System.Console.WriteLine("Tek sayıların toplamı çift sayılarından büyüktür.");   
+
+             System.Console.WriteLine("*********************");
+             System.Console.WriteLine("Çift sayıların Toplamı: " + ciftSayilarinToplami);
+             System.Console.WriteLine("Çift sayıların adedi: " + ciftAdetToplam);
+
+             System.Console.WriteLine("*********************");
+             System.Console.WriteLine("Tek sayıların Toplamı: " + tekSayilarinToplami);
+             System.Console.WriteLine("Tek sayıların adedi: " + tekAdetToplam);
+        }
+    }
+}
+
+Çıktı:
+
+0. index degerini giriniz: 10
+1. index degerini giriniz: 20
+2. index degerini giriniz: 50
+3. index degerini giriniz: 40
+4. index degerini giriniz: 10
+5. index degerini giriniz: 1
+6. index degerini giriniz: 2
+7. index degerini giriniz: 5
+8. index degerini giriniz: 8
+9. index degerini giriniz: 9
+Çift sayilarin toplami tek sayilarin toplamindan büyüktür.
+*********************
+Çift sayilarin Toplami: 140
+Çift sayilarin adedi: 7
+*********************
+Tek sayilarin Toplami: 15
+Tek sayilarin adedi: 3
+

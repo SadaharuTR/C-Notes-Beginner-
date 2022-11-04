@@ -1,0 +1,353 @@
+String Türü
+
+- Referans türlü olupta programlama dilinde bir keyword'le karşılanabilen/keyword barındıran tek türdür.
+
+int a = 5;
+string b = "Hilmi";
+
+STACK		   	HEAP
+
+(int) a = 5 	"Hilmi"	
+
+(string)b
+
+Değişken kısmı Stack'te değer kısmı HEAP'te tutulacaktır. b, "Hilmi"yi referans eder.
+
+-------------------------
+
+Null - Empty Durumları, Farkları
+
+- Bir değişken/nullable/referans eğer ki null alıyorsa bu durum ilgili değişkenin herhangi bir alanı tahsis etmediği
+anlamına gelir.
+
+STACK		   	HEAP
+x						//x null demek bir değer karşılığı yok demek.
+
+- Bir değişken/nullable/referans eğer ki empty ise bu değişkenin değeri yok anlamına gelir. İçi boş olan ama alan tahsisi yapılmış bir değişkendir.
+
+- Değer türlü değişkenler null alamazlar. Sadece referans türler null alabilir. 
+Değer türlü değişkenlerin null alabilmesi için nullable(?) olmaları gerekir.
+
+int? a = null;
+
+- Tüm değerlere empty atanabilir. Default değerlerin olduğu durumlar empty olarak geçerlidir.
+
+int a = 0;
+bool b = false;
+int[] x = new int[55];
+
+- Empty dendiğinde aklınıza string'e "" değerinin verilmesi gelsin.
+
+STACK		   	HEAP
+x---------------->     //karşılığı var ama empty. Boş. Bellekte yer kaplayacak ve alan tahsisinde bulunmuş olacaktır.
+
+string a = "";
+string a2 = string.Empty;					
+
+- İki varyasyonda empty işlemi yapılabilir.
+
+- Null olan bir değer üzerinde işlem yapmaya çalıştığımızda runtime hatası meydana gelir.
+  Empty olan bir değer üzerinde işlem gerçekleştirilebilir.
+  
+---------------------------
+  
+String İfadelerde IsNullOrEmpty Kontrolü
+  
+- Elimizdeki string ifadelerin işleme tabi tutulmasından önce kesinlikle kontrol etmemiz gerekli.
+
+string x = "";
+//string x = string.Empty;
+
+if(x != string.Empty && x is not null)
+{
+	//ilgili operasyonlar...
+}
+
+ya da
+
+- IsNullOrEmpty fonksiyonu elimizdeki string ifadenin null yahut empty olup olmasa durumları hakkında bir check yapar ve geriye bool türde sonuç döner.
+ 
+if(string.IsNullOrEmpty(x)) // eğer ki değer null ya da empty ise true değilse false dönecektir.
+{
+
+}
+
+fakat genel kullanımda
+
+if(!string.IsNullOrEmpty(x)) // değilse ilgili operasyonları yap şekline kullanılır.
+{
+
+}
+
+String İfadelerde IsNullOrWhiteSpace Kontrolü
+
+string x = "  "; //boşluk barındıran değer
+
+if(string.IsNullOrWhiteSpace(x))
+{
+
+}
+
+IsNullOrWhiteSpace fonksiyonu elimizdeki string ifadenin null, empty yahut boşluk karakterlerinden ibaret olma durumunda geriye bool true değerini döndürür.
+
+if(!string.IsNullOrWhiteSpace(x)) //genelde bu şekilde kullanılır.
+
+---------------------
+
+- String ifadeler aslında bir char dizisidir. Yazılım açısından string ifade yoktur. Esasında karakterlerin bir araya gelmiş hali vardır. Karakterleri de bir araya
+getirebilecek yegane şey de bir dizidir.
+
+- String ifadeler yazılımsal açıdan bilgisayarda bir char dizisi olarak tarif edilmekte ve o şekilde tutulmaktadırlar.
+
+string metin = "You'll never walk alone!";
+
+- String ifadeler özünde bir dizi olmasından dolayı referans türlü değişkenlerdir. Çünkü diziler nesnedirler, referans türlüdürler ve HEAP'te tutulurlar.
+
+- String ifadeler char dizi olduklarından dolayı yapısal olarak her bir karakter baştan sona otomatik index'lenmektedir. Dolaysıyla string bir ifade üzerinde bizler
+indexer operatörünü de kullanabilmekteyiz.
+
+metin[3]; //You' 0 1 2 3. index tırnak işaretine denk gelecektir.
+
+CW(metin[3]); // ' yazar.
+
+CW(metin.Length); // Length de kullanılabilir.
+
+Array array = metin; //string özünde bir char dizisi olabilir ama yapısal olarak yine de string olduğu için Array referansına atanamaz. Array ile karşılanamaz.
+
+-----------------
+
+Döngülerle String Metin İçerisindeki Her Bir Karaktere Ulaşma
+
+string metin = "Aliiiii alidesideroo";
+
+for (int i = 0; i < metin.Lenght; i++)
+{
+	if(metin[i] == 'l');
+	CW(i);
+}
+
+İlgili metindeki l karakterlerinin bulunduğu index numaralarını elde ederiz.
+
+string metin = "Aliiiii alidesideroo";
+
+int i = 0;
+do
+{
+	if(metin[i] == 'l')
+		CW(i);
+	i++;
+		
+}while (i < metin.Length);
+
+----------------
+
+String İfadelerde + Operatörü Kullanımı
+
++ Operatörü kullanılabilmektedir. İki string ifade arasında yanyana birleştirme işlemini görür.
+
+string a = "merhaba", b = "dünya";
+
+Console.WriteLine(a+b); //Ekrana merhabadünya yazılır.
+
+- Bir string ifade herhangi bir tür + operatörü ile işleme tabi tutulabilir.
+- + operatörü string bir ifadeye herhangi bir türdeki ifadeleri işleme tabii tutarken object + string davranışı sergilemektedir.
+
+string a = "merhaba";
+int a2 = 5;
+
+a + a2 -> string left, object right ise string döndürür. Tam tersi de aynı. String'in yanında ne +'larsan object+string davranışı sergiler. Geriye string döndürür.
+
+- Dolayısıyla herhangi bir ifadeyi string'e dönüştürebilmek için o ifadeyi + "" ile işleme tutmak yeterli olabilir.
+
+Console.WriteLine(5 + 7 + 20 + "Ahmet"); //Ekrana 32Ahmet yazdırır. Önce aritmetik işlemi yapar.
+
+fakat
+
+Console.WriteLine("Ahmet" + 3 + 5 + 22); // Ekrana Ahmet3522 yazdırır.
+
+--------------------------------
+
+String Formatlandırma
+
+Örnek:
+
+String Formatlandırma örneği.
+
+string isim = "Ali", soyisim = "Gümüş", tcNo = "12345678910";
+int yas = 28;
+bool medeniHal = true;
+
+Console.WriteLine(" TC No: ................ olan ...... ....... şahsın bilgileri | Yaş : .. | Medeni Hal : .. ");
+
+noktalı yerlere değerleri uygun şekilde yerleştirmemiz lazım.
+
++ Operatörü ile Formatlandırma
+
+Console.WriteLine(" TC No: " + tcNo + " olan " + isim + " " + soyisim + " Adlı şahsın bilgileri | " + "Yaş : " + yas + " | Medeni Hal : " + (medeniHal ? "Evli" : "Bekar"));
+
+Not: String + ile birleştirme yapılırken ternary operatörünü paranteze almayı unutmamak lazım.
+
+Çıktı:
+
+TC No: ................ olan ...... ....... sahsin bilgileri | Yas : .. | Medeni Hal : .. 
+TC No: 12345678910 olan Ali Gümüs Adli sahsin bilgileri | Yas : 28 | Medeni Hal : Evli
+
+- Çok uzun ve maliyetli oldu.
+
+-----------------------
+
+string.Format Metotu İle Formatlandırma
+
+- "........{0}.............{1}..............{2}..............", degisken1, degisken2, degisken3
+
+- string.Format fonksiyonu metinsel kalibin içerisindeki indexsel belirlenen noktalara sırasıyla değer göndermemizi sağlayan bir fonksiyondur.
+
+string sonuc = string.Format(" TC No: {0} olan {1} {2} şahsın bilgileri | Yaş : {3} | Medeni Hal : {4} ", tcNo, isim, soyisim, yas, medeniHal ? "Evli" : "Bekar");
+
+Console.WriteLine(sonuc);
+ 
+----------------------
+
+$(String Interpolation) Operatörü İle Formatlandırma (C# 6.0)
+
+- String interpolation, string ifadeniniçerisinde süslü parantez ile araya girerek programatik bir değişkenin değerini bırakmamızı/eklememizi sağlayan bir operatördür.
+
+$".....{isim}....{soyisim}..."
+
+- Bir string değerin başına $ operatörü koyulursa --> $"..." bu ifadenin içerisinde string interpolation operasyonunun/operatorunun kullanılabilirliği sağlanır.
+İlgili string içerisindeki süslü parantezler bir interpolation özelliği sergilerler.
+
+Console.WriteLine($" TC No: {tcNo} olan {isim} {soyisim} şahsın bilgileri | Yaş : {yas} | Medeni Hal : {(medeniHal ? "Evli": "Bekar")} ");
+
+- String interpolation yapısal olarak arka planda string.Format fonksiyonuyla şekillenen bir operatördür.
+
+Not: {}'leri de ekranda görünsün istersek ($"......{{alican}}...") çiftli parantez yapabiliriz. İki string interpolation birbirini ezer. Metinsel olarak
+süslü parantezi kullanabiliriz.
+
+-----------------------
+
+String Değerlerde (Escape)Kaçış Karakterleri
+
+"......" 
+
+" eylemsel bir karakterdir. String açısından belirli bir operasyonu/eylemi/sorumluluğu üstlenen bir karakterdir. Dolaysıyla böyle bir karakteri metinin içerisinde
+salt bir şekilde kullanmamız mümkün değildir.
+
+"........."............" -> ortadaki " gibi  bir şekilde string için özel eylemsel mahiyet ifade eden bir karakteri metinsel olarak kullanacaksam bu karakterin o anlık 
+özel karakter olmadığını ifade etmem gerekmektedir.
+
+- Bunun için escape/kaçış karakterleri kullanılmalıdır.
+- String içerisinde kaçış karakteri olarak \ backward slash kullanılmaktadır. String içerisinde özel/operatif karakteri ezen ve bunları metinsel hale getirmemizi sağlayan
+bir karakterdir.
+
+Console.WriteLine("\"Bu gün hava çok göözeel.\"");
+Çıktı:
+"Bu gün hava çok göözeel."
+
+- Öyle kafamıza göre de kullanamayız. Yanına illa ki özel bir karakter/eylemsel bir karakter bekler. Aksi halde hata verir.
+- Metinsel olarak \ kullanmak istiyorsak eğer ilgili operatörü yine kendisiyle ezmeliyiz.
+
+Console.WriteLine("\\Bu gün hava \\çok göözeel.\\");
+Çıktı:
+\Bu gün hava \çok göözeel.\
+
+Kaçış karakterleri
+
+\o -> Null sonlandırma karakteridir. Genel olarak dosya veya veri kanalının bitişini belirtmek için kullanılır.
+\a -> Bip sesi çıkartır.
+\b -> Backspace - geri - kendisinden önceki bir karakteri siler
+\t -> tab
+\r -> satır başı (carriage return)
+\n -> bir alt satıra in
+\v -> dikey tab
+\f -> sayfa ilerleme
+\" -> çift tırnak
+\' -> tek tırnak
+\  -> backlash
+
+char c = '\''; //char ' tek tırnak kullanmak istersek.
+
+--------------------
+
+String Türlerde @(Verbatim Strings) Operatörü
+
+1.Kullanım
+
+- Bir değişken yahut Metot vs. gibi yapılanma isimlerinin bir keyword'e karşılık gelmesi durumunda derleyici hatası verilir.
+İlla ki kullanmak için ölüyorsak @ operatörü kullanabiliriz.
+
+int a = 5; //doğru
+
+int class = 5; -> int @class = 5;
+int void = 5; -> int @void = 5;
+int namespace = 5; -> int @namespace = 5;
+
+void @void() //Metotlarda da kullanılır.
+{
+}
+
+2. Kullanım
+string metin = "Hava çok \"güzel\"";
+ya da
+string metin = @"Hava çok ""güzel""; //@koyduğumuz an ilgili eylemsel karakteri kendisiyle ezmemize yarar.
+
+- Escape karakterlerinin kullanılması gereken durumlarda @ operatörünü kullanarak eylemsel karakterleri kendileriyle ezebilecek özellik kazandırabiliyoruz.
+
+3. Kullanım
+
+- Metinsel ifadelerde "" arasına yazılan ifadeler tek satırda yazılmalıdır.
+
+string metin = "Comolokko Aaaaaa
+				ki ki ki ki mo
+				leleleele"; // derleyici hatası verir.
+				
+string metin = "Comolokko Aaaaaa +
+			   "ki ki ki ki" mo +
+			   "leleleele"; // + ile hata giderilir.	
+
+ya da @ ile
+
+string metin = @"Comolokko Aaaaaa
+				ki ki ki ki mo
+				leleleele"; //sorunu çözebiliriz.
+				
+---------------------------
+
+String Interpolation İle Verbatim String Birlikteliği (C# 8.0)
+
+string mailMessage = @"Merhaba ..... .... \n
+					 .... no'lu sipariş talebiniz tarafımızca alınmıştır. \n
+					 Fiyat : ....";
+					 
+Birlikte kullanmılmak istiyorsa @'dan sonra $ yazılmalıdır. 
+
+string isim = "Ali Joe", soyisim = "Yarenchuk", siparisNo = "123123";
+int fiyatBilgisi = 150;
+
+string mailMessage = @$"Merhaba {isim} {soyisim}
+					 {siparisNo} no'lu sipariş talebiniz tarafımızca alınmıştır. 
+					 Fiyat : {fiyatBilgisi}";
+					 
+Console.WriteLine(mailMessage);
+
+Çıktı:
+
+Merhaba Ali Joe Yarenchuk
+                          123123 no'lu siparis talebiniz tarafimizca alinmistir.
+                          Fiyat : 150
+						  
+- Boşlukları da algılar.
+
+string mailMessage = 
+@$"Merhaba {isim} {soyisim}
+{siparisNo} no'lu sipariş talebiniz tarafımızca alınmıştır. 
+Fiyat : {fiyatBilgisi}";
+
+yazarsak;
+
+Merhaba Ali Joe Yarenchuk
+123123 no'lu siparis talebiniz tarafimizca alinmistir.
+Fiyat : 150
+
+//daha güzel bir çıktı elde ederiz.
+

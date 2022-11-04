@@ -1,0 +1,76 @@
+İterasyon Nedir?
+
+- Mantıksal açısından her tahminin altında bir iterasyon mantığı yatar.
+
+1
+3
+5 sonra ne gelebilir?
+7 -> gelir diyorsan iterasyon mantığı kullanmışsındır.
+
+f(5) = 10
+f(10)= 20
+f(15)= 30 ise f(20) = 40'dır diyebiliriz.
+
+- Dil biliminde de iterasyonel kelimeler vardır. baba, mermer gibi. 
+
+- Eğer ki veri kümeleri içerisinde iterasyonel operasyonlar sağlıyorsak, bu kümenin içerisindeki bütün değerleri tek tek elde etmek zorundayız.
+Yüzdelik, kısımsal işlemlere pek uygun değildir. İterasyon her veriyi tek tek alacaktır, aldıktan sonra işlem anında o veriyi tanıyıp, veriyle işlem yapılıp yapılmayacağına
+kişinin karar vermesi lazım.
+
+Foreach İterasyonu
+
+- Elimizde bir veri kümesi yani array ya da koleksiyon olması şart.
+
+foreach(______değişken_______ in _______collection or array________)
+{
+
+} 
+
+Örnek:
+
+ArrayList sayilar = new ArrayList {123,123,325,534,5,345,345};
+
+foreach (object item in sayilar)
+{
+	System.Console.WriteLine(item);
+}
+
+Çıktı:
+123
+123
+325
+534
+5
+345
+345
+
+Örnek:
+
+ArrayList sayilar = new ArrayList {123,123,325,534,5,345,345};
+
+foreach (object item in sayilar)
+{
+	sayilar.Add(123); //koleksiyona eleman/veri ekledik ve yapısını bozduk. foreach ile çalışırken veri kümesinde bir değişiklik olursa hata verir. Çalışmaz.
+	//o yüzden genelde kaynakta değişiklik yapmamak lazım.
+	System.Console.WriteLine(item);
+}
+
+Örnek:
+
+For ile verilen kodu foreach'e dönüştürelim.
+
+ArrayList grades = new ArrayList() {5,10,26,34,26,26,2,23,26,200};
+for (int i = 0; i < grades.Count; i++)
+{
+	System.Console.WriteLine((int) grades[i] * 2);
+}
+
+Foreach ile;
+
+foreach (int grade in grades)
+{
+	System.Console.WriteLine(grade);
+}
+
+//2 ile çarpma işlemini veri kümesinde değişiklik yapmamak için kullanmadık. Fakat foreach'i veri okumak için kullanabiliriz.
+

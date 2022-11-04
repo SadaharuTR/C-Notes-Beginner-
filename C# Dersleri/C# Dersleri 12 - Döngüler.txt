@@ -1,0 +1,246 @@
+DÖNGÜLER
+
+for - while - do while 
+
+"Hangi döngü nere kullanılmalıdır?" sorusu yanlıştır. Doğrusu "Hangi döngü hangi senaryoya daha çok yakışır?" olmalıdır.
+
+- Ardışık denetlemelerde for döngüsü, sonsuz denetlemerde ise while daha uygundur. 
+- Bu döngülerin hepsi bir kombinasyona bağlı çalıştıkları için en nihayetinde birbirlerinin yerine kullanılabilirler.
+
+--------------------
+
+For Döngüsü
+
+Prosedürel programlamada döngü yapılarından birisidir.
+Genellikle ardışık işlemlerde kullanılan bir döngü yapılanmasıdır.
+
+Prototip:
+
+for(__genellikleBaşlangıçDeğeriIsimliDegisken__;___Şart___;__GenellikleBaslangıçDeğeriniArtırmaAzaltma__)
+{
+..........//şart true oldukça bu scope tetiklenecek ve döngü çalıştırılmış olacaktır.
+}
+
+- Genellikle ifadelerine dikkat edelim.
+
+- Başlangıç değer ya da ilk değer atama kısmı: Ardışık algoritmalarda genellikle bir ilk değere ihtiyaç vardır. Bunu burada tanımlayabiliriz. 
+Fakat bu tanımlama zorunlu değildir. Ayrıca illa ki integer olması da zorunlu değildir. Ama illa ki bir değer atanmalıdır.
+
+- Şart kısmında ise: Herhangi bir şart/koşul ifadesi tanımalanabilir. Genellikle ilk değer olarak tanımlanan değişken durumu burada kontrol edilir. Yani bir şarta bağlanır.
+Şart true olduğu sürece döngü tetiklenecektir.
+
+- Son kısımda ise herhangi bir değişken üzerinde işlem yapabiliriz. Genellikle başlangıç değeri üzerinde artırma/azaltma işlemi yapılır. Fakat bu zorunlu değildir.
+
+Örnek:
+
+for ( int sayi = 1 ; sayi < 10 ; sayi++ )
+{
+
+}
+
+Kodun çalışması:
+
+1-  Akış ilk olarak başlangıç değişkeni tanımlama kısmına girecektir. Eğer ki bir değişken tanımlama ifadesi varsa ilgili değişkeni tanımlayacaktır.
+2-  Ardından koşula gidecek ve koşulu değerlendirecektir. 
+3- 	Koşul true ise döngüye girecek, 
+3.1-Koşul kontrol edildikten sonra döngü ilgili değeri arttıracak parametreye gidecek ve yapılan artimatik işlemi değişkene uygulayacaktır.
+3.2-Sayısal değeri arttırılmış ya da azaltılmış olan değişkenden sonra yeniden koşulu kontrol edecek ve ardından true ise 3, değilse 4. adımlar tekrar edecektir.
+
+Koşul false olana kadar buraya kadarki işlemler tekrar edecek ve döngü tetiklenmiş olacaktır. 
+
+4-  Koşul true değilse döngüden çıkacaktır.
+
+Örnek:
+
+for(int i = 1 ; true ; i++ ) 
+//ya da for(int i = 1 ; i++ ) 
+//ya da for(int i = 1 ; i < 10) 
+//sonsuza kadar çalışırlar.
+	{
+	}	
+
+Örnek:
+
+for(int i = 1 ; i < 10 ; i++ ) //sonsuza kadar çalışır.
+	{
+	CW("Alican");
+	}
+	
+9 kere ekrana alt alta Alican yazdırır. 10 kere yazsın istiyorsak i<=10 demek lazım.
+
+Örnek:
+
+for (int i = 0 ; i < 50 ; i+=5)
+{
+	CW("Hilmi"); //10 kere Hilmi yazacaktır.
+}
+
+Örnek:
+
+for (int i = 10; i > 0 ; i--)
+{
+	CW("Hilmi"); //10 kere Hilmi yazacaktır.
+}
+
+Örnek:
+
+for (int i = 50; i > 0 ; i-=5)
+{
+	CW("Hilmi"); //10 kere Hilmi yazacaktır.
+}
+
+//Eğer ki ardışık işlemlerde artış yapılıyorsa i'nin değeri genellikle < (küçüklük) durumuyla değerlendirilir.
+// Eksilme işlemi yapılıyorsa da > (büyüklük) durumu ile değerlendirilir.
+
+Örnek:
+
+//1'den 10'a kadar olan sayılaı alt alta ekrana yazdıralım.
+
+for (int i = 1 ; i <= 10 ; i++)
+{
+	CW(i);
+}
+
+ya da azıcık karıştıralım.
+
+for (int i = 50 ; i < 60; i++)
+{
+	CW(i-49);
+}
+
+Örnek:
+
+//1 ile 40 arasındaki çift sayıları toplayarak sonucu ekranda gösterelim. 40 dahil.
+
+	int toplamSonuc = 0; //her bir döngü tekrarında sürekli tanımlanmaması için dışarıda oluşturduk.
+
+for (int i = 1; i <= 40 ; i++)
+{
+	//ilgili sayıyı 2'ye bölüp kalanı 0 kontrolü ile bulabiliriz.
+	if( i % 2 == 0)
+	{
+	toplamSonuc += i;
+	}
+}
+
+System.Console.WriteLine(toplamSonuc); // 420 yazdırır.
+
+Örnek:
+
+//Klavyeden girilen sayının faktöriyelini bulan programı yazınız.
+
+int sayi = int.Parse(Console.ReadLine()); //try catch ile de kontrol edebiliriz.
+
+int faktoriyel = 1;
+
+for (int i = 1 ; i <= sayi; i++) //1'den sayiya gidelim.
+{
+	faktoriyel *= i;
+}
+
+System.Console.WriteLine("Faktöriyel: " + faktoriyel);
+
+ya da sayi'dan geriye gidelim.
+
+for ( int i = sayi; i > 0 ; i--)
+{
+	faktoriyel *= i;
+}
+
+System.Console.WriteLine("Faktöriyel: " + faktoriyel);
+
+ya da daha da geliştirelim.
+
+int sayi = int.Parse(Console.ReadLine());
+string sonuc = "";
+
+int faktoriyel = 1;
+
+for (int i = sayi ; i > 0 ; i--)
+{
+	faktoriyel *= i;
+	sonuc += i + (i==1 ? " = " : " x ");
+}
+
+System.Console.WriteLine("Faktöriyel: " + sonuc + faktoriyel);
+
+//5 girersek;
+//Faktöriyel: 5 x 4 x 3 x 2 x 1 = 120 ekrana yazılır.
+
+-----------------
+
+For Döngüsü Varyasyonları
+
+- Başlangıç değişkenini dışarıda da tanımlayabiliriz.
+
+for (; i < 10 ; i++)
+{
+}
+
+-------------------
+
+- Bu varyasyonda dışarıda tanımlanan i değişkenin for döngüsünde başlangıç değeri olarak göstermek istiyorsak eğer, yine bir başlangıç değerini içeride vermemiz gereklidir.
+
+int i = 0;
+
+for (int i = 0; i < 10 ; i++)
+{
+}
+
+-------------------
+
+- Arttırma/azaltma işlemini for scope'u içine taşıyabiliriz.
+
+for (; i < 10 ;)
+{
+	i++;
+}
+
+-------------------
+
+- Şart kısmı illa ki başlangıç değerine bağlı olmak zorunda değildir.
+
+string adi = "Ali";
+
+for (int i = 0; adi == "Ahmet" ; i++) //değişkenin adı Ahmet olduğu sürece döngüye girecektir.
+{
+}
+
+Örnek:
+
+int a = 10;
+
+for( int i = 0; a != i*2; i++) //i'nın iki katını al sonuç a'ya eşit olmadığı sürece devam et.
+{
+	CW("Ali");
+}
+
+Ekrana 5 kere Ali yazacaktır.
+
+-------------------
+
+- Fantastik işlere de girişilebilir. Aşağıdaki kod sonsuza kadar çalışır/tetiklenir.
+
+for ( ; ; )
+{
+	CW("Ali");
+}
+
+Sonsuz sayıda Ali yazar.
+
+- Yine sonsuza kadar çalışan bir kod.
+
+for ( int i = 0 ; ; i++ )
+{
+}
+
+-------------------
+
+- Önemli! Birden fazla başlangıç değişkeni tanımlayabiliriz. Birden fazla şart koşabiliriz. 
+
+for(int i = 0, i2 = 0; i < 10 && i2 < 5 ; i++, i2++) //i2++, i++ sıralama önemli değil.
+{
+...
+}
+
+------------------------------------------

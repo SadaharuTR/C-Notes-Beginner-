@@ -1,0 +1,445 @@
+ARRAYS - DİZİLER
+
+- Tek bir değişken altında birden fazla "aynı türde" değeri toplamamızı sağlayan veri kümelerine dizi denmektedir.
+- Prosedürel programlamanın temel veri kümeleridir. Yani yazılımsal boyutta, yazılım adına RAM'de bbirden fazla geğeri
+tek bir değişken altında bir veri kümesi halinde tutabilirler.
+
+- Diziler, veri kümeleri oldukları için, içlerindeki birden fazla veri üzerinde kümesel işlemler yapmamızı sağlayabilirler.
+
+- Diziler, prosedürel programlamanın temel yapıları oldukları için daha gelişmiş yapılar olan koleksiyonlarında temelini
+teşkil etmektedirler ve gelişmelerine katkıda bulunmaktadırlar.
+
+- Diziler, referans türlü değerlerdir. Yani nesnel yapılardır. Özlerinde class'tırlar.
+
+- Yapısal olarak RAM'de Heap'te tutulurlar.
+
+- Dizi içerisinde her türlü (değer ya da referans) değer konulabilir. Ama bir dizi tek bir türde değer alabilir.
+Dizinin türü integer ise değerleri de integer olmalıdır.
+
+- Dizi içerisine konulan değerler işlevsel olarak aynı mahiyette olmalıdır.
+Örneğin yaş dizisine maaş bilgisi verilmemelidir. Aynı türde olması mantığını bozmamalı.
+
+- Diziler içerisinde eleman eklendikçe bunları sıralı/düzenli bir şekilde depolayacaktır.
+
+- Dizilerde eklenen elemanlar index ismini verdiğimiz numaralarla ardışık bir şekilde numaralandırılırlar.
+
+- index no: Her bir elemana verilen ardışık sayı. 0'dan başlar n-1'e kadar gider.
+
+Prototip:
+
+type a; ---> değişken
+
+type[]a ---> Dizi
+ 
+Bir değişken tanımlanırken türünün yanına [] koyarsak o değişken o türde bir dizi değişkeni olacaktır. Bu operatörüre -indexer- ismi verilir.
+
+type [] name = new type [...dizinin alacağı eleman sayısı...]; 
+
+- İleride OOP'de göreceğimiz new, bir dizi nesnesi oluşturmamızı sağlar.
+
+int[] yaslar = new int [5];
+
+bool[] x = new int [7];
+
+byte[] sayilar = new byte [n];
+
+- Dizi tanımlama sürecinde eleman sayısı mecburi girilmek zorundadır. Yani dizide çalışılacak değer adedi başta bildirilmelidir.
+
+- Dizilerde tanımlama yaparken eleman sayısının bildirilmesi zorunluluğu bir sınırlılıktır.
+
+int[] yaslar = new int [5];
+
+STACK    HEAP
+
+yaslar   obj(int[] array)
+
+//Stack'deki yaslar isminin Heap'deki bir nesneyi referans etmesi.
+
+- Bir dizi tanımlaması yağıldığı an bellekte o diziyi kullanmasakta verilen eleman sayısı kadar alan tahsisinde bulunulur.
+Bu bir sınırlılıktır. Ekstradan maliyete sebep olur. Kapatıldıktan sonra o alan geri alınır fakat çalışma sürecinde maliyetlidir.
+
+- Diziler alan tahsisi yapıldığında ilgili alanlara türüne uygun default değerleri atarlar.
+
+int[] yaslar = new int [5]; // burada 5 değerde 0 atanacaktır. Ayrıca index numaraları da 0'dan başlayarak atanacaktır.
+
+--------------------------
+
+Tanımlanmış Diziye Değer Atama
+
+- İndex numarası dizilere sistem tarafından otomatik verilen ve kimlik mahiyetinde kullanabileceğimiz bir numaradır.
+- Her bir elemana karşılık gelen unique değerlerdir. Böyle olması demek her bir elemana istediğimiz zaman erişip değer atayabilmemizi veya var olan değeri
+okuabilmemizi sağlar. 
+
+int[]yaslar = new int[7];
+
+yaslar[3]; //yaslar dizisindeki 3 index'ine karşılık gelen değeri getir.
+
+- Diziye değer koyarken;
+
+yaslar[3] = 10; // index 3'e 10 değeri atandı.
+
+yaslar[2] = 5;
+yaslar[0] = 5;
+yaslar[5] = 123;
+
+- Dizinin içerisindeki elemanlara değer atarken değişken davranışı gözlenir. Dolayısıyla herhangi bir elemana atanan en sonuncu değer geçerlidir.
+
+- Dizide aralık dışındaki bir index ile işlem yaparsak Runtime hatası alırız.
+
+yaslar[15] = 123; //yapılamaz. Array'in boyutu 7'dir. Dizinin sınırı neyse onunla çalışmamız lazım.
+yaslar[7] = 123;  //index no: 0-1-2-3-4-5-6 olduğundan 7. index yok. Yine hata verir.
+
+- Dizilerde değer ataması yaparken sıralamayı göz önünde tutmak zorunda değiliz.
+
+- Dizilerde eleman sayısının başta belirlenmesi, ihtiyaca göre daha fazla genişleletemeceğinden dolayı bir sınırlılıktır.
+
+----------------------------
+
+Tanımlanmış Diziden Değer Okuma
+
+int[]yaslar = new int[7];
+yaslar[3] = 10;
+CW(yaslar[3]); //diyerek ekrana 10 yazdırabiliriz.
+CW(yaslar[6]); //ekrana sıfır default değeri yazdırılır.
+
+- Dizilerden değer okurken değer aralığının aşılmamasına dikkat edilmelidir.
+
+Dizi İçerisinde Döngüyle Dönme
+
+string[] personeller = new string[10];
+
+personeller[0] = "Ali";
+personeller[1] = "Vali";
+personeller[2] = "Mali";
+personeller[3] = "Dali";
+personeller[4] = "Veli";
+personeller[5] = "MeAli";
+personeller[6] = "Zalim";
+personeller[7] = "Faruk";
+personeller[8] = "Tarçın";
+personeller[9] = "Apaçi";
+
+Amele'us Yöntemi;
+
+Console.WriteLine(personeller[0]);
+Console.WriteLine(personeller[1]);
+Console.WriteLine(personeller[2]);
+.
+.
+.
+ile son index'e kadar yazdırabiliriz. Ama biz Amele'us'cu değiliz.
+
+- Diziler genellikle "döngülerle" birlikte algoritmalarda kullanılmaktadır.
+
+for (int i = 0; i < 10; i++)
+{
+    Console.WriteLine(personeller[i]);
+}
+
+ile tüm değerleri ekrana yazabiliriz.
+
+ya da do while ile:
+
+int i = 0;
+do
+{
+    System.Console.WriteLine(personeller[i++]);
+} while (i < 10);
+
+----------------------
+
+- Dizi içerisinde dönecek olan döngü kombinasyonunda dizinin eleman sayısını manuel bir şekilde kullanmamalı. Bu sayısal değeri dizinin kendisinden almalıyız.
+Bunun için Length, dizinin kaç elemanlı olduğunu int olarak döndüren özellik,'e ihtiyaç vardır.
+
+for (int i = 0; i < personeller.Length; i++) 
+{
+    Console.WriteLine(personeller[i]);
+}
+
+Not: Dizilerde elemanlara değer atanırken indexer operatörü çokça kullanılmaktaıdır. Bu durum da bir sınırlılıktır. Tüm bu sınırlamaları koleksiyonlar konusunda aşacağız.
+
+-----------------------
+
+Dizi Tanımlama Varyasyonları 
+
+1) 
+
+int[] yaslar = new int [3]; //Temel tanımlamadır.
+yaslar[2] = 123; //gibi değer de atayabiliriz.
+
+2) 
+
+int[] yaslar = new int [3];
+int[] yaslar = { 30, 25 , 42 ,52 }; //gibi bir değer atama yöntemi de vardır.
+
+ya da tek satırda hem tanımlama hem atama yapılabilir.
+
+string[] isimler = { "Ali", "Gullit", "Zubizaretta", "Tanjantberk" }; //ne kadar değer verirsek o kadarlık dizi oluşturur
+
+3)
+
+string [] isimler = new string[] { "Ali", "Gullit", "Zubizaretta", "Tanjantberk" };//bu da bir varyasyondur. 
+
+4)
+
+string [] isimler = new string[3] { "Ali", "Gullit", "Zubizaretta" }; //new string[3] belirttiğimiz an tam 3 tane isim girmek zorundayız. Ne eksik ne fazla.
+
+5)
+
+int[] sayilar = new[] {3, 5, 7};
+
+yapıldığı gibi,
+
+var sayilar = new[] {2, 3, 5, 7};
+var sayilar2 = new[] {"2", "3", "5", "7", "Alican"}; //gibi türlü türlü varyasyonlar vardır.
+
+-----------------------
+
+Array Sınıfı Nedir? Ne Amaçla Kullanılır?
+
+- Dizi olarak tanımlanan değişkenler Array sınıfından türetilmektedirler.
+
+- Dolayısıyla dizilerde Array sınıfından gelen belirli metodlar ve özellikler mevcuttur.
+
+1)Bu format genellikle algoritmalarda tercih edilir. Çünkü -indexer- algoritmalarda çokça kullanılır.
+
+int[] yaslar = new int[3]; //Dizi eğer ki kendi türünde tutuluyorsa/referns ediliyorsa indexer operatörü kullanılabilir. Bu şekilde çalışıldığında ilgili diziye
+//verisel müdaheleler operatif gerçekleştirilir.
+
+2) Genellikle elimizdeki dizinin üzerinde işlem yaparken tercih edilir. Dizi hakkında bilgi edilirken vs.
+
+Array yaslar = new int[3]; //Eğer Array türünde referans ediliyorsa indexer operatörü kullanılamaz. Bu şekilde ise fonksiyonel çözümler getirmektedir. Veri ekleme/çağırma
+//fonksiyon üzerinden gerçekleşir.
+
+-----------------------
+
+Array Türünden Dizilere Değer Atama - Okuma
+
+Değer Atama:
+
+1.Yöntem
+
+int[] dizi = new int [3];
+
+dizi[0] = 30;
+dizi[1] = 20;
+dizi[2] = 40;
+
+Array dizi2 = dizi; //1. formatta oluşturulan diziyi Array dizi'sinde tutabiliriz.
+
+2. Yöntem
+
+Array dizi = new int[] {3,5,7,9}
+Array dizi = new int[4] {3,5,7,9}
+ya da
+Array dizi = new[] {3,5,7,9} ile dizi tanımlama yapabiliriz.
+
+Not: Array dizi = {3,5,7,9} tarzı bir tanımlama yapılamaz.
+
+3. Yöntem
+
+Array dizi = new int[3];
+
+dizi.SetValue(30,0); //30 değerini 0. index'e ata.
+dizi.SetValue(20,1); //20 değerini 1. index'e ata.
+dizi.SetValue(40,2); //40 değerini 2. index'e ata.
+
+Değer Okuma:
+
+object value = dizi.GetValue(1);
+CW(value);
+
+- GetValue, Array'in içerisinde hangi türden dizi olduğuyla ilgilenmez. Onun için ilgili değer ne ise object'e boxing eder ve o şekilde bize gönderir. Biz de gerektiği
+taktirde bunu unboxing yapıp kendi türünde/değerinde kullanırız.
+
+-----------------------------------
+
+Array Sınıfı Metodları
+
+Clear Motodu
+
+- Dizi içerisindeki tüm elemanlara, dizinin türüne uygun default değerleri atayan bir fonksiyondur. Dizi içerisindeki tüm elemanları siler tanımı yanlıştır.
+
+Array isimler = new[] { "Hilmi", "Hüseyin", "Şuayip" , "Farukgül" , "Hakansu" };
+
+Array.Clear(isimler, 0 , isimler.Length); //0. index'ten Length kadar o kadar eleman kadar Clear'la.
+
+Array.Clear(isimler, 1 , 3); //1.index'ten başla 3. index'e kadar. 1-2-3'ü Clear'la.
+
+------------
+
+Copy Metodu
+
+- Elimizdeki bir dizinin verilerini bir başka diziye kopyalamamızı sağlayan bir fonksiyondur.
+
+Array isimler = new[] { "Hilmi", "Hüseyin", "Şuayip" , "Farukgül" , "Hakansu" }; //aşağıdaki örneklerde bu diziyi kullanacağız.
+
+string[] isimler2 = new string[isimler.Length];
+
+Array.Copy(isimler, isimler2, 5); 
+
+for(int i = 0; i < isimler2.Length; i++)
+	Console.WriteLine(isimler2[i]); //isimler'in tüm içeriğini isimler2'ye kopyaladık.
+	
+ya da belirli bir aralıkta da çalışabiliriz.
+
+Array.Copya(isimler, 2, isimler2, 1, 3); //kaynak olan isimler'den, 2. index'ten başlayarak, isimler2'ye, kopyalanacak yerin başlangıç index'i olan 1'den itibaren, 3 tane elemanı ata. Yani 1-2-3. index'leri
+
+for(int i = 0; i < isimler2.Length; i++)
+	Console.WriteLine(isimler2[i]);
+	
+Çıktı: 
+
+(boşluk-null)
+Suayip
+Farukgül
+Hakansu
+(boşluk-null)
+
+olur.
+
+---------------
+
+IndexOf Metodu
+
+- Dizi içerisinde bir elemanın var olup olmadığını sorgulayabildiğimiz fonksiyondur.
+
+int index = Array.IndexOf(isimler, "Rıfkı"); //eğer dizimizde Rıfkı değeri varsa bize integer olarak Rıfkı'nın index numarasını döndürür.
+
+if(index != -1)
+{
+Console.WriteLine("Var.");
+}
+
+//yoksa -1 değerini döndürür.
+
+ya da belirtilen yer aralığında arama yapabiliriz.
+
+int index = Array.IndexOf(isimler, "Rıfkı", 0, 3); //0. index'ten başlayıp 3 elemanda Rıfkı'yı ara. Yani 0-1-2'de ara.
+
+if(index != -1)
+{
+Console.WriteLine("Var.");
+}
+
+--------------
+
+Reverse Metodu
+
+- Elimizdeki dizinin elemanlarını tersine sıralayan bir fonksiyondur.
+
+Array isimler = new[] { "Hilmi", "Hüseyin", "Şuayip" , "Farukgül" , "Hakansu" };
+
+for(int i = 0; i < isimler.Length; i++)
+	Console.WriteLine(isimler.GetValue(i));
+
+Array.Reverse(isimler);
+	Console.WriteLine("*******************");
+
+for(int i = 0; i < isimler.Length; i++)
+	Console.WriteLine(isimler.GetValue(i));
+
+Çıktı:
+
+Hilmi
+Hüseyin
+Suayip
+Farukgül
+Hakansu
+*******************
+Hakansu
+Farukgül
+Suayip
+Hüseyin
+Hilmi
+
+ya da verilen index'ten sonraki (o index dahil) n elemanı da Reverse'leyebiliriz.
+
+Array.Reverse(isimler, 0, 3); //0-1-2'yi reverse et. Diğerlerine dokunma.
+
+-----------------
+
+Sort Metodu
+
+Array isimler = new[] { "Hilmi", "Hüseyin", "Şuayip" , "Farukgül" , "Hakansu" };
+
+for(int i = 0; i < isimler.Length; i++)
+	Console.WriteLine(isimler.GetValue(i));
+
+Array.Sort(isimler); //string ise alfabeye, int ise küçükten büyüğe göre sıralar.
+	Console.WriteLine("*******************");
+
+for(int i = 0; i < isimler.Length; i++)
+	Console.WriteLine(isimler.GetValue(i));
+	
+Çıktı: 
+
+Hilmi
+Hüseyin
+Suayip
+Farukgül
+Hakansu
+*******************
+Farukgül
+Hakansu
+Hilmi
+Hüseyin
+Suayip
+
+----------------------------
+
+Array Sınıfı IsReadOnly Property'si
+
+- Dizinin salt okunabilirlik kontrolüne yarar. Dizi hem okunabilir hem yazılabilir ise False döndürür. Sadece okunabilir ise true döndürür.
+
+Array isimler = new[] { "Hilmi", "Hüseyin", "Şuayip" , "Farukgül" , "Hakansu" };
+	Console.WriteLine(isimler.IsReadOnly);
+
+----------------------------
+
+Array Sınıfı IsFixedSize Property'si
+
+- Bir veri kümesinin eleman sayısının sabit olup olmama durumunu öğrenmeye yarar.
+
+Array isimler = new[] { "Hilmi", "Hüseyin", "Şuayip" , "Farukgül" , "Hakansu" };
+	Console.WriteLine(isimler.IsFixedSize);
+	
+//Tüm dizilerde eleman sayısı sabit olduğu için sürekli true dönecektir.
+//fakat ArrayList koleksiyonunda false dönmektedir.
+
+----------------------------
+
+Array Sınıfı Length Property'si
+
+- Eleman sayısını getirir.
+
+------------------------------
+
+Array Sınıfı Rank Propertysi
+
+- İlgili dizinin derece sayısını döndürür.
+
+Array isimler = new[] { "Hilmi", "Hüseyin", "Şuayip" , "Farukgül" , "Hakansu" };
+	Console.WriteLine(isimler.Rank); //1 değerini döndürür çünkü 1 dereceli dizilerde çalıştık.
+	
+int[,,] x = new int [3,4,5]; // Rank'i 3 olan bir dizi 
+
+------------------------------
+
+Array Sınıfı - CreateInstance Metodu İle Dizi Tanımlama
+
+int[] yaslar = new int[3];
+
+- Normalde yukarıdaki gibi yapılan dizi tanımlaması esasında arkaplanda Array sınıfının CreateInstance metodunu kullanmaktadır.
+Bizler de bu metodu kullanarak fonksiyonel diziler oluşturabilmekteyiz.
+
+Array yaslar2 = Array.CreateInstance(typeof(int), 3); //ile de 3 boyutlu integer bir dizi oluşturabiliriz.
+
+-------------------------------
+
+Array Sınıfı - CreateInstance Metodu İle Çok Boyutlu Dizi Tanımlama
+
+Array dizi = Array.CreateInstance(typeof(int), 3 , 5 , 2 , 6 ); // Dizinin derecesi 4, her bir derecenin elemanları sırasıyla 3-5-2-6'dır.
+Console.WriteLine(isimler.Rank); //4 yazdırır.
+
+İleride daha detaylı.

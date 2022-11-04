@@ -1,0 +1,557 @@
+Programlamada Operatör Nedir?
+
+- Operatörler belirli bir sorumluluğu üstlenen sembolik yahut metinsel yapılardır. Bizim yerimize o sorumluluğu icra ederler.
+- Operatörler genellikle iki değer arasında matematiksel, mantıksal ya da farklı bir işlemsel görev yapan yapılardır.
+- Genellikle yaptıkları işlem neticesinde bir sonuç dönerler.
+- Operatörleri kullanırken geriye dönüş değerlerine dikkat edilmesi gerekmektedir.
+
+C# Aritmetik Operatörler Neledir? Geriye Dönüş Değeri Nedir?
+
+- Aritmetik operatörler iki sayısal değer üzerinde işlem yapan operatörler oldukları için işlem neticesinde
+geriye uygun türde sonuç dönerler.
+
+- +,-,*,/,%
+
+Aynı türde olan sayısal değer üzerinde işlem yaparken sonuç türü aynı olacaktır.
+
+- int sonuc = 3 + 5; // iki int değer int sonuc'ta tutulmalı.
+
+- int x = 3, y = 5;
+  int sonuc = x * y; 
+  
+- double s1 = 123;
+  double s2 = 321;
+  double sonuc = s1 + s2;
+  
+- decimal s1 = 123123;
+  decimal s2 = 3214532;
+  decimal sonuc = s1 % s2;
+  
+İki farklı türde sayısal değer üzerinde yapılan aritmetik işlem neticesinde sonuç büyük olan türde dönecektir.
+
+- int sayi1 = 10;
+  double sayi2 = 5;
+  double sonuc = s1 + s2; //sayi1'i double olarak hesaba katar.
+  
+Not: Aritmetik operatörlerde küçük olan tür büyük olan türe bilinçsiz bir şekilde dönüştürülerek o şekilde hesap yapılır.
+o yüzden sonuç büyük olan türde elde edilecektir.
+
+- int s1 = 3;
+  byte s2 = 123;
+  int sonuc = s1 - s2;
+  
+- İSTİSNA!!! Önemli!
+
+  byte s1 = 10;
+  byte s2 = 5;
+  int sonuc = s1 - s2;
+  
+Normalde 2 aynı türdeki sayısal değer üzerinde yapılan aritmetik işlem neticesinde sonuç aynı türde dönecekken, bu iki değer byte ise sonuç
+her zaman -int- dönecektir. Böyle kabul edilmiştir.
+
+-----------------------------
+
+C#'da Matematiksel İşlemlerde Öncelik Sırası Nasıldır?
+
+- Matematik prensipleri yazılımda da aynı şekilde geçerlidir. İlk olarak parantez işlemleri yapılır.
+- Eğer soruda üslü ya da köklü bir sayı varsa ikinci adımı bu işlemlerin çözülmesi oluşturmaktadır.
+- Sonrasında matematik işlemlerinden olan çarpma ve bölme yapılmalıdır.
+- Dördüncü sırada toplama ve çıkartma işleminin yapılması gelmektedir.
+- Son olarak da güdülmesi gereken çoklu işlemlerde işlem sürecinin soldan sağa doğru ilerlemesi olacaktır.
+
+-------------------------
+
+C# Karşılaştırma Operatörleri Nelerdir?
+
+- İki sayısal değer arasında büyüklük, küçüklük ve eşitlik durumuna göre karşılaştırma yapan operatörlerdir.
+
+- < küçüklük, > büyüklük , <= küçük veya eşitlik , >= büyük veya eşitlik , == eşitlik
+
+- Karşılaştırma operatörleri geriye daima bool türünde bir değer döndürecektir.
+
+Örnek;
+
+int i1 = 123;
+int i2 = 321;
+
+-> i1 == i2, false
+-> i1 < i2 , true
+
+--------------------------
+
+C# Mantıksal Operatörler Nelerdir?
+
+- Tüm şartları değerlendirip, kendine göre sonuç döndüren operatörlerdir.
+
+- ve && operatörü: Tüm şartları yerine getirilmiş olmasını ister.
+
+- veya || operatörü: Şartlardan en az bir tanesinin yerine getirilmesi yeterlidir.
+
+- ya da ^ operatörü: Şartlardan kesinlikle bir tanesinin yerine getirilmesini ister. Hiç ya da hepsi değil, sadece 1'i olmalı.
+
+- Mantıksal operatörler, mantıksal değerler üzerinde kullanılır. Geriye mantıksal sonuçlar dönerler.
+
+Örnek;
+
+bool patates = true, kofte = false;
+
+-> bool sonuc1 = patates && kofte; // False
+-> bool sonuc2 = patates || kofte; // True
+-> bool sonuc3 = patates ^ kofte;  // True
+
+Mantıksal Operatörlerde Geriye Dönüş Değerleri
+
+- ve &&
+
+true && true;   -> True
+true && false;	-> False
+false && false;	-> False
+false && true;	-> False
+
+- veya ||
+
+true || true;   -> True
+true || false;	-> True
+false || false;	-> False
+false || true;	-> True
+
+- ya da ^ (shift + 3 + boşluk)
+
+true ^ true;    -> False
+true ^ false;	-> True
+false ^ false;	-> False
+false ^ true;	-> True
+
+Örnek;
+
+Console.WriteLine(((true && true) || false && ((true ^ false) && false) || true));
+                   -----T------				   -----T------
+				   ---------------T-------	   -------------F---------
+				   ------------------------F--------------------------
+				   ------------------------------------------------------T--------
+				   Sonuç True olacaktır.
+
+-------------------------
+
+C# Arttırma(++) Azaltma(--) Operatörleri
+
+++,-- operatörleri işlem neticesinde değişkenin değerini döner.
+
+++i,i++,--i,i--
+
+i=i+1; 
+i=i-1;
+
+int i = 10;
+
+++1 -> Öncelikle i değeri 1 arttırılır, ardından i değerini döndürür.
+i++ -> Öncelikle i değerinni döndürür, sonra +1 arttırır.
+
+Eğer ki ayrı ayrı;
+
+CW(++i); -> Çalıştırırsak önce 1 arttırıp ekrana 11 yazar. Bellekte de 11 tutar.
+CW(i++); -> Bunu çalıştırırsak önce yazdırır. Ekrana 10 yazar. Ama bellekte 11'i tutar.
+
+Örnek;
+
+int a = 5;
+int b = a++; -> Önce a'nın değerini b'ye gönderir. Sonra a'yı 1 arttırır.
+
+CW(a); 
+CW(b);
+
+Çıktı: 6
+	   5   
+olur.
+
+
+Örnek;
+
+int i1 = 5;		-> (int) i1 = 5 
+int i2 = ++i1;	-> i1'in değeri 1 arttı. i1 = 6, i2 = 6
+int i3 = i1;	-> i3 = 6
+i2 = ++i2;		-> Önce i2'nin değeri 1 arttır. i2 = 7, eski 7 ezilip yerine yeni 7 yazdırılır. i++ yazsaydı arttırmadan 6 yazardı.
+
+CW(i1); -> 6
+CW(i2); -> 7
+CW(i3); -> 6
+
+-------------------------------
+
+Üzerine Ekleme/Yığma Operatörleri
+
++=, -=, *=, /=, %=
+
+i += 3; -> i = i + 3; //sadece += metinsel ifadelerde de kullanılır.
+diğerleri de aynı mantıkta. Pratik aritmetik işlemler yapmayı sağlarlar. 
+
+----------------------------------
+
+Metinsel İfadelerde Kullanılan Operatörler
+
+- Metinsel ifadeler + operatörüyle yanyana birleştirebilirler.
+
+string a = "Ahmet", b = "Mehmet";
+
+CW(a+b); -> Çıktı AhmetMehmet olur.
+
+Örnek;
+
+int a = 5;
+string b = "abc";
+
+CW(a + b) ; -> Tür dönüşümlerinde herhangi bir değeri string'e dönüştürebilmek için ToString fonksiyonunu kullanıyorduk.
+		   Ayrıyetten ilgili türü string'e dönüştürebilmek için string bir ifade ile + operatörüne tabi tutulması yeterli olacaktır.
+		   Sonuç string dönecektir ve yanyana birleştirme olacaktır.
+		   
+		   Çıktı: 5abc olacaktır.
+		   
+Örnek;
+
++= operatörünün kullanılması.
+
+string a = "ahmet";
+string b = "mehmet";
+
+a += b; -> a = a + b;
+CW(a);  -> çıktı ahmetmehmet olacaktır.
+
+Örnek;
+
+== operatörünün kullanılması.
+
+string a = "Ahmet";
+string b = "Mehmet";
+
+bool sonuc = (a == b);  // ya da a != b ile eşit değildir durumunu kontrol edebiliriz. O zaman da sonuç true olur.
+
+CW(sonuc); -> False
+
+--------------------
+
+C# Operatörler - ! Operatörü
+
+! -> Değil, olumsuzluk.
+Mantıksal yapılarda olumsuzluk ifade eder.
+
+!true -> false
+!false -> true
+
+!= -> Eşit değillik durumu.
+
+Ya da null referance durumunda kullanılır. (İleride)
+
+Örnek;
+CW(!true); -> False yazdırır.
+
+Örnek;
+
+int i = 3;
+int i2 = 5;
+
+CW(i != i2);
+ya da
+CW(!(i == i2)); -> ile kontrol edebiliriz. Parantez içi boolean bir değer döndürüyor.
+
+! operatörü, !='in dışında sadece mantıksal değerlerin yanında kullanılabilir. !ahmet, !3 diyemeyiz.
+
+---------------------------
+
+C# Operatörler - Ternary Operatörü (?:)
+
+- Şarta bağlı değer döndüren bir operatördür.
+
+- Bir değişkene/metoda/property'e değer atanırken, eğer ki bu değer şarta göre fark edecekse satır bazlı/tek satırda bu şart kontrolünü yaparak
+durua göre değeri döndürmemizi sağlayan bir kalıpsal operatördür.
+
+- Turnery operatörü uzun bir if else bloğu yazmaktansa buradaki maliyeti tek satırda döndürmekte ve işartı kendi kalıbında kolayca kontrol edip
+sonucu döndürmektedir.
+
+........şart/durum......... ? .......... : ............
+
+boolean bir sonuç döndürür  ? şart true  :  şart false
+
+ise bölgelerdeki değer döndürülecektir.
+
+- Dönecek değerler aynı türde olmalıdır.
+
+Not: Polimorfizm kurallarına göre birbirinden türeyen değerlerde artık desteklenmektedir. (ileride) (C# 9.0 de gelen bir özelliktir.)
+
+Örnek;
+
+bool medeniHal = true;
+string mesaj = medeniHal == true ? "Evlilere kampanya...." : "Bekarlara kampanya...";
+
+
+Örnek; // Birden fazla durumu kontrol etme.
+
+// Yaşı 25'den büyük olanlara A, 25 olanlara B ve 25'den büyük olanlara C değerini döndüren ternary operatörü.
+
+int yas = 25;
+
+string sonuc = yas < 25 ? "A" : (yas == 25 ? "B" : "C"); -> 25'ten küçükse "A" döndür. Parantez şart değil. Yaş 25'e eşitse "B" değilse zaten ilk başta küçüktür
+															olduğu durumlar burada elendiği için 25'ten büyükler için "C" döndürecektir.
+															
+Örnek;
+
+Kullanıcı tarafından girilen sayının aşağıdaki önergelere göre hesabını gerçekleştiren kodu geliştiriniz.
+
+// sayı < 3 					-> sayı * 5
+// sayı > 3 && sayı < 9 		-> sayı * 3
+// sayı >= 9 && sayi %2 == 0	-> sayı * 10
+// sayı %2 == 1 				-> sayı
+// hiçbiri değilse 				-> -1
+
+Console.WriteLine("Lütfen bir sayı giriniz.");
+int sayi = int.Parse(Console.ReadLine()); 
+
+// ya da string sayi = Console.ReadLine(); // ReadLine() kullanıcının girdiği sayıyı string olarak yakalayan/getiren bir komuttur. Kullanıcıdan değer bekler.														
+//int sayi = int.Parse(sayi);
+
+int sonuc =  sayi < 3 ? sayi * 5 : 
+			(sayi > 3 && sayi < 9 ? sayi * 3 :
+			(sayi >= 9 && sayi %2 == 0) ? sayi * 10 : 
+			(sayi %2 == 1 ? sayi : -1));
+
+System.Console.WriteLine("Sonuç: " + sonuc); -> Girilen değere göre sonucu verecektir. 
+
+Örnek;
+
+Hava durumu turan string değişkenin değerine göre aşağıdaki önergeleri uygulayan programı yazınız.
+
+"Yağmurlu" ise "Şemsiye Almalısın."
+"Güneşli" ise "Bol bol D vitamini alman dileğiyle..."
+"Kapalı" ise "Yağmur yağabilir."
+
+string havaDurumu = "Yağmurlu";
+Console.WriteLine( havaDurumu == "Yağmurlu" ? "Şemsiye Almalısın." : (havaDurumu == "Güneşli" ? "Bol bol D vitamini alman dileğiyle..." : "Yağmur yağabilir."));
+
+----------------------
+
+C# Operatörler - Atama(Assign) Operatörü
+
+int a = 5; -> _________________ = _________________
+			 değişkenin kendisi	  değişkenin değeri
+			 
+İleride referans türü değişkenlerde atama operatörünün sorumluluğu değişip referans operatörü olduğunu göreceğiz.
+
+-----------------------
+
+C# Operatörler - Member Access(Üye Erişim Operatörü)
+
+int i = 5;
+
+i. -> yazdığımızda integer üzerinden erişebileceğimiz bir sürü member/eleman'lar görürüz.
+
+Member, bir türün altındaki kodlardır, erişebildiğimiz/çağırabildiğimiz propertyler/metodlardır. (ileride)
+
+i.ToString(); // ya da ToString(). ile de devam edilebilir.
+
+- Member Access, elimizdeki bir değerin türüne uygun elemanlarını/fonksiyonlarını/metodlarını/propertylerini/field erişmemizi/çalıştırmamızı/çağırmamızı
+sağlayan bir operaötürdür. Kodun devamını getirir.
+
+--------------------
+
+C# Operatörler - Cast Operatörü ()
+
+Genellikle tür dönüşümlerinde kullanılır.
+
+- Boxing -> Unboxing 
+
+object x = 123;
+int x2 = (int)x;
+
+- Bilinçli Tür Dönüşümü
+
+int a = 5 ;
+short b = (short)a;
+
+- Char -> int veya int -> char (ASCII)
+
+int ascii = 93;
+char c = (char)ascii;
+
+İleride polimorfizm durumunda base class referansıyla işaretlenen bir nesneyi kendi türünde de elde edebilmemizi de sağlar.
+
+-----------------
+
+C# Operatörler - sizeof Operatörü
+
+- Verilen türün bellekte kaç byte'lık yer kapladığını integer olarak geriye döndürür.
+
+CW("int : " + sizeof(int)); -> 4
+CW("long : " + sizeof(long)); -> 8
+CW("decimal : " + sizeof(decimal)); ->16
+
+------------------
+
+C# Operatörler - typeof Operatörü
+
+- Verilen türün/değerin type'ını/türünü getirir.
+
+- O tür ile ilgili bilgileri edinmek için kullanılır.
+
+- İleride (ileri düzey programlamada) reflection konusunda reflection'lara girmek için kullanacağız.
+
+Type t = typeof(int); //int türüne ait tüm bilgiler burada t değişkeninde atanmıştır.
+
+CW(t.name); -> Int32
+CW(t.IsPrimitive); -> True
+CW(t.IsClass); -> False
+CW(t.IsValueType); -> True
+
+------------------
+
+C# Operatörler - default Operatörü
+
+- Belirtilen türün default değerini döndüren operatördür.
+
+- Default değerler her tür için yazılım tarafından tanımlanmış bir varsayılan değerdir.
+
+- sayisal = 0, bool = false, string = null, char = \0, referans = null
+
+CW(default(decimal));   ->0
+CW(default(string));	->	   // string ifade null'dur, değersizdir.
+CW(default(Program));	->     //Program bir referans türüdür.
+CW(default(short));		->0
+CW(default(byte));		->0
+
+int a = default; //default değer vermek için direkt default keyword'ünü verebiliriz.
+int a2 = default (int); //bu şekilde de yazılabilir.
+
+------------------
+
+C# Operatörler - is Operatörü
+
+- Boxing'e tabi tutulmuş bir değerin öz türünü öğrenebilmek/check edebilmek/kontrol edebilmek için kullanılan bir operatördür.
+is operatörü denetleme neticesinde durumu bool yani true ya da false olarak döndürecektir.
+
+object x = true; //boxing
+
+CW(x is bool); 		->True
+CW(x is int);		->False
+CW(x is Program);	->False
+
+İleride if yapılanmasında çok tercih edilen bir operatör olacaktır.
+Yine OOP yapılanmasında polimorfizm, is operatörüyle kalıtımsal durumlardaki nesnelerin türlerini de öğrenebileceğiz.
+
+--------------------
+
+C# Operatörler - is null Operatörü
+
+- Bir değişkenin değerinin null olup olmamasını kontrol eden ve sonuç olarak geriye bool türde bir değer döndüren operatördür.
+
+String a = null;
+CW(a is null);
+
+- is null operatörünü sadece null olabilen türlerde kullanabiliriz.
+Değer türlü değişkenler not nullable; referans türlü değerler nullable'dur.
+int a = null; -> olmaz.
+
+--------------------
+
+C# Operatörler - is not null Operatörü
+
+- Elimizdeki değerin null olup olmamasıyla ilgilenmekte ve geriye bool sonuç döndürmektedir.
+
+string a = "sdaasdsad";
+CW(a is not null); -> True
+
+- Sadece null alabilen türlerde kullanılabilir.
+
+--------------------
+
+C# Operatörler - as Operatörü
+
+x as Type
+
+- Cast operatörünün UnBoxing işlemine alternatif olarak üretilmiş bir operatörüdür.
+
+Cast ile object x = 123; //yapılan unboxing işleminde türüne uygun bir şekilde Cast edilmesi gerekiyor. Farklı türde hata verir.
+		 (int)x;
+
+- as operatörü ise object x = 123; //Türüne uygun bir şekilde as edilmesi zaruri değildir. Eğer ki tür uygunsa unboxing başarılı, değilse de hata vermeden
+								   //null değer döndürecektir. Bu durumda programlamatik olarak yazılımın sonlanmadan akışta kontrol edilmesine müsade edecek
+								   //işleme devam edecektir.
+					Type y = x as Type;	
+
+- as operatörü tür uygun olmadığı takdirde geriye null döndüreceği için bu null'u karşılyabileen türlerle çalışmak isteyecektir.
+Dğer türlü değişkenler ile kullananılamayacaktır. Referans türlerdeki değişkenlerle çalışabilir.
+
+Örnek;
+
+object x = "Ahmet;
+string x2 = (string)x;
+CW(x2); -> Ekrana Ahmet yazdırılır.					
+								   
+object x = "Ahmet;
+string x2 = (int)x; -> String ifadeyi int ile cast etmeye çalışırsak,
+CW(x2); 			-> Hata verir.				   
+
+object x = "Ahmet;
+string y = x as string;
+CW(y); -> Ekrana Ahmet yazdırılır.	
+
+object x = "Ahmet;
+string y = x as int; -> Sadece nullable türlerde çalışır.
+CW(y); 				 -> Hata verir.
+
+object x = "Ahmet;
+Program y = x as Program;   -> Bir başka nullable olan referans türüyle unboxing yaparsak,
+CW(y); 				 		-> Ekrana bir şey yazdırmaz çünkü null döndürür.
+		   
+--------------------
+
+C# Operatörler - Nullable Operatörü
+
+- C# Programlama dlinde değer türlü değişkenler normalde null değer alamazlar.(not nullable)
+- Bir değer türlü değişkenin null değer alabilmesi için(yani nullable olabilmesi için) ? operatörünün kullanılması gerekmektedir.
+
+int? a = null; //Artık değişken türlüden ziyade referans türlüymüş gibi hareket edecek ve null değerlerini karşılayabilecektir.
+bool? b = null;
+
+Prototip -> değişken_türü? değişken_adi 
+
+- Artık is null ve is not null kontrolleri de yapılabilir. as de kullanabiliriz.
+
+Örnek;
+
+object x = 123;
+int? y = x as int?; //x'i integer çıkarıyorsak nullable dönebilmesi için integer'ın nullable haliyle çıkarmaya dikkat etmek lazım. Aynı şekilde ?y'e atarken de.
+
+---------------------
+
+C# Operatörler - Null Coalescing Operatörü
+
+- Elimizdeki değişkenin değerinin null olma durumuna istinaden farklı bir değeri göndermemizi sağlayan operatördür.
+
+string a = null;
+
+a ?? "Merhaba" -> a değişkeninin değeri null değilse a'nın değerini yazdır. Null ise "Merhaba" yazdır.
+
+Örnek;
+
+string a = "Ahmet";
+Console.WriteLine(a ?? "Merhaba"); -> a null olmadığından dolayı Ahmet yazdırır.
+		   
+string a = null;
+Console.WriteLine(a ?? "Merhaba"); -> a null olduğundan dolayı Merhaba yazdırır.
+
+string a = null;
+Console.WriteLine(a ?? 3); // null Coalescing operatöründe her iki taraftaki değişken yahut değerler aynı değerde olmalıdır. Hata verir.
+
+------------------------
+
+C# Operatörler - Null Coalescing Assignment(C# 8.0)
+
+string x = null;
+
+Console.WriteLine(x ??= "Merhaba");
+
+//x'in değeri null ise Merhaba yazdır ve Merhaba değerini x'e ata.
+//null değilse direkt olarak x'in değerini yazdır.
+
+Örnek;
+
+int? id = null;
+id ??= 1; //id null ise 1 değerini ata, değilse değerini koru.

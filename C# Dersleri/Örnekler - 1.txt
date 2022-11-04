@@ -1,0 +1,231 @@
+Kontrol Yapıları
+
+Örnek:
+
+//Kullanıcıdan aldığı dönüşe göre işlem yapan Mini ATM
+//1- Bakiye Görüntüleme
+//2- Para çekme
+//3- Para Yatırma
+//4- q'ya basarsa çıkış yapılsın.
+
+using System;
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            System.Console.WriteLine("ATM'ye Hoşgeldiniz.");
+            System.Console.WriteLine("Yapmak istediğiniz işlemi seçiniz.");
+
+            int bakiye = 1000;
+            string secim = Console.ReadLine();
+
+            if (secim == "1")
+                System.Console.WriteLine("Şu anki bakiyeniz: " + bakiye);
+            else if (secim == "2")
+            {               
+                System.Console.WriteLine("Çekmek istediğiniz tutarı giriniz: ");
+                int cekilecekTutar = Convert.ToInt32(Console.ReadLine());
+                if(cekilecekTutar <= bakiye)
+                {
+                System.Console.WriteLine(cekilecekTutar + " TL başarıyla çekildi.");
+                System.Console.WriteLine("Kalan tutar: " + (bakiye-cekilecekTutar));
+                }
+                else
+                    System.Console.WriteLine("Yetersiz bakiye.");
+            }
+            else if (secim == "3")
+            {
+                System.Console.WriteLine("Yatırmak istediğiniz tutar: ");
+                int yatirilacakTUtar = Convert.ToInt32(Console.ReadLine());
+                System.Console.WriteLine(yatirilacakTUtar + " TL başarıyla yatırıldı.");
+                System.Console.WriteLine("Yeni bakiyeniz: " + (bakiye+yatirilacakTUtar));
+            }
+            else if (secim == "q")
+            {
+                System.Console.WriteLine("ATM'den çıkış yapıldı. İyi günler.");
+            }
+            else
+                System.Console.WriteLine("Lütfen geçerli bir değer giriniz!");
+	}
+}
+}
+
+----------------------------
+
+Örnek: //Beden Kitle İndeksi Bulma Uygulaması
+
+//Beden Kitle İndeksi = Kilo / (boy*boy)
+//18'e eşit veya küçükse ZAYIF
+//18-25 arası NORMAL
+//25'ten büyükse OBEZ yazdıran bir program yazdıralım.
+
+		System.Console.WriteLine("Kilonuzu giriniz: ");
+		int kilo = Convert.ToInt32(Console.ReadLine());
+
+		System.Console.WriteLine("Boyunuzu giriniz: ");
+		double boy = Convert.ToDouble(Console.ReadLine());
+
+		double bke = kilo / (boy*boy);
+
+			if (bke<18)
+				System.Console.WriteLine("Değeriniz." + bke + "=> Normal indeks değerinin altındasınız.");
+			else if (bke > 18 && bke < 25)
+				System.Console.WriteLine("Değeriniz." + bke + "=> Normal değerlerdesiniz.");
+			else if (bke > 25)
+				System.Console.WriteLine("Değeriniz." + bke + "=> Normal değerlerin üstündesiniz.");
+
+//Boy değerini girerken virgülle 1,68 gibi girmemiz gerekli.
+
+----------------------------
+
+Örnek: Switch Case ile Mini ATM Uygulaması
+
+		int bakiye = 700;
+        System.Console.WriteLine("ATM'ye hoşgeldiniz."); 
+        System.Console.WriteLine("Lütfen bir işlem seçiniz.\n\n 1-Bakiye Görüntüle.\n 2-Para çek.\n 3-Para Yatır.\n 4-Çıkış yap.\n");
+        string secim = Console.ReadLine();
+
+        switch(secim)
+        {
+            case "1":
+                System.Console.WriteLine("Bakiyeniz: " + bakiye);
+                break;
+
+            case "3":
+                System.Console.WriteLine("Yatırmak istediğiniz miktarı giriniz: ");
+                int yatirilacakTUtar = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Yeni bakiyeniz: " + (bakiye + yatirilacakTUtar));
+                break;
+
+            case "2":
+                System.Console.WriteLine("Çekmek istediğiniz miktarı giriniz: ");
+                int cekilecekTutar = Convert.ToInt32(Console.ReadLine());
+
+                if(cekilecekTutar > bakiye)
+                    System.Console.WriteLine("Yetersiz bakiye.");
+                else
+                    System.Console.WriteLine("Kalan bakiyeniz: " + (bakiye - cekilecekTutar));
+                
+                break;   
+
+            case "4":
+                System.Console.WriteLine("Hesabınızdan çıkış yapılıyor.");
+                break;     
+                
+            default:
+                System.Console.WriteLine("Lütfen geçerli bir işlem numarası giriniz.");
+                break;
+            }
+		
+----------------------
+
+DÖNGÜLER
+
+Örnek:
+
+Ekrana aşağıdakini yazdıralım.
+1
+12
+123
+1234
+12345
+123456
+1234567
+12345678
+123456789
+
+	for (int i = 1; i <= 10 ; i++)   //i=1 ile alttaki döngüye girdik.
+    {
+        for(int j = 1; j <= i ; j++) //j değerim i'ye kadar yani 1'e kadar dönecek ve ekrana j'yi yani 1'i yazacak. j bir artıp 2 olacak ve 2 <= 1 bozulup içteki döngüden çıkacak
+        {
+        System.Console.Write(j);
+        }
+        System.Console.WriteLine("");//iç döngüden çıkıp buraya geldik. "" ifadesi alt satıra geç anlamına da gelir. Alt satıra geçtikten sonra üstteki döngüden devam edecek. i++ ile i'yi 2 yapacak.   
+    }   
+
+--------------------------
+
+Örnek:
+
+while döngüsü ile 100'e kadar olan çift sayıları ekrana büyükten küçüğe yazdıralım.
+
+	int a = 100;
+
+    while(a >= 0)
+    {
+        System.Console.WriteLine(a);
+        a-=2;
+    }
+
+--------------------------
+
+Örnek:
+
+do while ile 1'den 100'e kadar olan sayıların toplamını ekrana yazdıralım.
+
+	int a = 1, toplam = 0;
+
+    do
+    {
+        toplam += a;
+        a++;
+    }
+    while(a <= 100);
+            
+    System.Console.WriteLine(toplam);
+	
+----------------------------
+
+Çarpım tablosu
+
+		static void Main(string[] args)
+        {
+            for(int i = 1; i <= 10 ; i++)
+                for(int j = 1; j <= 10; j++)
+                    System.Console.WriteLine(i + "x" + j + "=" + (i*j));       
+	    }
+	
+------------------------------
+
+Kullanıcı giriş sayfası uygulaması.
+
+Kullanıcı adı ve şifresini doğru girerse "Tebrikler başarıyla giriş yaptınız."
+Yanlış girerse hata verelim ve 3 hak tanıyalım, yanlış girdiği sürece döngü devam etsin.
+
+		static void Main(string[] args)
+        {
+
+        int hakSayisi = 3; 
+
+        while(true)
+            {
+            System.Console.WriteLine("Lütfen adınızı giriniz: ");
+            string kullaniciAdi = Console.ReadLine();
+            System.Console.WriteLine("Lütfen şifrenizi giriniz: ");
+            string sifre = Console.ReadLine();
+
+            if (kullaniciAdi == "Enes" && sifre == "123")
+            {
+                System.Console.WriteLine("Tebrikler başarılı bir şekilde giriş yaptınız.");
+                break;
+            }
+            else
+            {
+                System.Console.WriteLine("Kullanıcı adı veya şifre hatalı.");
+
+                if(hakSayisi > 0)
+                {
+                    hakSayisi -=1;
+                }
+                if(hakSayisi == 0)
+                {
+                    System.Console.WriteLine("Giriş hakkınız doldu.");
+                    break;
+                }
+            }
+            }
+
+	    }

@@ -1,0 +1,357 @@
+Hata Kontrol Mekanizmaları Nedir? Ne Amaçla Kullanılır?
+
+Hata Türleri - Derleme/Syntax/Sözdizimi Hatası
+
+- Program dili kurallarına aykırı olan hatalardır.
+- Gelişmiş editörler sayesinde derleeye gerek kalmadan bile farkedebilmekteyiz.
+- Hatanın bulundığı satır derleyici tarafından rapor edilir.
+- O yüzden fark edilmesi ve çözülmesi en kolay hata türüdür.
+
+Örnek:
+
+stat_ic void Main(string[] args) //stat_ic olmaz.
+{
+...//ya da türlü yazım hataları, uygunsuz scope'lar, tanımlanmayan değişkenler.
+}
+
+-------------------
+
+Hata Türleri - Run-Time(Çalışma Zamanı) Hataları
+
+- Syntax'da problem yokken çalışma zamanında hataya sebep verir.
+- Yazılım ayaktayken ortaya çıkan bir takım aykırı durumlardan dolayı programın işletim sistemi tarafından kesilmesi/durdurulmasıdır.
+- Programın işleyişinin ortasında direkt kullanıcı ile temas edebilecek hatalardır. 
+
+Runtime Error! 
+
+- Çalışma zamanı hataları genellikle kullanılan mimaride öntanımlı mesajları verecektir.
+- Eğer ki alınan hatanın mimaride bir karşılığı yoksa işletim sistemi dili kullanılacak ve daha kompleks bir açıklamayla karşılaşacaktır.
+Bu yüzden olması gereken çalışma zamanı hatalarının önceden tespit edilip daha anlaşılabilir şekilde düzenlenmesi lazım.
+
+- Bu hataları öngörebilmek genelde -tester-'ların işidir.
+- Uygulama mümkün mertebe test edilerek çalışma zamanı hataları tespit edilmesi ve programcı tarafından tanımlanmalıdır.
+- Bir programın gelişimi sahadaki belli bir sürece bağlıdır.
+- Bu süreçte toplanan log'lar ve son kullanıcı dönütleri değerlendirilerek çalışma zamanı hataları tespit edilip arındırılabilir.
+- Tespit edilen çalışma zamanlarının manipülasyonları önemlidir.
+
+- Hata kontrol mekanizmaları "çalışma zamanı hatalarını" kullanıcıya hissettirmeden yakalayabilmek ve ilgili hatayı manipüle etmek için vardır.
+
+Örnek:
+
+//Çalışma zamanı hata durumları
+
+- Olmayan bir dosyayı açmaya yahut üzerine yazmaya, okumaya çalışmak.
+- Olmayan değer üzerine işlem yapmak.
+- Uygun olmayan formatlarda çalışmak.
+- Veritabanı bağlantısının kopması.
+
+Örnek:
+
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Lütfen birinci sayıyı giriniz: ");
+			int sayi1 = int.Parse(Console.ReadLine());
+            Console.WriteLine("Lütfen ikinci sayıyı giriniz: ");
+			int sayi2 = int.Parse(Console.ReadLine());
+			//integer'a Parse edilemeyecek bir değer girilirse runtime error verir. X -> Exception Unhandled ....
+			Console.WriteLine("Toplam : " + (sayi1 + sayi2));
+			//uygulamayı dosya yolundan bulup .exe üzerinden çalıştırırsak daha net görebiliriz. 
+			//sayi1'e "Ali" girersek yine hata verir. "Ali" int'e dönüşmez.
+        }
+}}
+
+- Buna yazılımsal bir çözüm getirmek gereklidir.
+
+-----------------------
+
+try - catch Mekanizması Teorik Anlatım
+
+- Çalışma zamanında alınan olası hataları kontrol etmemizi, karşılamamızı, manipüle etmemizi sağlayan bir yapılanmadır.
+
+- try catch yapılanması uygulama sürecinde yaşanan olası hatayıkullanıcıya hissettirmeksizin farklı bir durum ya da olağan bir mesaj gibi göstermenizi
+sağlayan ve bunun yanında hataya dair bizlere bilgi sunan ve bu bilgiler eşliğinde kayıtlar/log oluşturmamızı sağlayan bir programatik yapılanmadır.
+
+- Amaç: 
+
+1)Kullanıcıya alınan hatayı hissettirmemek.
+2)Alınan hatanın nedenine dair kullanıcıyı bilgilendirmek.
+3)İşletim sistemleri aykırı durum yaşandığında uygılamayı sonlandırmak isterler ve sonlandırırlar. try-catch yapılanması ile alınan hataya dair manipülasyon
+gerçekleştiriliyor ve uygulamanın kapanmadan devam edilmesi sağlanabiliyor.
+
+Prototip:
+
+try
+{
+... //olası çalışma zamanı hatalarını verebilecek kodları buraya yazıyoruz.
+}
+catch
+{
+... //try içerisinde olası hata söz konusu ise kodun akışı orada kesilecek ve akış catch bloğundan devam edecektir.
+    //hataya dair log, kullanıcı bilgilendirme, kontrollü kapanı vs.
+}
+
+Örnek: 
+
+using System;
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+			try
+			{
+            Console.WriteLine("Lütfen birinci sayıyı giriniz: ");
+			int sayi1 = int.Parse(Console.ReadLine());
+            Console.WriteLine("Lütfen ikinci sayıyı giriniz: ");
+			int sayi2 = int.Parse(Console.ReadLine());
+			Console.WriteLine("Toplam : " + (sayi1 + sayi2));
+			}
+			catch
+            {
+            System.Console.WriteLine("Lütfen doğru bir ifade giriniz."); //değerleri hatalı girdiğimizde burası ekrana yazılacaktır.
+            }
+        }
+}}
+
+Not: try catch yapılanması olası hatanın ihtimal olduğu kodları durmadan kontrol eden maliyetli bir yapıdır. Dolayısıyla try içerisinde kontrol edilen
+kodlar lüzumsuz yere tüm kodlar olmamalıdır. Sadece olası hata barındıran kodları try-catch'de bulundurmak daha verimli ve performanslı olacaktır.
+
+...
+static void Main(string[] args)
+        {
+			Console.WriteLine("Lütfen birinci sayıyı giriniz: ");
+			int sayi1 = 0, sayi2 = 0;
+			try
+			{
+				sayi1 = int.Parse(Console.ReadLine());
+				Console.WriteLine("Lütfen ikinci sayıyı giriniz: ");
+				sayi2 = int.Parse(Console.ReadLine());
+			}
+			catch
+            {
+				Console.WriteLine("Lütfen doğru bir ifade giriniz."); //değerleri hatalı girdiğimizde burası ekrana yazılacaktır.
+            }
+			if(sayi1 is not 0 && sayi2 is not 0)
+			Console.WriteLine("Toplam : " + (sayi1 + sayi2));
+
+        }}} //gibi sadeleştirebiliriz.
+		
+--------------------------
+
+try - catch Hata Parametreleri
+
+- Çalışma zamanında alınan hataya dair bizlere bilgi veren/taşıyan parametrelerdir.
+
+Örnek:
+
+int s1 = 0, s2 = 10;
+int a = s2 / s1;
+
+Runtime hatası verecektir:
+
+Unhandled exception. System.DivideByZeroException: Attempted to divide by zero.
+at OrnekProje.Program.Main(String[] args) in C:\Users\acdem\Masaüstü\C#VSCode\OrnekProje\Program.cs:line 25
+
+DivideByZeroException bize kaşılaştığımız hatanın türünü ifade etmektedir.
+
+Bu geri dönüşler hatanın türüne göre değişecektir.
+
+Örnek: 
+
+object x = null;
+x.ToString();
+
+Unhandled exception. System.NullReferenceException: Object reference not set to an instance of an object.
+at OrnekProje.Program.Main(String[] args) in C:\Users\acdem\Masaüstü\C#VSCode\OrnekProje\Program.cs:line 26
+
+Örnek:
+
+int.Parse("Alican");
+
+Unhandled exception. System.FormatException: Input string was not in a correct format.
+
+------------------------
+
+try-catch Exception ile Hata Yakalama
+
+try
+{
+}
+catch(Exception herhangiBirIsim) // Exception, bizlere fırlatılan hatayla ilgili tüm bilgileri getirecek olan (yani hataları karşılayabilen bir üst türdür.(ileride detaylı)
+//herhangiBirIsim parametresi üzerinden bizler alınan htaya dair bilgiler edinebilmekte ve gerekli log'lama vs. operasyonları gerçekleştirebilmekteyiz.	
+//bu parametre catch bloğuna yazılmak/tanımlanmak zorunda değil. Eğer ki tanımlama yapılırsa hataya dair bilgi alabiliriz. Tanımlama yapılmazsa hata neticesinde
+//catch çalışacak fakat bilgi almayacağız.		
+{
+
+}
+
+Örnek:
+
+try
+{
+	int s1 = 0, s2 = 10;
+	int a = s2 / s1;
+}
+catch(Exception ex)
+{
+	Console.WriteLine("Mesaj : " + ex.Message);
+}
+
+Ekrana yazacaktır ->
+Mesaj : Attempted to divide by zero.
+
+Not: Exception tüm hata türlerinin atasıdır. Bütün veri türlerinin atası da object'tir. Dolayısıyla Exception'un da atası object'tir. Bu da böyle
+bir not. Nihayetinde Exception referans türlüdür.
+
+------------------------
+
+try - catch Exception Dışında Farklı Bir Tür İle Hata Yakalama
+
+Örnek:
+
+try
+{
+	int s1 = 0, s2 = 10;
+	int a = s2 / s1;
+}
+catch(DivideByZeroException ex) //catch bloğu bir parametre tanımlanmazsa tüm hataları karşılayabilen bir bloktur. Exception durumunu da anlattık.
+//eğer ki parametre Exception değil özelleştirilmiş bir hataya indirgenmişse böyle bir durumda sadece ilgili türe ait hataları yakalayabilecek, karşılayabilecektir.
+{
+	Console.WriteLine("Mesaj : " + ex.Message);
+}
+
+Örnek:
+
+try
+{
+	int s1 = 0, s2 = 10;
+	int a = s2 / s1;
+	
+	int.Parse("Alican");
+}
+catch(DivideByZeroException ex) //Bu senaryoda try catch kullandğımız halde kod patlayıp sona ermiştir.
+							    //catch bloğu genel olmayan bir türe özgüyse böyle bir durumda sadece o türden hataları yakalayabilir.
+{
+	Console.WriteLine("Mesaj : " + ex.Message);
+}
+
+Birden fazla catch bloğu ile bunu çözebiliriz.
+
+try
+{
+    int.Parse("Alican");
+	int s1 = 0, s2 = 10;
+	int a = s2 / s1; 
+}
+catch(DivideByZeroException ex)
+{
+	Console.WriteLine("Mesaj : " + ex.Message);
+}        
+catch(FormatException ex)
+{
+    Console.WriteLine("Mesaj : " + ex.Message);
+}
+catch(Exception ex)
+{
+//catch bloklarının en sonuna Exception türünde parametre(catch) tanımlarsan alınan hata üstteki türlerden herhangi biri değilse bu Exception tarafından karşılanabilir.
+	Console.WriteLine("Mesaj : " + ex.Message);
+}
+
+- try-catch yapılanması olas runtime hatası alındığında catch sıralamasına göre kontrol etmektedir. Bu sıralama önemlidir. catch Exception'u en sona yazmalıyız.
+
+---------------------------
+
+try - catch finally Bloğu
+
+- finally bloğu, try catch yapılanmasında hata alınsa da alınmasa da her iki durumda da tetiklenmesi/çalıştırılması gereken kodları yazdığımız bloktur.
+
+try
+{
+     //hata verebilecek kodlar
+}
+catch
+{
+	 //hata alındıktan sonra yapılacak işlemler
+}    
+finally
+{
+	 //her iki durumda da çalışmasını istediğimiz kodlar.
+}   
+
+- Günümüzde pek bir kullanımı yok. Eskiden veri tabanı bağlantısını kesmekte kullanılıyordu.
+
+---------------------------
+
+try - catch when Yapısı İle Hata Filtreleme (C# 6.0)
+
+try
+{
+	int s1 = 0, s2 = 10;
+	int a = s2 / s1;
+}
+catch(_____) when (___karşılaştırma___) // catch when(____) olarak da yazılabilir. when(3==3), when(x == "b") ise gibi.
+{
+	Console.WriteLine("Mesaj : " + ex.Message); //catch uyduğu VE karşılaştırma true olduğu sürece çalışır.
+}     
+
+Örnek:
+
+string x = "b";
+try
+{
+	int s1 = 0, s2 = 10;
+	int a = s2 / s1; 
+}
+catch(DivideByZeroException ex) when (x == "a") //string x = "a"; olsaydı buraya
+{
+	Console.WriteLine("Mesaj : " + ex.Message);
+}   
+catch(DivideByZeroException ex) when (x == "b") //string x = "b"; olduğu için buraya
+{
+	Console.WriteLine("Mesaj : " + ex.Message);
+}   
+catch(Exception ex) // //string x = "c"; olsaydı buraya. Ne olur ne olmaz diye eklemek lazım.
+{
+	Console.WriteLine("Mesaj : " + ex.Message);
+}
+
+----------------------
+
+Hata Türleri - Mantıksal Hatalar - BUG
+
+- Program mantığında, akışında, algoritmasında, stratejisinde bir takım şeylerin yanlış hesaplanması, düşüünülmesi, tasarlanması neticesinde alınan hatalardır.
+- Kod çalışır, sonuç verir ama istenilen sonuçlar verilmez.
+- Test sürecinde veya müşteri geri dönüşlerinde tespit edilebilir.
+- Günlük hayattki karşılığı 'Bug' dur.
+- Bazen tek çözüm debug'dır.
+
+Örnek: //2 ile 5'i çarp
+
+CW(2*6);
+
+Sonuç: 12
+
+Bu kadar basit. Ama sinir bozucu!
+
+Örnek:
+
+bool medeniHal = true;
+
+if (!medeniHal)
+{
+CW("Hediye gönder.");
+}
+else
+{
+CW("Hediye gönderme.");
+}
+//Yine ufak basit bir hata. Tam tersi olmalıydı.
+

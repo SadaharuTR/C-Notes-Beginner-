@@ -1,0 +1,69 @@
+Metotlarda Overloading (Çoklu Yükleme)
+
+namespace OrnekProje
+{
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            //Overloading: Çoklu Yükleme
+            //Bir class içerisinde belirli kurallar çerçevesinde aynı isimde birden fazla metot oluşturmaya
+            //Method Overloading denir.
+            
+            //Daha öncede yapmıştık!
+            //Random random = new Random();
+            //random.Next(); -> Next(); üzerine geldiğimizde farklı overload'larını görebiliriz.
+
+            Matematik matematik = new Matematik();
+            matematik.Topla(1,2);
+            //Aynı sayıda parametre ama farklı türde durumu varsa default olarak integer olan fonksiyon tetiklenecektir.
+            matematik.Topla(5,10,15);
+            matematik.Topla(5,(byte)2,10,15); //şimdi byte ile tanımlanana gider.
+            matematik.Topla(1,2,3,4); //int olana gider
+			matematik.Topla(1,5555555555,3,4); //doouble olana gider çünkü en yakın değer aralığı karşılayıcısı double. int'in sınırları aşıldı.
+            matematik.Topla(1,2d,5,23); //double olana gider.
+
+            //Kurallar
+            //Bu metotlar içerisinde fark yaratmamız gerekmektedir. Bu fark bizzat metot imzalarında olmalıdır.
+            //Metot Overloading işlemini yapabilmek için metot isimleri aynı olmalıdır.
+            //Metotlar arasında farkı yaratırken erişim belirleyicileri ve geri dönüş değerleri fark yaratmamaktadır.
+            //Parametre sayıları ya da parametre türleri farklı olmalıdır.
+        }
+               
+    }   
+    class Matematik
+    {
+        //Bir class içerisinde aynı isimde birden fazla metot tanımlanamaz.
+        //...
+        //Belirli kurallar dışında!
+        public int Topla (int sayi1, int sayi2) //Aynı isimde birden fazla metot var. Demek ki overloading yapılmış.
+        {
+            return sayi1 + sayi2; //iki tane parametre alan "topla"
+        }
+        private int Topla (int sayi1, double sayi2) //sayi2 farklı türde.
+        {
+                return (int)(sayi1 + sayi2);
+        }
+        public int Topla(int sayi1, int sayi2, int sayi3) //sayi3'ü eklediğimizde hata ortadan kalkar.
+        {
+                return sayi1 + sayi2 + sayi3;//üç tane parametre alan "topla"
+        }
+        public int Topla(int sayi1, int sayi2, int sayi3, int sayi4) 
+        {
+                return sayi1 + sayi2 + sayi3 + sayi4;//dört tane int parametre alan "topla"
+        }
+        public int Topla(int sayi1, byte sayi2, int sayi3, int sayi4) 
+        {
+                return sayi1 + sayi2 + sayi3 + sayi4;//dört tane parametre alan biri de btye olan "topla"
+        }
+        public int Topla(int sayi1, double sayi2, int sayi3, int sayi4) //dört tane parametre alan biri de double olan "topla"
+        {
+                return (int)(sayi1 + sayi2 + sayi3 + sayi4);
+        }
+        //Topla fonksiyonları birbirlerinin overload'u dur.
+        //Matematik sınıfının altında Topla isminde bir tane fonksiyonum olacak ve bu fonksiyonun da üç tane overload'u olacaktır.
+    } 
+}
+
+- Overloading işlemine tabi tutulmuş metotlardan istediğimizi kullanabilmek için o metodun imzasına uygun parametreleri tetiklememiz yeterli olacaktır.
+(Ya da başka bir deyişle o imzadaki metodu kullanmamız.)

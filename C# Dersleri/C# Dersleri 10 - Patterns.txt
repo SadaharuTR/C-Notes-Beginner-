@@ -1,0 +1,281 @@
+C# 7.0 Pattern Matching - Type Pattern
+
+Type Pattern
+
+- Object içerisindeki bir tipin belirlenmesinde kullanılan is operatörünün desenleştirilmiş halidir.
+- is ile belirlenen türün direkt dönüşümünü sağlar. is'in desenleşmiş halidir.
+
+Örnek:
+
+object x = 125;
+
+if(x is string)
+{
+	string xx = x as string; //string'e dönüştür.
+	CW($"x değişkeni string tipindedir.");
+}
+else if(x is int)
+{
+	int xx = (int) string; //int'e dönüştür.
+	CW($"x değişkeni int tipindedir.");
+}
+
+//object içerisinde string varsa if bloğu işlemlerini yap, int varsa else if'i yap.
+//ilgili türün hangisi olduğunu runtime'da kontrol edip bulduktan sonra o objectin içerisindeki değeri unboxing yaparken ya -as- ile ya da cast() ile
+//bir şekilde unboxing yapmamız gerek. Bunu uzun uzun yapmak yerine;
+
+- Desen'i kullanabiliriz.
+
+if (x is string xx) // x eğer ki string ise xx değişkeni ile string olarak geri göndür. (as veya cast kullanmadan)
+	CW($"x değişkeni string tipindedir.");
+else if (x is int xx) // x eğer ki int ise xx değişkeni ile int olarak geri göndür.
+	CW($"x değişkeni int tipindedir.");
+	
+Örnek:
+
+	object x = "Ali";
+	if(x is string)
+	{
+		string x = (string)x;
+	}
+	
+	ya da
+	
+	object x = "Ali";
+	if(x is string a) // eğer ki x'in içindeki değer string ise a değişkeninde string olarak ver.
+	{
+	//artık a'yı burada istediğimiz gibi kullanabiliriz.
+	}
+	//scope dışında da erişebiliriz ama null olma ihtimalinden dolayı kullanamayız. Bir değişken null ise çağırılamaz, değeri çağırılamaz sadece ona bir değer
+	//atanabilir. x'in string olmama durumunda null gelme şansı var.
+	
+	//CW(a); //hata verir. ama önce a'ya bir değer atarsak.
+	
+	a = "Velican";
+	CW(a); // Hata vermez. Sonuç ekrana yazdırılır.
+	
+// Type Pattern kullanıp bir daha else if ile dönüşüm yapacaksak değişken isimleri aynı olmamalı.
+	if(x is string a)
+	{
+	....
+	}
+	else if (x is int a) //olmaz hata verir. 
+	{
+	....
+	}
+	
+----------------
+
+C# 7.0 Pattern Matching - Constant Pattern
+
+- Elimizdeki veriyi sabit bir değer ile karşılaştırabilmemizi sağlar. =='tir operatörü gibi çalışır.
+
+Örnek:
+
+object x = 123;
+
+if(x is 123) //değersel bazlı kontrol
+{
+}
+if(x is int) // tür bazlı bir kontrol
+{
+}
+
+Örnek:
+
+int a = 123;
+CW(a is int); -> ekrana True yazdıracaktır.
+
+- is operatörü bir değişkenin türünü sormamızı/belirlememizi sağlyan bir operatördür. Ve bu operatörün kullanıldığı değişkenlerin türü illa bir referans türlü olmak
+zorunda değildir. İstersek değer türlü değişkenlerde de is operatörü kullanılır. Primitive türler de dahil.
+
+Örnek:
+
+int a = 5; 
+//Mini not: Aşağıdaki iki CW'nin çalışması için object olarak yazmak lazım. Yazmaksak hata verir. zaten int olduğu belli. 
+//Console.WriteLine(a is int); //buradakiler ise is operatörünün normal işlemidir.
+//Console.WriteLine(a is string);
+
+//Constant Pattern kontrolü ise;
+Console.WriteLine(a is 5); //Eğer ki is operatörüyle bir değişkenin değerini == operatörünün sorumluluğuyla kontrol ediyorsak 
+						   //buna constant pattern denmektedir. Sonuç ekrana True döner.
+
+-------------------
+
+C# 7.0 Pattern Matching - Var Pattern
+
+- Eldeki veriyi var değişkeni ile elde etmemizi sağlar.
+
+Örnek:
+
+object x = "Türkiye";
+
+if (x is var a) //x'in türü ne olursa olsun var a'ya çıkar. Var verilen değerin türüne (runtime'da!) bürünme işlemini gerçekleştiren bir keyword'dür.
+{
+	Console.WriteLine(a);
+}
+
+NOT!: var keyword'ü normalde derleyici sürecinde türü belirlerken var pattern'daki var runtime'da türü belirlemektedir.
+
+var b = "Alilo"; //direkt string oldu.
+
+ama var pattern'daki;
+
+if(x is var a) //almış olduğu değeri runtime'da alacağından dolayı türü runtime'da belirlenir.
+...
+
+Not: Dynamic runtime'da türü belirlenecek değişkenlerde kullanılır. Fakat biz hem elimizdeki değerin türünü kontrol edip ardından o türü kendi verisinde
+unboxing edeceksek burada var pattern'i kullanak zorundayız. (x is dynamic a) tarzı bir pattern yoktur. Hata verir.
+
+----------------------
+
+C# 7.0 Pattern Matching - Recursive Pattern
+
+- switch case yapılanması üzerinde yenilikler getirmektedir.
+- switch bloğunda referans türlü değişkenlerde kontrol edilebilmektedir.
+- Ayrıca switch bloğuna when komutu ile çeşitli şart/koşul niteliği kazandırılmıştır.
+- Tür kontrolü yaptığı için type pattern'ı kapsamaktadır.
+- Ayrıyetten case null komutu ile ilgili referansın null olup olmamasını kontrol edebilmesinden dolayı constant pattern'ı da kapsar.
+
+Detaylar ileride.
+
+---------------------
+
+C# 7.0 Pattern Matching - Type ve Var Pattern Üzerine Devam (Genel Kültür)
+
+- Akış kontrol mekanizması olmadan da kullanabilmekteyiz.
+
+Type Pattern;
+
+object x = "Alilocan";
+bool result = x is string o; //hem sonucu bool olarak result'a aldım. Hem de o isimli bir değişken tanımlamış oldum. Ve ilgili string x değerinin orjinal değerini
+							 //o'ya string olarak cast etmiş olduk.
+CW(o); //Hata verir. -o- 'yu null'dan çıkarmak için değer vermek lazım. Bu seferde x'in orjinal değeri bozulur.
+//x'in olmadığı durumda o'nun null olma durumu var. Bu ihtimalden dolayı kullanamayız.							 
+// Kullanışlı değil. Type pattern'ı if ile kulanmaya devam. 
+
+Var Pattern;
+
+object x = "Alilocan";
+bool result = x is var o; //runtime'da null olup olmayacağı kararlaştırılacağı için hata vermez. 
+CW(o);				      //hangi tür olursa olsun atayacağından dolayı null gelme ihtimali yok.
+
+-------------------------
+
+C# 9.0 Pattern Matching Enhancements
+
+Simple Type Pattern C# 9.0
+
+- Normal type pattern'ın geliştirilmiş halidir.
+- Bir değişken içerisindeki değerin belirli bir türde olup olmadığını hızlı bir şekilde kontrol etmemizi sağlayan desendir.	
+- 9.0'dan önce Type Pattern ile yapılan tür bildirimlerinin yanına değişken adı tanımlaması yahut discard ifadesinin kullanılması zorunluydu.
+9.0 ile bu ortadan kalktı ve direkt olarak tür kontrol işlemine odaklanılması sağlandı.		
+
+Örnek: //sadece tür kıyaslaması yapacaksak
+
+//Eskiden
+
+object obj = new Person();
+switch(obj)
+{
+	case Person p:
+	//.....
+	break;
+}
+
+//9.0 ile
+
+object obj = new Person();
+switch(obj)
+{
+	case Person: //p'yi silebiliriz.
+	//.....
+	break;
+}
+
+Örnek:
+
+//ESKİ
+
+string GetProduct(IProduct p) => p switch
+{
+	Technologic _=> "Teknolojik",
+	Computer _=> "Bilgisayar",
+	Goggles _=> "Gözlük"
+};
+
+NOT:
+
+_ Discard Operatörü: Bir veriyi, değişkeni, propertyi yahut metot geri dönüş değerini bir noktaya atama işlemi neticesinde ilgili değerin 
+bellekte bir yer ayrılmayacak şekilde çöp olarak kabul edilmesini sağlamakla görevlidir.
+Bir başka deyişle değişken deklare(tanımlama) etmeye ihtiyaç duyulmadığı durumlarda Discard operatörü kullanılarak sonraki adımlarda hiçbir zaman 
+kullanılmayacak değişkenleri boşuna oluşturarak bellekte lüzumsuz yer işgal edilmemesini sağlamaktadır.
+
+//Yeni
+
+string GetProduct(IProduct p) => p switch
+{
+	Technologic => "Teknolojik", //herhangi bir değişken ismi ya da discard operatörü vermeden tür kontrolü yapabilmekteyiz.
+	Computer => "Bilgisayar",
+	Goggles => "Gözlük"
+};
+
+----------------------
+
+Relational Pattern C# 9.0
+
+- Desenlerde <,>, <= ve >= operatörleri kullanabilmekte ve belirli karşılaştırmaları hızlıca gerçekleştirebilmektedir.
+
+Örnek:
+
+int number = 111;
+string reulst = number switch
+{
+	< 50 => "50'den küçük",
+	> 50 => "50'den büyük,
+	  50 => "50'ye eşit",
+	- => "Hiçbiri
+};
+
+//switch özü itibarıyla sadece eşitlik durumunu inceleyebiliyorDU. Relational pattern ile artık diğer türlü durumları da kullanabiliriz.
+//if ile farkı kalmamıştır.
+
+Logical Pattern C# 9.0
+
+- and, or ve not gibi mantıksal operatörleri keyword olarak kullanabiliriz.
+
+Örnek:
+
+string GetProduct(IProduct o) => p switch
+{
+	Technologic or Computer => "Teknolojik, //
+	Goggles => "Gözlük"
+},
+
+Örnek:
+
+int number = 60;
+
+string result = number switch
+{
+	> 10 and < 50 => "10'dan büyük 50'den küçük",
+	> 50 or < 100 and 60 => "50'den büyük veya 100'den küçük ve 60'a eşit",
+	not 51 => "51 değil."
+};
+
+- Relational pattern ile oldukça uyumludur.
+
+-----------------
+
+Not Pattern C# 9.0
+
+- not operatörünün kullanılbildiği bir desendir. (bir üstteki örnekte relational pattern'da kullandık.)
+
+Örnek: 
+
+object obj = new Goggles();
+if (obj is not Technologic)
+{
+// object bir Technologic değilse (-not-) buraya gir. is ile de kullanılabilir.
+}
+
